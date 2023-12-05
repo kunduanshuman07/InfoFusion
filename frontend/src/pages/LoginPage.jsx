@@ -32,7 +32,7 @@ const Root = styled.div`
   width: 70%;
   margin-left: 140px;
   .side-box{
-    margin-left: 40px;
+    margin-left: 80px;
     color: #086D67;
     text-align:center;
   }
