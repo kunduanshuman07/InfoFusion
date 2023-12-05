@@ -20,7 +20,10 @@ import TrendingPage from '../pages/TrendingPage';
 import styled from "styled-components";
 import PersonalizedPage from '../pages/PersonalizedPage';
 import RegionalPage from '../pages/RegionalPage';
-
+import PlaygroundPage from "../pages/PlaygroundPage";
+import FactcheckPage from "../pages/FactcheckPage";
+import SignUpPage from "../pages/SignUpPage";
+// import { Sidebar } from '../utils/Sidebar';
 
 const UserLayout = () => {
     const [drawerWidth, setDrawerWidth] = React.useState(220);
@@ -50,9 +53,10 @@ const UserLayout = () => {
                     </IconButton>
                     <List style={{ marginTop: 15 }}>
                         <ListItem
-                            to="/trending"
+                            to="/"
                             component={NavLink}
-                            className='tab-style'
+                            style={({ isActive }) =>
+                                (isActive ? { color: 'white', borderRight: '9px solid white' } : { color: 'white' })}
                         >
                             <ListItemIcon>
                                 <IconButton style={{ color: "white" }}>
@@ -74,7 +78,8 @@ const UserLayout = () => {
                         <ListItem
                             to="/personalized"
                             component={NavLink}
-                            className='tab-style'
+                            style={({ isActive }) =>
+                                (isActive ? { color: 'white', borderRight: '9px solid white' } : { color: 'white' })}
                         >
                             <ListItemIcon>
                                 <IconButton style={{ color: "white" }}>
@@ -96,7 +101,8 @@ const UserLayout = () => {
                         <ListItem
                             to="/regional"
                             component={NavLink}
-                            className='tab-style'
+                            style={({ isActive }) =>
+                                (isActive ? { color: 'white', borderRight: '9px solid white' } : { color: 'white' })}
                         >
                             <ListItemIcon>
                                 <IconButton style={{ color: "white" }}>
@@ -117,6 +123,9 @@ const UserLayout = () => {
                         </ListItem>
                         <ListItem
                             to="/playground"
+                            component={NavLink}
+                            style={({ isActive }) =>
+                                (isActive ? { color: 'white', borderRight: '9px solid white' } : { color: 'white' })}
                         >
                             <ListItemIcon>
                                 <IconButton style={{ color: "white" }}>
@@ -137,6 +146,9 @@ const UserLayout = () => {
                         </ListItem>
                         <ListItem
                             to="/fact-check"
+                            component={NavLink}
+                            style={({ isActive }) =>
+                                (isActive ? { color: 'white', borderRight: '9px solid white' } : { color: 'white' })}
                         >
                             <ListItemIcon>
                                 <IconButton style={{ color: "white" }}>
@@ -161,9 +173,12 @@ const UserLayout = () => {
             <main style={{ width: "100%" }}>
                 <div className='content'>
                     <Routes>
-                    <Route path="/trending" element={<TrendingPage/>}/>
-                    <Route path="/personalized" element={<PersonalizedPage/>}/>
-                    <Route path="/regional" element={<RegionalPage/>}/>
+                        <Route path="/" element={<TrendingPage />} />
+                        <Route path="/personalized" element={<PersonalizedPage />} />
+                        <Route path="/regional" element={<RegionalPage />} />
+                        <Route path="/playground" element={<PlaygroundPage />} />
+                        <Route path="/factcheck" element={<FactcheckPage />} />
+                        <Route path="/signup" element={<SignUpPage />} />
                     </Routes>
                 </div>
             </main>
@@ -173,16 +188,12 @@ const UserLayout = () => {
 
 const Root = styled.div`
     display: flex;
-    .tab-style{
-        color: white
-    }
     .content{
         flexGrow: 1.5;
-        padding: 90px;
+        padding: 80px;
         overflowX: auto;
         overflowY: hidden;
     }
-`
-
+`;
 export default UserLayout
 
