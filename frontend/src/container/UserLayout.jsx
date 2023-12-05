@@ -22,7 +22,6 @@ import PersonalizedPage from '../pages/PersonalizedPage';
 import RegionalPage from '../pages/RegionalPage';
 import PlaygroundPage from "../pages/PlaygroundPage";
 import FactcheckPage from "../pages/FactcheckPage";
-import SignUpPage from "../pages/SignUpPage";
 // import { Sidebar } from '../utils/Sidebar';
 
 const UserLayout = () => {
@@ -178,7 +177,6 @@ const UserLayout = () => {
                         <Route path="/regional" element={<RegionalPage />} />
                         <Route path="/playground" element={<PlaygroundPage />} />
                         <Route path="/factcheck" element={<FactcheckPage />} />
-                        <Route path="/signup" element={<SignUpPage />} />
                     </Routes>
                 </div>
             </main>

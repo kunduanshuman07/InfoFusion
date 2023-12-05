@@ -3,21 +3,38 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Logo from "../assets/InfoFusion.png";
-import AuthTile from '../components/AuthTile';
+import SignupTile from '../components/SignupTile';
+import styled from "styled-components";
+import { Typography } from '@mui/material';
 
 const SignUpPage = () => {
   return (
-    <Box>
-      <Card>
+    <Root>
+      <Card className='card-container'>
         <Box>
-          <img src={Logo} width={150} alt='InfoFusion'/>
           <CardContent>
-            <AuthTile/>
+            <SignupTile />
           </CardContent>
         </Box>
       </Card>
-    </Box>
+      <Box className='side-box'>
+        <img src={Logo} width={250} alt='InfoFusion' className='logo' />
+        <Typography>Play around the latest news !</Typography>
+      </Box>
+    </Root>
   )
 }
 
+const Root = styled.div`
+  display: flex;
+  align-items: center;
+  height: 90vh;
+  width: 70%;
+  margin-left: 140px;
+  .side-box{
+    margin-left: 40px;
+    color: #086D67;
+    text-align:center;
+  }
+`
 export default SignUpPage;
