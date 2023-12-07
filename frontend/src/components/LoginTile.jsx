@@ -1,31 +1,41 @@
 import { TextField, Button, Typography, Box } from '@mui/material'
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 const LoginTile = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const handleLogin = () => {
+        
+    }
     return (
         <Root>
             <form>
                 <TextField
                     name="email"
+                    value={email}
                     variant="outlined"
                     fullWidth
                     size="small"
                     placeholder='Email Id'
+                    onChange={(e) => setEmail(e.target.value)}
                     className='form-textfield'
                 />
                 <TextField
                     name="password"
+                    value={password}
                     type='password'
                     variant="outlined"
                     fullWidth
                     size="small"
                     placeholder='Password'
+                    onChange={(e) => setPassword(e.target.value)}
                     className='form-textfield'
                 />
                 <Box className='footer-box'>
                     <Button
                         variant="contained"
                         className='form-submit'
+                        onClick={handleLogin}
                     >
                         Login
                     </Button>

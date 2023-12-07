@@ -160,7 +160,7 @@ const UserLayout = () => {
                             <ListItemText
                                 primary={
                                     <Typography>
-                                        FactCheck
+                                        Fact Check
                                     </Typography>
                                 }
                                 style={{ display: open ? "" : "none" }}

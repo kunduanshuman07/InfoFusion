@@ -1,8 +1,11 @@
 import React from 'react'
-import NewsTile from '../components/NewsTile'
+// import NewsTile from '../components/NewsTile'
+import CarouselComponent from '../components/CarouselComponent'
 const RegionalPage = () => {
   return (
-    <div><NewsTile/></div>
+    <div>
+      <CarouselComponent/>
+    </div>
   )
 }
 

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Card, Grid } from '@mui/material';
 import axios from "axios";
 import styled from 'styled-components';
+import Logo from "../assets/InfoFusion.png";
 import CircularProgress from '@mui/material/CircularProgress';
 const NewsTile = ({ url }) => {
   const [headlines, setHeadlines] = useState([]);
@@ -10,6 +11,7 @@ const NewsTile = ({ url }) => {
     const fetchHeadlines = async () => {
       try {
         const response = await axios.get(url);
+        console.log(response.data.articles);
         setHeadlines(response.data.articles);
         setLoading(false);
       } catch (error) {
@@ -26,12 +28,11 @@ const NewsTile = ({ url }) => {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={4}>
                 <Card className='image-box'>
-                  <img height="220" width="260" src={e.urlToImage} alt="news" />
+                  {e.urlToImage ? <img height="220" width="260" src={e.urlToImage} alt="news" /> : <img alt="InfoFusion" src={Logo} width={250} height="85%" />}
                 </Card>
               </Grid>
               <Grid item xs={12} sm={8} className='text-boxes'>
-                <Card className='text-box'>{e.title}</Card>
-                <Card className='text-box'>{e.description}</Card>
+                <Card className='text-box'><span>{e.title}</span> | <span>{e.description}</span></Card>
               </Grid>
             </Grid>
           </Card>
@@ -61,7 +62,7 @@ const Root = styled.div`
     margin-bottom: 10px;
   }
   .text-box{
-    height: 50%; 
+    // height: 80%; 
     background-color: white;
     border: 1px solid #086d67; 
     margin-bottom: 10px;
