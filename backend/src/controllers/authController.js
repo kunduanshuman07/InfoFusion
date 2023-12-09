@@ -1,16 +1,15 @@
 import express from 'express';
 import bcrypt from 'bcrypt';
-// import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import User from '../models/userModel.js';
 const JWT_SECRET='infofusionsuperhardkey'
 export const register = async (req, res) => {
-    const { name, email, password, gender, picturePath, age } = req.body;
+    const { name, email, password, phone, age } = req.body;
     try {
         const salt = await bcrypt.genSalt();
         const hashPassword = await bcrypt.hash(password, salt);
         const newUser = new User({
-            name, email, password: hashPassword, gender, picturePath, age
+            name, email, password: hashPassword, phone, age
         });
         const savedNewUser = await newUser.save();
         console.log(savedNewUser);
@@ -37,7 +36,7 @@ export const login = async (req, res) => {
         }
         const token = jwt.sign({id: user._id}, JWT_SECRET);
         delete user.password;
-        res.status(200).json({ token, user });
+        res.status(200).send({ token, user });
     } catch (error) {
         res.status(400).json({error: error.message});
     }

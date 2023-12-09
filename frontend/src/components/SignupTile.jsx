@@ -1,7 +1,35 @@
 import { TextField, Button, Typography, Box } from '@mui/material'
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 const SignupTile = () => {
+  const navigate = useNavigate();
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [phone, setPhone] = useState(0);
+  const [cpassword, setCPassword] = useState('');
+  const [age, setAge] = useState();
+  const handleSignUp = async () => {
+    if (password === cpassword) {
+      try {
+        const userData = {
+          name, email, password, phone, age
+        }
+        const { data, status } = await axios.post('http://localhost:3000/auth/register', userData);
+        if (status === 200) {
+          console.log(data);
+          navigate('/login')
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    else {
+      console.log("Password mismatch");
+    }
+  }
   return (
     <Root>
       <form>
@@ -12,6 +40,7 @@ const SignupTile = () => {
           size="small"
           placeholder='Full Name'
           className='form-textfield'
+          onChange={(e) => setName(e.target.value)}
         />
         <TextField
           name="email"
@@ -20,6 +49,7 @@ const SignupTile = () => {
           size="small"
           placeholder='Email Id'
           className='form-textfield'
+          onChange={(e) => setEmail(e.target.value)}
         />
         <TextField
           name="password"
@@ -29,6 +59,7 @@ const SignupTile = () => {
           size="small"
           placeholder='Password'
           className='form-textfield'
+          onChange={(e) => setPassword(e.target.value)}
         />
         <TextField
           name="cpassword"
@@ -38,25 +69,31 @@ const SignupTile = () => {
           size="small"
           placeholder='Confirm Password'
           className='form-textfield'
+          onChange={(e) => setCPassword(e.target.value)}
         />
         <TextField
           name="phone"
+          type='number'
           variant="outlined"
           fullWidth
           size="small"
           placeholder='Phone'
           className='form-textfield'
+          onChange={(e) => setPhone(e.target.value)}
         />
         <TextField
           name="age"
+          type='number'
           variant="outlined"
           fullWidth
           size="small"
           placeholder='Age'
           className='form-textfield'
+          onChange={(e) => setAge(e.target.value)}
         />
         <Box className='footer-box'>
           <Button
+            onClick={handleSignUp}
             variant="contained"
             className='form-submit'
           >

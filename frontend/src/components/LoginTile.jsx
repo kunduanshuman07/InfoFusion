@@ -1,11 +1,26 @@
 import { TextField, Button, Typography, Box } from '@mui/material'
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import { useAuth } from '../context/AuthProvider'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 const LoginTile = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const handleLogin = () => {
-        
+    const { setAuth } = useAuth();
+    const navigate = useNavigate();
+    const handleLogin = async () => {
+        try {
+            const { data, status } = await axios.post('http://localhost:3000/auth/login', { email, password });
+            if (status === 200) {
+                await localStorage.setItem("authToken", data.token);
+                await localStorage.setItem("user", JSON.stringify(data.user));
+                setAuth(true);
+                navigate('/')
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
     return (
         <Root>

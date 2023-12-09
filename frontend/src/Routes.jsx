@@ -5,15 +5,16 @@ import UserLayout from './container/UserLayout';
 import SignUpPage from './pages/SignUpPage';
 import PersonalInfo from './components/PersonalInfo';
 import QuizDashboard from './components/QuizDashboard';
-
+import { useAuth } from './context/AuthProvider';
 const RouteJS = () => {
+  const { auth } = useAuth();
   return (
     <Routes>
-        <Route path='/login' element={<LoginPage/>}/>
-        <Route path='signup' element={<SignUpPage/>}/>
-        <Route path='/*' element={<UserLayout/>}/>
-        <Route path='/personal-info' element={<PersonalInfo/>}/>
-        <Route path='quiz-dashboard' element={<QuizDashboard/>}/>
+      <Route path='/login' element={<LoginPage />} />
+      <Route path='signup' element={<SignUpPage />} />
+      <Route path='/*' element={auth ? <UserLayout /> : <Navigate to='/login' />} />
+      <Route path='/personal-info' element={auth && <PersonalInfo />} />
+      <Route path='quiz-dashboard' element={auth && <QuizDashboard />} />
     </Routes>
   )
 }
