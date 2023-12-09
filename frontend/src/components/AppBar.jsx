@@ -32,7 +32,8 @@ function AppBarComponent({ comp }) {
         navigate('/settings');
     }
     const handleLogout = () => {
-
+        localStorage.clear();
+        navigate('/login');
     }
     const handleSupport = () => {
 
