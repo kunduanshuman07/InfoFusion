@@ -59,7 +59,7 @@ function AppBarComponent({ comp }) {
                                     (isActive ? { borderBottom: "5px solid #086D67" } : { color: '#086D67' })} className='profile-btn'>Quiz Dashboard</NavLink>
                             </Box>}
                             <Box sx={{ ml: "auto" }}>
-                                <IconButton title="setting" color="inherit" onClick={handleMenu}>
+                                <IconButton color="inherit" onClick={handleMenu}>
                                     <Avatar alt='Anshuman Kundu' src='avatar' className='avatar-style' />
                                 </IconButton>
                                 <Menu
