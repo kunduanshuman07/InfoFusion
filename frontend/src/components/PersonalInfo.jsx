@@ -6,6 +6,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditProfile from './EditProfile';
 
 const PersonalInfo = () => {
+    const user = JSON.parse(localStorage.getItem("user"));
     const [openModal, setOpenModal] = useState(false);
     return (
         <Root>
@@ -13,36 +14,43 @@ const PersonalInfo = () => {
             <Box className='container'>
                 <Box className='profile-box'>
                     <IconButton color="inherit">
-                        <Avatar alt='Anshuman Kundu' src='avatar' className='avatar-style' />
+                        <Avatar alt={user.name} src='avatar' className='avatar-style' />
                     </IconButton>
-                    <h3>Anshuman Kundu</h3>
+                    <h3>{user.name}</h3>
                     <Button className='edit-profile' onClick={()=> setOpenModal(true)}>Edit Profile</Button>
                 </Box>
 
                 <Box className='info-line'>
                     <Box className='info-type'>Account Details</Box>
                     <Box className='info'>
-                        <Typography>Email: abc@gmail.com</Typography>
+                        <Typography><span style={{fontWeight:"bold"}}>Email :</span> {user.email}</Typography>
                     </Box>
                     <Box className='info'>
-                        <Typography>Phone: 1234567890</Typography>
+                        <Typography><span style={{fontWeight:"bold"}}>Phone :</span> {user.phone}</Typography>
+                    </Box>
+                    <Box className='info-type'>Personal Details</Box>
+                    <Box className='info'>
+                        <Typography><span style={{fontWeight:"bold"}}>Age :</span> {user.age}</Typography>
+                    </Box>
+                    <Box className='info'>
+                        <Typography><span style={{fontWeight:"bold"}}>Gender:</span> {user.gender}</Typography>
                     </Box>
                     <Box className='info-type'>Career Details</Box>
                     <Box className='info'>
-                        <Typography>Education: NIT Bhopal</Typography>
+                        <Typography><span style={{fontWeight:"bold"}}>Education:</span> {user.education}</Typography>
                     </Box>
                     <Box className='info'>
-                        <Typography>Employment: Salaried</Typography>
+                        <Typography><span style={{fontWeight:"bold"}}>Employment:</span> {user.employment}</Typography>
                     </Box>
                     <Box className='info-type'>Address</Box>
                     <Box className='info'>
-                        <Typography>City: Ranchi</Typography>
+                        <Typography><span style={{fontWeight:"bold"}}>City:</span> {user.city}</Typography>
                     </Box>
                     <Box className='info'>
-                        <Typography>State: Jharkhand</Typography>
+                        <Typography><span style={{fontWeight:"bold"}}>State:</span> {user.state}</Typography>
                     </Box>
                     <Box className='info'>
-                        <Typography>Pincode: 835204</Typography>
+                        <Typography><span style={{fontWeight:"bold"}}>Pincode:</span> {user.pincode}</Typography>
                     </Box>
                     <Box className='info-type'>Privacy</Box>
                     <Box className='info'>
@@ -70,8 +78,13 @@ const Root = styled.div`
     .profile-box {
         min-width: 300px;
         max-height: 200px;
-        border: 2px solid #086D67;
-        border-radius: 10px;
+        box-shadow: 8px 4px 8px rgba(0.1, 0.1, 0.1, 0.2);
+        cursor: pointer;
+        &:hover {
+            box-shadow: 8px 4px 8px rgba(0.1, 0.1, 0.1, 0.4);
+        }
+        border-left: 2px solid #086D67;
+        border-radius: 5px;
         padding: 20px;
         text-align: center;
     }
@@ -79,14 +92,15 @@ const Root = styled.div`
         display: flex;
         flex-direction: column;
         margin-left: 50px; 
-        border-left: 10px solid #086D67;
+        border-left: 5px solid #086D67;
         padding-left: 50px;
     }
 
     .info-type {
         font-weight: bold;
+        font-size: 18px;
         margin-bottom: 10px;
-        
+        color: #086D67;
     }
 
     .info {
@@ -95,9 +109,15 @@ const Root = styled.div`
         align-items: center;
         margin-bottom: 10px;
         padding: 10px;
-        border: 1px solid #086D67;
-        border-radius: 10px;
+        box-shadow: 8px 4px 8px rgba(0.1, 0.1, 0.1, 0.2);
+        cursor: pointer;
+        &:hover {
+            box-shadow: 8px 4px 8px rgba(0.1, 0.1, 0.1, 0.4);
+        }
+        border-left: 2px solid #086D67;
+        border-radius: 5px;
         min-width: 600px;
+        color: #045350;
     }
     .avatar-style{
         background-color: #086D67;
@@ -105,13 +125,13 @@ const Root = styled.div`
     .change-pass{
         text-decoration: none;
         color: blue;
-        font-weight: 500;
+        font-weight: bold;
         cursor: pointer;
     }
     .delete-acc{
         text-decoration: none;
         color: red;
-        font-weight: 500;
+        font-weight: bold;
         cursor: pointer;
     }
     .del-btn{

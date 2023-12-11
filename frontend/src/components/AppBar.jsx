@@ -14,6 +14,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import SupportIcon from '@mui/icons-material/SupportAgent';
 import styled from "styled-components";
 function AppBarComponent({ comp }) {
+    const user = JSON.parse(localStorage.getItem("user"));
     const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
@@ -60,7 +61,7 @@ function AppBarComponent({ comp }) {
                             </Box>}
                             <Box sx={{ ml: "auto" }}>
                                 <IconButton color="inherit" onClick={handleMenu}>
-                                    <Avatar alt='Anshuman Kundu' src='avatar' className='avatar-style' />
+                                    <Avatar alt={user.name} src='avatar' className='avatar-style' />
                                 </IconButton>
                                 <Menu
                                     className='menu-style'

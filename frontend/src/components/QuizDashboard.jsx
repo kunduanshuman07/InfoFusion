@@ -1,13 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import AppBarComponent from '../components/AppBar';
-import { Box, Grid, IconButton, Avatar, Typography } from '@mui/material';
+import { Box, Grid, IconButton, Avatar} from '@mui/material';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import WhatshotIcon from '@mui/icons-material/Whatshot';
 import VideogameAssetIcon from '@mui/icons-material/VideogameAsset';
 import StarIcon from '@mui/icons-material/Star';
 import CalendarHeatmapComponent from './CalendarHeatmapComponent';
 const QuizDashboard = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
   return (
     <Root>
       <AppBarComponent comp={'profile'} />
@@ -18,9 +19,9 @@ const QuizDashboard = () => {
             <Box className='grids'>
               <Box className='profile-box'>
                 <IconButton>
-                  <Avatar alt='Anshuman Kundu' src='avatar' className='avatar-style' />
+                  <Avatar alt={user.name} src='avatar' className='avatar-style' />
                 </IconButton>
-                <h4>Anshuman Kundu</h4>
+                <h4>{user.name}</h4>
               </Box>
             </Box>
           </Grid>
@@ -100,6 +101,7 @@ const Root = styled.div`
     border-radius: 5px;
     margin-left: 4px;
     margin-right: 18px;
+    border-left: 2px solid #086D67;
     box-shadow: 8px 4px 8px rgba(0.1, 0.1, 0.1, 0.15);
     cursor: pointer;
     &:hover {

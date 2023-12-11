@@ -1,96 +1,48 @@
 import React, { useState } from 'react'
 import { questions } from '../data/questions';
-import { Box, Button, List, ListItem, TextField, Typography } from '@mui/material';
+import { Box, Button, List, ListItem, Typography } from '@mui/material';
 import styled from 'styled-components';
 const Quiz = () => {
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [score, setScore] = useState(0);
-    const [answers, setAnswers] = useState([]);
     const [showScore, setShowScore] = useState(false);
-    const handleAnswerSelection = (questionIndex, selectedAnswer) => {
-        const updatedAnswers = [...answers];
-        updatedAnswers[questionIndex] = selectedAnswer;
-        setAnswers(updatedAnswers);
-    };
-    const handleNextQuestion = () => {
-        if (
-            answers[currentQuestion] === questions[currentQuestion].answer ||
-            JSON.stringify(answers[currentQuestion]) ===
-            JSON.stringify(questions[currentQuestion].answer)
-        ) {
-            setScore(score + 1);
+    const handleAnswerButtonClick = (isCorrect) => {
+        if (isCorrect) {
+          setScore(score + 1);
         }
-        if (currentQuestion + 1 < questions.length) {
-            setCurrentQuestion(currentQuestion + 1);
+    
+        const nextQuestion = currentQuestion + 1;
+        if (nextQuestion < questions.length) {
+          setCurrentQuestion(nextQuestion);
         } else {
-            setShowScore(true);
+          setShowScore(true);
         }
-    };
+      };
     return (
         <Root>
             {showScore ? (
-                <Box>
+                <Box className='container'>
                     <Typography className='question-no'>Quiz Complete!</Typography>
                     <Typography className='question-det'>Your Score: {score}</Typography>
                 </Box>
             ) : (
-                <Box>
-                    <Typography className='question-no'>Question No. {currentQuestion + 1} :</Typography>
-                    <Typography className='question-det'>{questions[currentQuestion].question}</Typography>
-                    <Box className="ques-box">
-                        {questions[currentQuestion].type === 'radio' && (
-                            <List>
-                                {questions[currentQuestion].options.map((option, index) => (
-                                    <ListItem key={index}>
-                                        <input
-                                            type="radio"
-                                            name={`question${currentQuestion}`}
-                                            value={option}
-                                            onChange={() =>
-                                                handleAnswerSelection(currentQuestion, option)
-                                            }
-                                        />
-                                        {option}
-                                    </ListItem>
-                                ))}
-                            </List>
-                        )}
-                        {questions[currentQuestion].type === 'checkbox' && (
-                            <List>
-                                {questions[currentQuestion].options.map((option, index) => (
-                                    <ListItem key={index}>
-                                        <input
-                                            type="checkbox"
-                                            name={`question${currentQuestion}`}
-                                            value={option}
-                                            onChange={() =>
-                                                handleAnswerSelection(currentQuestion, option)
-                                            }
-                                        />
-                                        {option}
-                                    </ListItem>
-                                ))}
-                            </List>
-                        )}
-                        {questions[currentQuestion].type === 'input' && (
-                            <TextField
-                                size='small'
-                                onChange={(e) =>
-                                    handleAnswerSelection(currentQuestion, e.target.value)
-                                }
-                            />
-                        )}
-                        {questions[currentQuestion].type === 'textarea' && (
-                            <TextField
-                                fullWidth
-                                onChange={(e) =>
-                                    handleAnswerSelection(currentQuestion, e.target.value)
-                                }
-                            />
-                        )}
+                <Box className='container'>
+                    <Box className='question-box'>
+                        <Typography className='question-info'>
+                            <h3>Question No. {currentQuestion + 1} :</h3>
+                            <h2>{questions[currentQuestion].question}</h2>
+                        </Typography>
                     </Box>
-                    <Box className='btn-box'>
-                        <Button variant='contained' className='quiz-btn' onClick={handleNextQuestion}>Next Question</Button>
+                    <Box className='option-box'>
+                        <List className='option-list'>
+                            {questions[currentQuestion].options.map((option, index) => (
+                                <ListItem key={index} className='option'>
+                                    <Button className='option-btn' variant='outlined' onClick={() => handleAnswerButtonClick(option === questions[currentQuestion].answer)}>
+                                        {option}
+                                    </Button>
+                                </ListItem>
+                            ))}
+                        </List>
                     </Box>
                 </Box>
             )}
@@ -100,25 +52,49 @@ const Quiz = () => {
 
 
 const Root = styled.div`
+    margin-top: 50px;
+  .container{
     padding: 10px;
-    border: 5px solid #086D67;
-    .btn-box{
-        margin-top: 5px;
+    box-shadow: 8px 4px 8px rgba(0.1, 0.1, 0.1, 0.2);
+    cursor: pointer;
+    &:hover {
+        box-shadow: 8px 4px 8px rgba(0.1, 0.1, 0.1, 0.4);
     }
-    .quiz-btn{
-        background-color: "086D67;
-        text-transform: none;
-        margin-top: 10px;
-        &:hover {
-            background-color: #045350;
-        }
+    border-left: 2px solid #086D67;
+    border-radius: 5px;
+    padding: 20px;
+    text-align: center;
+  }
+  .question-box{
+    background-color: #086D67;
+    padding: 5px;
+    box-shadow: 8px 4px 8px rgba(0.1, 0.1, 0.1, 0.2);
+    cursor: pointer;
+    border-radius: 10px;
+  }
+  .question-info{
+    color: whitesmoke;
+  }
+  .option-box{
+    margin-top: 20px;
+    border-radius: 5px;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .option-list{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .option-btn{
+    color: #086D67;
+    &:hover {
+        background-color: #086D67;
+        color: whitesmoke;
+        box-shadow: 8px 4px 8px rgba(0.1, 0.1, 0.1, 0.4);
     }
-    .question-no{
-        font-weight: bold;
-    }
-    .question-det{
-
-    }
+  }
 `;
 
 export default Quiz
