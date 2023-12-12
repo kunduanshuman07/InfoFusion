@@ -6,6 +6,7 @@ import SignUpPage from './pages/SignUpPage';
 import PersonalInfo from './components/PersonalInfo';
 import QuizDashboard from './components/QuizDashboard';
 import { useAuth } from './context/AuthProvider';
+import QuizForm from './pages/QuizFormPage';
 const RouteJS = () => {
   const { auth } = useAuth();
   return (
@@ -15,6 +16,7 @@ const RouteJS = () => {
       <Route path='/*' element={auth ? <UserLayout /> : <Navigate to='/login' />} />
       <Route path='/personal-info' element={auth && <PersonalInfo />} />
       <Route path='quiz-dashboard' element={auth && <QuizDashboard />} />
+      <Route path='quiz-form-admin' element={auth && <QuizForm />} />
     </Routes>
   )
 }

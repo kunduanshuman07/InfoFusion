@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 
 const PlaygroundPage = () => {
+  const [startQuiz, setStartQuiz] = useState(false);
   const getTimeRemainingUntilNextDay = useCallback(() => {
     const now = new Date();
     const tomorrow = new Date(now);
@@ -16,7 +17,6 @@ const PlaygroundPage = () => {
 
     return secondsRemaining;
   }, []);
-  const [startQuiz, setStartQuiz] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(getTimeRemainingUntilNextDay());
   const user = JSON.parse(localStorage.getItem('user'));
 
