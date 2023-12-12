@@ -4,6 +4,7 @@ import { Box, TextField, MenuItem, Button, InputLabel } from "@mui/material";
 import NewsTile from "../components/NewsTile";
 import { countries } from "../utils/Countries";
 import { newsCategories } from "../utils/newsCategories";
+import LinearProgress from '@mui/material/LinearProgress';
 const PersonalizedPage = () => {
   const [personalizedUrl, setPersonalizedUrl] = useState("");
   const [category, setCategory] = useState("Category");
@@ -14,12 +15,12 @@ const PersonalizedPage = () => {
     console.log(prefUrl);
     setPersonalizedUrl(prefUrl);
     setLoading(false);
-}
+  }
   return (
     <Root>
       <Box className='personalized-box'>
         <Box className='country'>
-        <InputLabel className='country-label'>Country</InputLabel>
+          <InputLabel className='country-label'>Country</InputLabel>
           <TextField
             name="country"
             variant="outlined"
@@ -37,7 +38,7 @@ const PersonalizedPage = () => {
           </TextField>
         </Box>
         <Box className='category'>
-        <InputLabel className='category-label'>Category</InputLabel>
+          <InputLabel className='category-label'>Category</InputLabel>
           <TextField
             name="category"
             variant="outlined"
@@ -58,7 +59,7 @@ const PersonalizedPage = () => {
           <Button className='makeurl-btn' variant='outlined' onClick={handleAddPreferrences}>Find</Button>
         </Box>
       </Box>
-      {loading === false && <NewsTile url={personalizedUrl} /> }
+      {loading ? <LinearProgress className='progress-bar' color="success"/> : <NewsTile url={personalizedUrl} />}
     </Root>
   )
 }
@@ -113,6 +114,10 @@ const Root = styled.div`
     margin-bottom: 5px;
     margin-left: 150px;
     color: #086D67;
+  }
+  .progress-bar{
+    color: #086d67;
+    margin-top: 1%;
   }
 `;
 
