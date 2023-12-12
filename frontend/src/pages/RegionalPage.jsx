@@ -1,10 +1,9 @@
 import React from 'react'
-// import NewsTile from '../components/NewsTile'
-import CarouselComponent from '../components/CarouselComponent'
+import NewsTile from '../components/NewsTile'
 const RegionalPage = () => {
   return (
     <div>
-      <CarouselComponent/>
+      <NewsTile />
     </div>
   )
 }

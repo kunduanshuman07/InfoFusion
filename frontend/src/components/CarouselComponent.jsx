@@ -55,8 +55,12 @@ const CarouselComponent = ({ url }) => {
 
 const Root = styled.div`
   margin: 10px;
-  border: 5px solid #086D67;
   padding: 10px;
+  box-shadow: 8px 4px 8px rgba(0.1, 0.1, 0.1, 0.2);
+  cursor: pointer;
+  &:hover{
+    box-shadow: 8px 4px 8px rgba(0.1, 0.1, 0.1, 0.4);
+  }
   .image-box{
     display: flex;
     justify-content: center;

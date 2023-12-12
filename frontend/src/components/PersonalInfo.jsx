@@ -8,6 +8,9 @@ import EditProfile from './EditProfile';
 const PersonalInfo = () => {
     const user = JSON.parse(localStorage.getItem("user"));
     const [openModal, setOpenModal] = useState(false);
+    const handleChangePassword = () => {
+        console.log(user.password);
+    }
     return (
         <Root>
             <AppBarComponent comp={'profile'} />
@@ -54,7 +57,7 @@ const PersonalInfo = () => {
                     </Box>
                     <Box className='info-type'>Privacy</Box>
                     <Box className='info'>
-                        <Typography className='change-pass'>Change password</Typography>
+                        <Typography className='change-pass' onClick={handleChangePassword}>Change password</Typography>
                     </Box>
                     <Box className='info'>
                         <Typography className='delete-acc'>Delete account</Typography>
@@ -62,7 +65,7 @@ const PersonalInfo = () => {
                     </Box>
                 </Box>
             </Box>
-            {openModal && <EditProfile onCloseModal={() => setOpenModal(false)}/>}
+            {openModal && <EditProfile values={user} onCloseModal={() => setOpenModal(false)}/>}
         </Root>
     );
 };

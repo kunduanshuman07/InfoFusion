@@ -10,19 +10,60 @@ import {
 import Dialog from "@mui/material/Dialog/Dialog";
 import DialogContent from "@mui/material/DialogContent/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle/DialogTitle";
-
-
+import axios from "axios";
+const educationOptions = [
+    {
+        value: "Below High School",
+        label: "Below High School",
+    },
+    {
+        value: "High School",
+        label: "High School",
+    },
+    {
+        value: "Undergraduate",
+        label: "Undergraduate",
+    },
+    {
+        value: "Graduate",
+        label: "Graduate",
+    },
+];
+const employmentOptions = [
+    {
+        value: "Unemployed",
+        label: "Unemployed",
+    },
+    {
+        value: "Selfemployed",
+        label: "Selfemployed",
+    },
+    {
+        value: "Employed",
+        label: "Employed",
+    },
+];
 const EditProfile = (props) => {
-    // const [phone, setPhone] = useState('123-456-7890');
-    // const [age, setAge] = useState('25');
-    // const [gender, setGender] = useState('Male');
-    // const [education, setEducation] = useState('Bachelor\'s Degree');
-    // const [employment, setEmployment] = useState('Software Engineer');
-    // const [city, setCity] = useState('');
-    // const [state, setState] = useState('');
-    // const [pincode, setPincode] = useState('');
+    const [phone, setPhone] = useState(props.values.phone);
+    const [age, setAge] = useState(props.values.age);
+    const [gender, setGender] = useState(props.values.gender);
+    const [education, setEducation] = useState(props.values.education);
+    const [employment, setEmployment] = useState(props.values.employment);
+    const [city, setCity] = useState(props.values.city);
+    const [state, setState] = useState(props.values.state);
+    const [pincode, setPincode] = useState(props.values.pincode);
     const handleClose = () => {
         props.onCloseModal(false);
+    }
+    const handleUpdate = async () => {
+        const updatedData = {
+           id: props.values._id, phone, age, gender, education, employment, city, state, pincode
+        }
+        const {data, status} = await axios.patch('http://localhost:3000/user/update-profile', updatedData); 
+        if(status===200){
+            localStorage.setItem("user", JSON.stringify(data.updatedUser));
+            handleClose();
+        }
     }
     return (
         <Dialog open={true} onClose={props.onCloseModal}>
@@ -37,8 +78,6 @@ const EditProfile = (props) => {
                     <Grid xs={8}>
                         <h4 style={{ color: "white" }}>Edit Profile</h4>
                     </Grid>
-                    <Grid xs={8}></Grid>
-                    <Grid xs={1}></Grid>
                 </Grid>
             </DialogTitle>
             <Divider />
@@ -48,29 +87,34 @@ const EditProfile = (props) => {
                         <Grid item xs={6}>
                             <InputLabel required>Phone</InputLabel>
                             <TextField
-                                name="credentialKey"
+                                name="phone"
                                 variant="outlined"
                                 fullWidth
                                 size="small"
-                                disabled={props?.isEditable ? true : false}
+                                value={phone}
+                                onChange={(e) => setPhone(e.target.value)}
                             />
                         </Grid>
                         <Grid item xs={6}>
                             <InputLabel required>Age</InputLabel>
                             <TextField
-                                name="userName"
+                                name="age"
                                 variant="outlined"
                                 fullWidth
                                 size="small"
+                                value={age}
+                                onChange={(e) => setAge(e.target.value)}
                             />
                         </Grid>
                         <Grid item xs={6}>
                             <InputLabel required>Gender</InputLabel>
                             <TextField
-                                name="authPassphrase"
+                                name="gender"
                                 variant="outlined"
                                 fullWidth
                                 size="small"
+                                value={gender}
+                                onChange={(e) => setGender(e.target.value)}
                             />
                         </Grid>
                         <Grid item xs={6}>
@@ -80,7 +124,16 @@ const EditProfile = (props) => {
                                 variant="outlined"
                                 fullWidth
                                 size="small"
-                            />
+                                value={education}
+                                select
+                                onChange={(e) => setEducation(e.target.value)}
+                            >
+                                {educationOptions.map((option) => (
+                                    <MenuItem key={option.value} value={option.value}>
+                                        {option.label}
+                                    </MenuItem>
+                                ))}
+                            </TextField>
                         </Grid>
                         <Grid item xs={6}>
                             <InputLabel required>Employment</InputLabel>
@@ -89,8 +142,16 @@ const EditProfile = (props) => {
                                 variant="outlined"
                                 fullWidth
                                 size="small"
-                                
-                            />
+                                value={employment}
+                                select
+                                onChange={(e) => setEmployment(e.target.value)}
+                            >
+                                {employmentOptions.map((option) => (
+                                    <MenuItem key={option.value} value={option.value}>
+                                        {option.label}
+                                    </MenuItem>
+                                ))}
+                            </TextField>
                         </Grid>
                         <Grid item xs={6}>
                             <InputLabel required>City</InputLabel>
@@ -99,6 +160,8 @@ const EditProfile = (props) => {
                                 variant="outlined"
                                 fullWidth
                                 size="small"
+                                value={city}
+                                onChange={(e) => setCity(e.target.value)}
                             />
                         </Grid>
                         <Grid item xs={6}>
@@ -108,6 +171,8 @@ const EditProfile = (props) => {
                                 variant="outlined"
                                 fullWidth
                                 size="small"
+                                value={state}
+                                onChange={(e) => setState(e.target.value)}
                             />
                         </Grid>
                         <Grid item xs={6}>
@@ -117,6 +182,8 @@ const EditProfile = (props) => {
                                 variant="outlined"
                                 fullWidth
                                 size="small"
+                                value={pincode}
+                                onChange={(e) => setPincode(e.target.value)}
                             />
                         </Grid>
                         <Grid
@@ -142,7 +209,7 @@ const EditProfile = (props) => {
                                 Close
                             </Button>
                             <Button
-                                // onClick={handleUpdate}
+                                onClick={handleUpdate}
                                 variant="contained"
                                 style={{
                                     backgroundColor: "#086D67",
@@ -152,7 +219,7 @@ const EditProfile = (props) => {
                                     padding: "6px 10px 5px 10px",
                                 }}
                             >
-                                {props.isEditable ? "Update" : "Add"}
+                                Update
                             </Button>
                         </Grid>
                     </Grid>
