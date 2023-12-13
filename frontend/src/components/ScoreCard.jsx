@@ -2,13 +2,15 @@ import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
 import { Box, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
+import axios from "axios";
 const ScoreCard = (props) => {
+    const user = JSON.parse(localStorage.getItem("user"));
     const [rows, setRows] = useState([]);
     const columns = [
         {
 
             field: "question",
-            headerName: "Question",
+            headerName: "Questions",
             flex: 1,
             sortable: false,
             headerAlign: "center",
@@ -16,7 +18,7 @@ const ScoreCard = (props) => {
         },
         {
             field: "useranswer",
-            headerName: "Your answer",
+            headerName: "Your answers",
             flex: 0.5,
             sortable: false,
             headerAlign: "center",
@@ -24,7 +26,7 @@ const ScoreCard = (props) => {
         },
         {
             field: "correctanswer",
-            headerName: "Correct Answer",
+            headerName: "Correct Answers",
             flex: 0.5,
             sortable: false,
             headerAlign: "center",
@@ -41,6 +43,17 @@ const ScoreCard = (props) => {
         },
     ]
     useEffect(() => {
+        const updateQuizDataToUser = async () =>{
+            const quizUserData = {
+                quizId: props.quizId,
+                score: props.score,
+                userId: user._id,
+            }
+            const response = await axios.patch('http://localhost:3000/quiz/update-user-quiz-data', quizUserData);
+            if(response.status===200){
+                localStorage.setItem("user", JSON.stringify(response.data));
+            }
+        }
         const formattedRows = props.attemptedQuestions.map((item, index) => ({
               id: index,
               question: item.question.questionText,
@@ -50,6 +63,7 @@ const ScoreCard = (props) => {
             }),
           );
           setRows(formattedRows);
+          updateQuizDataToUser();
       }, []);
     return (
         <Root>

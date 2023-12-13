@@ -3,7 +3,7 @@ import { Box, Button, List, ListItem, Typography } from '@mui/material';
 import styled from 'styled-components';
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import ScoreCard from './ScoreCard';
-const Quiz = ({ questions }) => {
+const Quiz = ({ questions, quizId }) => {
   const [timeLeft, setTimeLeft] = useState(10);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
@@ -51,7 +51,7 @@ const Quiz = ({ questions }) => {
   return (
     <Root>
       {showScore ? (
-        <ScoreCard score={score} questionsLength={questionsLength} attemptedQuestions={attemptedQuestions}/>
+        <ScoreCard score={score} quizId={quizId} questionsLength={questionsLength} attemptedQuestions={attemptedQuestions}/>
       ) : (
         <>
           <Box className='timer'>

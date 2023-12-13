@@ -8,12 +8,13 @@ import axios from "axios";
 const PlaygroundPage = () => {
   const [startQuiz, setStartQuiz] = useState(false);
   const [questions, setQuestions] = useState();
-  
+  const [quizId, setQuizId] = useState();
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
         const response = await axios.get('http://localhost:3000/quiz/latest-quiz');
         setQuestions(response.data.questions);
+        setQuizId(response.data._id);
       } catch (error) {
         console.error("Error fetching questions:", error);
       }
@@ -53,9 +54,13 @@ const PlaygroundPage = () => {
     return `${hours} hrs : ${String(minutes).padStart(2, '0')} mins : ${String(remainingSeconds).padStart(2, '0')} secs`;
   }
 
+  const handleStartQuiz = () =>{
+    setStartQuiz(true);
+  }
+
   return (
     <>
-      {startQuiz ? <Quiz questions={questions}/> : <Root>
+      {startQuiz ? <Quiz questions={questions} quizId={quizId}/> : <Root>
         <Box className='container'>
           <IconButton>
             <Avatar alt={user.name} src='avatar' className='avatar-style' />
@@ -68,7 +73,7 @@ const PlaygroundPage = () => {
             <AccessAlarmIcon fontSize='medium' className='timer-icon' />
             <h3>{formatTime(timeRemaining)}</h3>
           </Box>
-          <Button className='start-quiz' variant='outlined' onClick={() => setStartQuiz(true)}>
+          <Button className='start-quiz' variant='outlined' onClick={handleStartQuiz}>
             Start the quiz
           </Button>
         </Box>
