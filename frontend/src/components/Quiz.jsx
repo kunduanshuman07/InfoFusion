@@ -1,15 +1,16 @@
-import React, { useState, useCallback, useEffect } from 'react'
-import { questions } from '../data/questions';
+import React, { useState, useEffect } from 'react'
 import { Box, Button, List, ListItem, Typography } from '@mui/material';
 import styled from 'styled-components';
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
-const Quiz = () => {
+import ScoreCard from './ScoreCard';
+const Quiz = ({ questions }) => {
   const [timeLeft, setTimeLeft] = useState(10);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [showScore, setShowScore] = useState(false);
   const questionsLength = questions.length;
   const [attemptedQuestions, setAttemptedQuestions] = useState([]);
+
   useEffect(() => {
     if (!timeLeft) setShowScore(true);
 
@@ -22,11 +23,17 @@ const Quiz = () => {
 
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
-  const handleAnswerButtonClick = (isCorrect, questionAttempted) => {
+  const handleAnswerButtonClick = (isCorrect, questionAttempted, correctOption, selectedOption) => {
     if (isCorrect) {
       setScore(score + 1);
     }
-
+    const attempt = {
+      question: questionAttempted,
+      yourAnswer: selectedOption,
+      correctOption: correctOption,
+      points: isCorrect ? 1 : 0,
+    }
+    setAttemptedQuestions((prevAttempts) => [...prevAttempts, attempt]);
     const nextQuestion = currentQuestion + 1;
     if (nextQuestion < questions.length) {
       setCurrentQuestion(nextQuestion);
@@ -34,13 +41,17 @@ const Quiz = () => {
       setShowScore(true);
     }
   };
+  useEffect(() => {
+    console.log(attemptedQuestions);
+  }, [attemptedQuestions]);
+  const findCorrectOption = (options) => {
+    const optionArray = Object.values(options);
+    return optionArray.find((option) => option.isCorrect);
+  };
   return (
     <Root>
       {showScore ? (
-        <Box className='container'>
-          <Typography className='complete'>Quiz Complete!</Typography>
-          <Typography className='score'>Your Score: {score} / {questionsLength} </Typography>
-        </Box>
+        <ScoreCard score={score} questionsLength={questionsLength} attemptedQuestions={attemptedQuestions}/>
       ) : (
         <>
           <Box className='timer'>
@@ -51,15 +62,15 @@ const Quiz = () => {
             <Box className='question-box'>
               <Typography className='question-info'>
                 <h3>Question No. {currentQuestion + 1} :</h3>
-                <h2>{questions[currentQuestion].question}</h2>
+                <h2>{questions[currentQuestion].questionText}</h2>
               </Typography>
             </Box>
             <Box className='option-box'>
               <List className='option-list'>
                 {questions[currentQuestion].options.map((option, index) => (
                   <ListItem key={index} className='option'>
-                    <Button className='option-btn' variant='outlined' onClick={() => handleAnswerButtonClick(option === questions[currentQuestion].answer, questions[currentQuestion])}>
-                      {option}
+                    <Button className='option-btn' variant='outlined' onClick={() => handleAnswerButtonClick(option.isCorrect, questions[currentQuestion], findCorrectOption(questions[currentQuestion].options), option.optionText)}>
+                      {option.optionText}
                     </Button>
                   </ListItem>
                 ))}

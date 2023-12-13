@@ -3,9 +3,25 @@ import Quiz from '../components/Quiz';
 import { Button, Box, Typography, IconButton, Avatar } from '@mui/material';
 import styled from 'styled-components';
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
+import axios from "axios";
 
 const PlaygroundPage = () => {
   const [startQuiz, setStartQuiz] = useState(false);
+  const [questions, setQuestions] = useState();
+  
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/quiz/latest-quiz');
+        setQuestions(response.data.questions);
+      } catch (error) {
+        console.error("Error fetching questions:", error);
+      }
+    };
+
+    fetchQuestions();
+  }, []);
+
   const getTimeRemainingUntilNextDay = useCallback(() => {
     const now = new Date();
     const tomorrow = new Date(now);
@@ -17,6 +33,7 @@ const PlaygroundPage = () => {
 
     return secondsRemaining;
   }, []);
+
   const [timeRemaining, setTimeRemaining] = useState(getTimeRemainingUntilNextDay());
   const user = JSON.parse(localStorage.getItem('user'));
 
@@ -28,9 +45,6 @@ const PlaygroundPage = () => {
     return () => clearInterval(interval);
   }, []);
 
-
-
-
   function formatTime(seconds) {
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
@@ -41,7 +55,7 @@ const PlaygroundPage = () => {
 
   return (
     <>
-      {startQuiz ? <Quiz /> : <Root>
+      {startQuiz ? <Quiz questions={questions}/> : <Root>
         <Box className='container'>
           <IconButton>
             <Avatar alt={user.name} src='avatar' className='avatar-style' />
