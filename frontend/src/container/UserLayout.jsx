@@ -22,7 +22,8 @@ import PersonalizedPage from '../pages/PersonalizedPage';
 import RegionalPage from '../pages/RegionalPage';
 import PlaygroundPage from "../pages/PlaygroundPage";
 import FactcheckPage from "../pages/FactcheckPage";
-// import { Sidebar } from '../utils/Sidebar';
+import OverallLeaderboard from '../pages/OverallLeaderboard';
+import HelpSupport from '../pages/HelpSupport';
 
 const UserLayout = () => {
     const [drawerWidth, setDrawerWidth] = React.useState(220);
@@ -177,6 +178,8 @@ const UserLayout = () => {
                         <Route path="/regional" element={<RegionalPage />} />
                         <Route path="/playground" element={<PlaygroundPage />} />
                         <Route path="/factcheck" element={<FactcheckPage />} />
+                        <Route path="/leaderboard" element={<OverallLeaderboard/>}/>
+                        <Route path='/help-support' element={<HelpSupport/>}/>
                     </Routes>
                 </div>
             </main>

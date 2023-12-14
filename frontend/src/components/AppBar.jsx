@@ -12,6 +12,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { Menu, MenuItem, Tooltip } from '@mui/material';
 import HomeIcon from "@mui/icons-material/Home";
 import SupportIcon from '@mui/icons-material/SupportAgent';
+import LeaderboardIcon from '@mui/icons-material/Leaderboard';
 import styled from "styled-components";
 function AppBarComponent({ comp }) {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -37,7 +38,10 @@ function AppBarComponent({ comp }) {
         navigate('/login');
     }
     const handleSupport = () => {
-
+        navigate('/help-support')
+    }
+    const handleLeaderboard = () => {
+        navigate('/leaderboard');
     }
     return (
         <Root>
@@ -83,6 +87,11 @@ function AppBarComponent({ comp }) {
                                     <MenuItem onClick={handleSettings}>Settings</MenuItem>
                                     <MenuItem onClick={handleLogout}>Logout</MenuItem>
                                 </Menu>
+                            </Box>
+                            <Box>
+                                <Tooltip title='Leaderboard'>
+                                    <IconButton className='support-style' onClick={handleLeaderboard}><LeaderboardIcon /></IconButton>
+                                </Tooltip>
                             </Box>
                             <Box>
                                 <Tooltip title='Help & Support'>

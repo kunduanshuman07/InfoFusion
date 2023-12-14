@@ -56,3 +56,54 @@ export const updateUserQuizData = async (req, res) => {
         res.status(500).send(error);
     }
 }
+
+export const getLeaderBoard = async (req, res) => {
+    const { quizId } = req.body;
+    try {
+        const quiz = await Quiz.findById(quizId);
+        const userIds = quiz.users.map(user => user.userId);
+        const usersDetails = await User.find({ _id: { $in: userIds } });
+        const leaderboard = usersDetails.map(userDetail => ({
+            userId: userDetail._id,
+            username: userDetail.name,
+            score: quiz.users.find(user => user.userId.equals(userDetail._id)).score,
+        }));
+        leaderboard.sort((a, b) => b.score - a.score);
+        res.status(200).send({ leaderboard });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+};
+
+export const getOverallLeaderboard = async (req, res) => {
+    try {
+        const allUsers = await User.find();
+        let leaderboardData = [];
+        allUsers.forEach((user) => {
+            const username = user.name;
+            user.quizzes.forEach((quiz) => {
+                const quizName = quiz.name;
+                const score = quiz.score || 0;
+
+                const existingUserIndex = leaderboardData.findIndex((item) => item.user.name === username);
+
+                if (existingUserIndex !== -1) {
+                    leaderboardData[existingUserIndex].totalScore += score;
+                } else {
+                    leaderboardData.push({
+                        user: user,
+                        totalScore: score,
+                    });
+                }
+            });
+        });
+        leaderboardData.sort((a, b) => b.totalScore - a.totalScore);
+        console.log(leaderboardData);
+        res.status(200).send({ leaderboard: leaderboardData });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send(error);
+    }
+
+}
