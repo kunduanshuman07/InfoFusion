@@ -28,6 +28,10 @@ export const updateUserQuizData = async (req, res) => {
     try {
         const user = await User.findById(userId);
         user.rating = user.rating+iqr;
+        if(user.rating> user.highestRating){
+            user.highestRating = user.rating;
+        }
+        await user.save();
         const updatedUser = await User.updateOne(
             { _id: userId },
             {
@@ -70,7 +74,7 @@ export const getLeaderBoard = async (req, res) => {
         const leaderboard = usersDetails.map(userDetail => ({
             userId: userDetail._id,
             username: userDetail.name,
-            rating: quiz.users.find(user => user.userId.equals(userDetail._id)).iqr,
+            iqr: quiz.users.find(user => user.userId.equals(userDetail._id)).iqr,
         }));
         leaderboard.sort((a, b) => b.iqr - a.iqr);
         res.status(200).send({ leaderboard });

@@ -11,6 +11,7 @@ function CustomToolbar() {
     );
 }
 const ScoreCard = (props) => {
+    console.log(props.iqr);
     const user = JSON.parse(localStorage.getItem("user"));
     const [rows, setRows] = useState([]);
     const columns = [
@@ -53,28 +54,33 @@ const ScoreCard = (props) => {
         },
     ]
     useEffect(() => {
-        const updateQuizDataToUser = async () => {
-            const quizUserData = {
-                quizId: props.quizId,
-                score: props.score,
-                userId: user._id,
+        if(props.iqr!==0){
+            const updateQuizDataToUser = async () => {
+                const quizUserData = {
+                    quizId: props.quizId,
+                    score: props.score,
+                    userId: user._id,
+                    iqr: props.iqr,
+                }
+                console.log(quizUserData);
+                const response = await axios.patch('http://localhost:3000/quiz/update-user-quiz-data', quizUserData);
+                if (response.status === 200) {
+                    console.log(response.data);
+                    localStorage.setItem("user", JSON.stringify(response.data));
+                }
             }
-            const response = await axios.patch('http://localhost:3000/quiz/update-user-quiz-data', quizUserData);
-            if (response.status === 200) {
-                localStorage.setItem("user", JSON.stringify(response.data));
-            }
+            const formattedRows = props.attemptedQuestions.map((item, index) => ({
+                id: index,
+                question: item.question.questionText,
+                useranswer: item.yourAnswer,
+                correctanswer: item.correctOption.optionText,
+                points: item.points,
+            }),
+            );
+            setRows(formattedRows);
+            updateQuizDataToUser();
         }
-        const formattedRows = props.attemptedQuestions.map((item, index) => ({
-            id: index,
-            question: item.question.questionText,
-            useranswer: item.yourAnswer,
-            correctanswer: item.correctOption.optionText,
-            points: item.points,
-        }),
-        );
-        setRows(formattedRows);
-        updateQuizDataToUser();
-    }, []);
+    }, [props.iqr]);
     return (
         <Root>
             <Box className='container'>

@@ -35,6 +35,16 @@ const QuizForm = () => {
         ],
         type: '',
       },
+      {
+        questionText: '',
+        options: [
+          { optionText: '', isCorrect: false },
+          { optionText: '', isCorrect: false },
+          { optionText: '', isCorrect: false },
+          { optionText: '', isCorrect: false },
+        ],
+        type: '',
+      },
     ],
   });
 

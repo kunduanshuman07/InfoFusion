@@ -5,13 +5,19 @@ import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import { DataGrid } from "@mui/x-data-grid";
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 const StartQuiz = (props) => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  console.log(user);
+  console.log(props.quizId)
   const [rows, setRows] = useState([]);
+  const [isQuizEnabled, setIsQuizEnabled] = useState(true);
   useEffect(() => {
+    const isQuizIdPresent = user.quizzes.some((quiz) => quiz.quizId === props.quizId);
+    setIsQuizEnabled(!isQuizIdPresent);
     const formattedRows = props.rows.map((item, index) => ({
       id: index,
       rank: index + 1,
       username: item.username,
-      score: item.score,
+      iqr: item.iqr,
     }),
     );
     setRows(formattedRows);
@@ -38,8 +44,8 @@ const StartQuiz = (props) => {
       align: "center",
     },
     {
-      field: "score",
-      headerName: "Score",
+      field: "iqr",
+      headerName: "IQR",
       flex: 0,
       headerClassName: "mytableheader",
       sortable: false,
@@ -79,7 +85,6 @@ const StartQuiz = (props) => {
   }, []);
 
   const [timeRemaining, setTimeRemaining] = useState(getTimeRemainingUntilNextDay());
-  const user = JSON.parse(localStorage.getItem('user'));
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -104,15 +109,17 @@ const StartQuiz = (props) => {
           </IconButton>
           <Typography className='greet'>
             <h2>Hi {user.name} !</h2>
-            <h4>Next Quiz starts in</h4>
+            {isQuizEnabled===false && <h4 style={{color: "red"}}>"You have already given today's quiz!"</h4>}
+            <h3 style={{color: "purple"}}>Next Quiz starts in</h3>
           </Typography>
           <Box className='timer'>
             <AccessAlarmIcon fontSize='medium' className='timer-icon' />
             <h3>{formatTime(timeRemaining)}</h3>
           </Box>
-          <Button className='start-quiz' variant='outlined' onClick={handleStartQuiz}>
+          <Button className='start-quiz' variant='outlined' onClick={handleStartQuiz} disabled={!isQuizEnabled}>
             Start the quiz
           </Button>
+           
         </Box>
         <Box className='leaderboard-box'>
           <Button variant='outlined' className='leaderboard-btn'>Current Quiz Leaderboard <EmojiEventsIcon style={{color: "#d4af37", marginLeft: "5px"}}/></Button>
@@ -180,6 +187,9 @@ const Root = styled.div`
      text-transform: none;
      color: #086D67;
      font-weight: 600;
+     background-color: #086d67;
+     color: whitesmoke;
+     box-shadow: 8px 4px 8px rgba(0.1, 0.1, 0.1, 0.4);
      &:hover {
       background-color: #086d67;
       color: whitesmoke;
@@ -188,7 +198,7 @@ const Root = styled.div`
   }
   .greet {
     color: #086d67;
-    margin-bottom: 0px;
+    margin-bottom: -20px;
   }
 
   .avatar-style {

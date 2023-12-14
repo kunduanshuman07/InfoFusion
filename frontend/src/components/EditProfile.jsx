@@ -58,7 +58,7 @@ const EditProfile = (props) => {
     }
     const handleUpdate = async () => {
         const updatedData = {
-            id: props.values._id, phone, age, gender, education, employment, city, state, pincode
+            id: props.values._id, phone, age, gender, education, university, employment, city, state, pincode
         }
         const { data, status } = await axios.patch('http://localhost:3000/user/update-profile', updatedData);
         if (status === 200) {

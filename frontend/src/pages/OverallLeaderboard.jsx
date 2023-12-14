@@ -28,15 +28,6 @@ const OverallLeaderboard = () => {
       align: "center",
     },
     {
-      field: "score",
-      headerName: "Total Score",
-      flex: 0.5,
-      sortable: false,
-      headerAlign: "center",
-      headerClassName: "mytableheader",
-      align: "center",
-    },
-    {
       field: "rating",
       headerName: "Rating",
       flex: 0.5,
@@ -46,8 +37,8 @@ const OverallLeaderboard = () => {
       align: "center",
     },
     {
-      field: "quiztime",
-      headerName: "Total Quiz Time",
+      field: "quizcount",
+      headerName: "Total Quiz Count",
       flex: 0.5,
       sortable: false,
       headerAlign: "center",
@@ -57,13 +48,14 @@ const OverallLeaderboard = () => {
   ]
   useEffect(() => {
     const fetchLeaderBoard = async () => {
-      const { data, status } = await axios.get('http://localhost:3000/quiz/overall-leaderboard');
+      const { data, status } = await axios.get('http://localhost:3000/user/overall-leaderboard');
       if (status === 200) {
         const formattedRows = data.leaderboard.map((item, index) => ({
           id: index,
           rank: index + 1,
           username: item.user.name,
-          score: item.totalScore,
+          rating: item.rating,
+          quizcount: item.quizcount,
         }),
         );
         setRows(formattedRows);
