@@ -11,26 +11,47 @@ const OverallLeaderboard = () => {
 
       field: "rank",
       headerName: "Rank",
-      width: 300,
+      flex: 0.5,
       sortable: false,
       headerAlign: "center",
+      headerClassName: "mytableheader",
       align: "center",
     },
     {
 
       field: "username",
       headerName: "Username",
-      width: 300,
+      flex: 1,
       sortable: false,
       headerAlign: "center",
+      headerClassName: "mytableheader",
       align: "center",
     },
     {
       field: "score",
       headerName: "Total Score",
-      width: 300,
+      flex: 0.5,
       sortable: false,
       headerAlign: "center",
+      headerClassName: "mytableheader",
+      align: "center",
+    },
+    {
+      field: "rating",
+      headerName: "Rating",
+      flex: 0.5,
+      sortable: false,
+      headerAlign: "center",
+      headerClassName: "mytableheader",
+      align: "center",
+    },
+    {
+      field: "quiztime",
+      headerName: "Total Quiz Time",
+      flex: 0.5,
+      sortable: false,
+      headerAlign: "center",
+      headerClassName: "mytableheader",
       align: "center",
     },
   ]
@@ -59,7 +80,15 @@ const OverallLeaderboard = () => {
 }
 
 const Root = styled.div`
-
+  .mytableheader{
+    background-color: #086D67;
+    color: white;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 0;
+    padding: 0;
+  }
 `
 
 export default OverallLeaderboard

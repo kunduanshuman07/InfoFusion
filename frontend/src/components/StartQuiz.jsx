@@ -3,6 +3,7 @@ import { Button, Box, Typography, IconButton, Avatar } from '@mui/material';
 import styled from 'styled-components';
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import { DataGrid } from "@mui/x-data-grid";
+import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 const StartQuiz = (props) => {
   const [rows, setRows] = useState([]);
   useEffect(() => {
@@ -21,6 +22,7 @@ const StartQuiz = (props) => {
       field: "rank",
       headerName: "Rank",
       flex: 0,
+      headerClassName: "mytableheader",
       sortable: false,
       headerAlign: "center",
       align: "center",
@@ -30,6 +32,7 @@ const StartQuiz = (props) => {
       field: "username",
       headerName: "Username",
       flex: 0.5,
+      headerClassName: "mytableheader",
       sortable: false,
       headerAlign: "center",
       align: "center",
@@ -38,10 +41,12 @@ const StartQuiz = (props) => {
       field: "score",
       headerName: "Score",
       flex: 0,
+      headerClassName: "mytableheader",
       sortable: false,
       headerAlign: "center",
       align: "center",
     },
+
   ]
   // const rows = [
   //   {
@@ -110,7 +115,7 @@ const StartQuiz = (props) => {
           </Button>
         </Box>
         <Box className='leaderboard-box'>
-          <Button variant='outlined' className='leaderboard-btn'>Current Quiz Leaderboard</Button>
+          <Button variant='outlined' className='leaderboard-btn'>Current Quiz Leaderboard <EmojiEventsIcon style={{color: "#d4af37", marginLeft: "5px"}}/></Button>
           <Box className='data-grid'>
             <DataGrid
               sx={{ border: "0px" }}
@@ -119,6 +124,7 @@ const StartQuiz = (props) => {
               paginationModel={{ pageSize: 5, page: 0 }}
               disableRowSelectionOnClick
               disableColumnMenu
+              hideFooter
             />
           </Box>
         </Box>
@@ -167,6 +173,7 @@ const Root = styled.div`
   }
   .leaderboard-btn{
      margin-top: 10px;
+     margin-bottom: 10px;
      margin-left: 20px;
      padding: 0px;
      width: 90%;
@@ -213,6 +220,14 @@ const Root = styled.div`
     font-size: 40px;
     margin-top: 40px;
     margin-left: 10px;
+  }
+  .mytableheader{
+    background-color: #086D67;
+    color: white;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 0;
   }
 `;
 export default StartQuiz
