@@ -2,9 +2,9 @@ import express from "express";
 import Quiz from "../models/quizModel.js";
 import User from "../models/userModel.js";
 export const quizAddByAdmin = async (req, res) => {
-    const { title, description, questions } = req.body;
+    const { questions } = req.body;
     try {
-        const newQuiz = new Quiz({ title, description, questions });
+        const newQuiz = new Quiz({ questions });
         const savedNewQuiz = await newQuiz.save();
         res.status(200).send(savedNewQuiz);
     } catch (error) {
@@ -24,8 +24,10 @@ export const latestQuiz = async (req, res) => {
 }
 
 export const updateUserQuizData = async (req, res) => {
-    const { quizId, score, userId } = req.body;
+    const { quizId, score, userId, iqr } = req.body;
     try {
+        const user = await User.findById(userId);
+        user.rating = user.rating+iqr;
         const updatedUser = await User.updateOne(
             { _id: userId },
             {
@@ -33,6 +35,7 @@ export const updateUserQuizData = async (req, res) => {
                     quizzes: {
                         quizId: quizId,
                         score: score,
+                        rating: iqr,
                     },
                 },
             }
@@ -45,6 +48,7 @@ export const updateUserQuizData = async (req, res) => {
                     users: {
                         userId: userId,
                         score: score,
+                        iqr: iqr,
                     },
                 },
             }
@@ -66,44 +70,12 @@ export const getLeaderBoard = async (req, res) => {
         const leaderboard = usersDetails.map(userDetail => ({
             userId: userDetail._id,
             username: userDetail.name,
-            score: quiz.users.find(user => user.userId.equals(userDetail._id)).score,
+            rating: quiz.users.find(user => user.userId.equals(userDetail._id)).iqr,
         }));
-        leaderboard.sort((a, b) => b.score - a.score);
+        leaderboard.sort((a, b) => b.iqr - a.iqr);
         res.status(200).send({ leaderboard });
     } catch (error) {
         console.log(error);
         res.status(500).send(error);
     }
 };
-
-export const getOverallLeaderboard = async (req, res) => {
-    try {
-        const allUsers = await User.find();
-        let leaderboardData = [];
-        allUsers.forEach((user) => {
-            const username = user.name;
-            user.quizzes.forEach((quiz) => {
-                const quizName = quiz.name;
-                const score = quiz.score || 0;
-
-                const existingUserIndex = leaderboardData.findIndex((item) => item.user.name === username);
-
-                if (existingUserIndex !== -1) {
-                    leaderboardData[existingUserIndex].totalScore += score;
-                } else {
-                    leaderboardData.push({
-                        user: user,
-                        totalScore: score,
-                    });
-                }
-            });
-        });
-        leaderboardData.sort((a, b) => b.totalScore - a.totalScore);
-        console.log(leaderboardData);
-        res.status(200).send({ leaderboard: leaderboardData });
-    } catch (error) {
-        console.error(error);
-        res.status(500).send(error);
-    }
-
-}

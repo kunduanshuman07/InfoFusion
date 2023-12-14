@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import AppBarComponent from '../components/AppBar';
-import { Box, Grid, IconButton, Avatar} from '@mui/material';
+import { Box, Grid, IconButton, Avatar } from '@mui/material';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import WhatshotIcon from '@mui/icons-material/Whatshot';
 import VideogameAssetIcon from '@mui/icons-material/VideogameAsset';
 import StarIcon from '@mui/icons-material/Star';
 import CalendarHeatmapComponent from './CalendarHeatmapComponent';
+import { LineChart } from '@mui/x-charts/LineChart';
 const QuizDashboard = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   return (
@@ -21,7 +22,9 @@ const QuizDashboard = () => {
                 <IconButton>
                   <Avatar alt={user.name} src='avatar' className='avatar-style' />
                 </IconButton>
-                <h4>{user.name}</h4>
+                <h4 style={{ color: "#086D67" }}>{user.name}</h4>
+                <h5 style={{ color: "#086D67" }}>Quiz count: 109</h5>
+                <h6 style={{ color: "gray" }}>1st Quiz attempt: 14.12.2023 </h6>
               </Box>
             </Box>
           </Grid>
@@ -31,10 +34,9 @@ const QuizDashboard = () => {
                 <EmojiEventsIcon className='trophy-icon' />
               </Box>
               <Box className='rank-info'>
-                <h3>Overall Rank: 14</h3>
-                <h4>Weekly Rank: 3</h4>
-                <h4>Monthly Rank: 10</h4>
-                <h4>Highest Rank: 3</h4>
+                <h2>Rating: 146</h2>
+                <h3>Highest Rating: 167</h3>
+                <h4>Max IQR: 80</h4>
               </Box>
             </Box>
           </Grid>
@@ -52,32 +54,49 @@ const QuizDashboard = () => {
           {/* Second Row */}
           <Grid item xs={4}>
             <Box className='grids'>
+              <Box className='iqr-graph'>
+                <LineChart
+                  xAxis={[{ data: [1, 2, 3, 5, 8, 10] }]}
+                  series={[
+                    {
+                      data: [2, 5.5, 2, 8.5, 1.5, 5],
+                      label: "Individual Quiz Rating",
+                      color: "#7d37a1"
+                    },
+                  ]}
+                  width={400}
+                  height={200}
+                />
+              </Box>
+            </Box>
+          </Grid>
+          <Grid item xs={4}>
+            <Box className='grids'>
               <Box className='quiz-box'>
                 <VideogameAssetIcon className='quiz-icon' />
               </Box>
               <Box className='quiz-info'>
-                <h3>Quiz count: 109</h3>
                 <h4>Solved questions: 800</h4>
                 <h4>Correct Answers: 700</h4>
+                <h4>Correct Misc + Hard: 150</h4>
               </Box>
             </Box>
           </Grid>
           <Grid item xs={4}>
             <Box className='grids'>
-              <Box className='best-box'>
-                <StarIcon className='best-icon' />
-              </Box>
-              <Box className='best-info'>
-                <h3>Best quiz rank: 3</h3>
-                <h4>9/10 count: 90</h4>
-                <h4>10/10 count: 109</h4>
-              </Box>
-            </Box>
-          </Grid>
-          <Grid item xs={4}>
-            <Box className='grids'>
-              <Box className='heatmap'>
-                <CalendarHeatmapComponent />
+              <Box className='overallrating-graph'>
+                <LineChart
+                  xAxis={[{ data: [1, 2, 3, 5, 8, 10] }]}
+                  series={[
+                    {
+                      data: [2, 5.5, 2, 8.5, 1.5, 5],
+                      label: "Rating",
+                      color: 'Red',
+                    },
+                  ]}
+                  width={400}
+                  height={200}
+                />
               </Box>
             </Box>
           </Grid>
@@ -95,7 +114,7 @@ const Root = styled.div`
   }
   .grids {
     display: flex;
-    padding: 10px;
+    padding: 0px;
     min-width: 300px;
     min-height: 200px;
     border-radius: 5px;
@@ -123,18 +142,6 @@ const Root = styled.div`
     margin: auto;
     color: #086D67;
     text-align: center;
-  }
-  .best-info{
-    margin: auto;
-    color: #086D67;
-    text-align: center;
-    margin-left: 60px;
-  }
-  .heatmap{
-    margin-left: auto;
-    margin-right: auto;
-    width: 90%;
-    height: 90%;
   }
   .profile-box {
     margin: auto;

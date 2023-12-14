@@ -4,8 +4,6 @@ import axios from "axios";
 import styled from 'styled-components';
 const QuizForm = () => {
   const [quizData, setQuizData] = useState({
-    title: '',
-    description: '',
     questions: [
       {
         questionText: '',
@@ -15,6 +13,7 @@ const QuizForm = () => {
           { optionText: '', isCorrect: false },
           { optionText: '', isCorrect: false },
         ],
+        type: '',
       },
       {
         questionText: '',
@@ -24,6 +23,7 @@ const QuizForm = () => {
           { optionText: '', isCorrect: false },
           { optionText: '', isCorrect: false },
         ],
+        type: '',
       },
       {
         questionText: '',
@@ -33,6 +33,7 @@ const QuizForm = () => {
           { optionText: '', isCorrect: false },
           { optionText: '', isCorrect: false },
         ],
+        type: '',
       },
     ],
   });
@@ -65,24 +66,6 @@ const QuizForm = () => {
   return (
     <Root>
       <form className='form-box'>
-        <InputLabel htmlFor="title" className='label'>Title</InputLabel>
-        <TextField
-          type="text"
-          id="title"
-          name="title"
-          fullWidth
-          value={quizData.title}
-          onChange={(e) => setQuizData({ ...quizData, title: e.target.value })}
-        />
-
-        <InputLabel htmlFor="description" className='label'>Description</InputLabel>
-        <TextField
-          id="description"
-          name="description"
-          fullWidth
-          value={quizData.description}
-          onChange={(e) => setQuizData({ ...quizData, description: e.target.value })}
-        />
 
         {quizData.questions.map((question, questionIndex) => (
           <Box key={questionIndex} className='questions-box'>
@@ -120,6 +103,14 @@ const QuizForm = () => {
                 />
               </Box>
             ))}
+            <InputLabel className='label'>Question Type (Write 1 for E, 2 for M, 3 for H & 4 for Misc): </InputLabel>
+            <TextField
+              fullWidth
+              id={`type${questionIndex}`}
+              name={`type${questionIndex}`}
+              value={question.type}
+              onChange={(e) => handleInputChange(questionIndex, 'type', e.target.value)}
+            />
           </Box>
         ))}
 

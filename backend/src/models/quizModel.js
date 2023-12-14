@@ -1,17 +1,13 @@
 import mongoose from "mongoose";
 
 const quizSchema = new mongoose.Schema({
-    title: {
-        type: String,
-        required: true,
-    },
-    description: {
-        type: String,
-        required: true,
-    },
     questions: [
         {
             questionText: {
+                type: String,
+                required: true,
+            },
+            type: {
                 type: String,
                 required: true,
             },
@@ -38,21 +34,15 @@ const quizSchema = new mongoose.Schema({
             score: {
                 type: Number,
             },
-        },
-    ],
-    ratings: [
-        {
-            userId: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "User",
-            },
-            rating: {
+            iqr:{
                 type: Number,
-                min: 1,
-                max: 5,
-            },
+            }
         },
     ],
+    bestUser: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+    },
 },
     {
         timestamps: true,

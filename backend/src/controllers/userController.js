@@ -1,7 +1,7 @@
 import express from "express";
 import User from "../models/userModel.js";
 export const updateProfile = async (req, res) => {
-    const { id, phone, age, gender, education, employment, city, state, pincode } = req.body;
+    const { id, phone, age, gender, education,university, employment, city, state, pincode } = req.body;
     try {
         const updatedUser = await User.findByIdAndUpdate(
             id,
@@ -10,6 +10,7 @@ export const updateProfile = async (req, res) => {
                 age,
                 gender,
                 education,
+                university,
                 employment,
                 city,
                 state,
@@ -28,4 +29,26 @@ export const updateProfile = async (req, res) => {
         res.status(500).send(error);
        
     }
+}
+
+export const getOverallLeaderboard = async (req, res) => {
+    try {
+        const allUsers = await User.find();
+        let leaderboardData = [];
+        allUsers.forEach((user) => {
+            const username = user.name;
+            const rating = user.rating;
+            leaderboardData.push({
+                user: user,
+                rating: rating,
+            });
+        });
+        leaderboardData.sort((a, b) => b.rating - a.rating);
+        console.log(leaderboardData);
+        res.status(200).send({ leaderboard: leaderboardData });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send(error);
+    }
+
 }

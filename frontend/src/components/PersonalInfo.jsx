@@ -20,40 +20,43 @@ const PersonalInfo = () => {
                         <Avatar alt={user.name} src='avatar' className='avatar-style' />
                     </IconButton>
                     <h3>{user.name}</h3>
-                    <Button className='edit-profile' onClick={()=> setOpenModal(true)}>Edit Profile</Button>
+                    <Button className='edit-profile' onClick={() => setOpenModal(true)}>Edit Profile</Button>
                 </Box>
 
                 <Box className='info-line'>
                     <Box className='info-type'>Account Details</Box>
                     <Box className='info'>
-                        <Typography><span style={{fontWeight:"bold"}}>Email :</span> {user.email}</Typography>
+                        <Typography><span style={{ fontWeight: "bold" }}>Email :</span> {user.email}</Typography>
                     </Box>
                     <Box className='info'>
-                        <Typography><span style={{fontWeight:"bold"}}>Phone :</span> {user.phone}</Typography>
+                        <Typography><span style={{ fontWeight: "bold" }}>Phone :</span> {user.phone}</Typography>
                     </Box>
                     <Box className='info-type'>Personal Details</Box>
                     <Box className='info'>
-                        <Typography><span style={{fontWeight:"bold"}}>Age :</span> {user.age}</Typography>
+                        <Typography><span style={{ fontWeight: "bold" }}>Age :</span> {user.age}</Typography>
                     </Box>
                     <Box className='info'>
-                        <Typography><span style={{fontWeight:"bold"}}>Gender:</span> {user.gender}</Typography>
+                        <Typography><span style={{ fontWeight: "bold" }}>Gender:</span> {user.gender}</Typography>
                     </Box>
                     <Box className='info-type'>Career Details</Box>
                     <Box className='info'>
-                        <Typography><span style={{fontWeight:"bold"}}>Education:</span> {user.education}</Typography>
+                        <Typography><span style={{ fontWeight: "bold" }}>Education:</span> {user.education}</Typography>
                     </Box>
+                    {user.education === "Graduate" && <Box className='info'>
+                        <Typography><span style={{ fontWeight: "bold" }}>University:</span> {user.university}</Typography>
+                    </Box>}
                     <Box className='info'>
-                        <Typography><span style={{fontWeight:"bold"}}>Employment:</span> {user.employment}</Typography>
+                        <Typography><span style={{ fontWeight: "bold" }}>Employment:</span> {user.employment}</Typography>
                     </Box>
                     <Box className='info-type'>Address</Box>
                     <Box className='info'>
-                        <Typography><span style={{fontWeight:"bold"}}>City:</span> {user.city}</Typography>
+                        <Typography><span style={{ fontWeight: "bold" }}>City:</span> {user.city}</Typography>
                     </Box>
                     <Box className='info'>
-                        <Typography><span style={{fontWeight:"bold"}}>State:</span> {user.state}</Typography>
+                        <Typography><span style={{ fontWeight: "bold" }}>State:</span> {user.state}</Typography>
                     </Box>
                     <Box className='info'>
-                        <Typography><span style={{fontWeight:"bold"}}>Pincode:</span> {user.pincode}</Typography>
+                        <Typography><span style={{ fontWeight: "bold" }}>Pincode:</span> {user.pincode}</Typography>
                     </Box>
                     <Box className='info-type'>Privacy</Box>
                     <Box className='info'>
@@ -65,7 +68,7 @@ const PersonalInfo = () => {
                     </Box>
                 </Box>
             </Box>
-            {openModal && <EditProfile values={user} onCloseModal={() => setOpenModal(false)}/>}
+            {openModal && <EditProfile values={user} onCloseModal={() => setOpenModal(false)} />}
         </Root>
     );
 };

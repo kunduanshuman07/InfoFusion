@@ -48,6 +48,7 @@ const EditProfile = (props) => {
     const [age, setAge] = useState(props.values.age);
     const [gender, setGender] = useState(props.values.gender);
     const [education, setEducation] = useState(props.values.education);
+    const [university, setUniversity] = useState("");
     const [employment, setEmployment] = useState(props.values.employment);
     const [city, setCity] = useState(props.values.city);
     const [state, setState] = useState(props.values.state);
@@ -57,10 +58,10 @@ const EditProfile = (props) => {
     }
     const handleUpdate = async () => {
         const updatedData = {
-           id: props.values._id, phone, age, gender, education, employment, city, state, pincode
+            id: props.values._id, phone, age, gender, education, employment, city, state, pincode
         }
-        const {data, status} = await axios.patch('http://localhost:3000/user/update-profile', updatedData); 
-        if(status===200){
+        const { data, status } = await axios.patch('http://localhost:3000/user/update-profile', updatedData);
+        if (status === 200) {
             localStorage.setItem("user", JSON.stringify(data.updatedUser));
             handleClose();
         }
@@ -135,6 +136,17 @@ const EditProfile = (props) => {
                                 ))}
                             </TextField>
                         </Grid>
+                        {education === "Graduate" && <Grid item xs={6}>
+                            <InputLabel required>University</InputLabel>
+                            <TextField
+                                name="university"
+                                variant="outlined"
+                                fullWidth
+                                size="small"
+                                value={university}
+                                onChange={(e) => setUniversity(e.target.value)}
+                            />
+                        </Grid>}
                         <Grid item xs={6}>
                             <InputLabel required>Employment</InputLabel>
                             <TextField

@@ -55,6 +55,26 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
+  university:{
+    type: String,
+    default: "",
+  },
+  rating:{
+    type: Number,
+    default: 100,
+  },
+  highestRating:{
+    type: Number,
+    default: ""
+  },
+  streak: {
+    type: Number,
+    default: 0,
+  },
+  maxstreak:{
+    type: Number,
+    default: 0,
+  },
   quizzes: [
     {
       quizId: {
@@ -67,8 +87,10 @@ const userSchema = new mongoose.Schema({
       },
       rating: {
         type: Number,
-        min: 1,
-        max: 5,
+        required: true,
+      },
+      timetaken: {
+        type: Date,
       },
     },
   ],
