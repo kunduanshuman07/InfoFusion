@@ -1,17 +1,26 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { Box, Typography } from "@mui/material";
+import { Box, IconButton, Tooltip, Typography } from "@mui/material";
 import { DataGrid, GridToolbarContainer, GridToolbarExport } from "@mui/x-data-grid";
+import FastRewindIcon from '@mui/icons-material/FastRewind';
 import axios from "axios";
 function CustomToolbar() {
+    const handleBack = () => {
+        
+    }
     return (
         <GridToolbarContainer className='toolbar'>
             <GridToolbarExport className='export' />
+            <Tooltip title='Back to Playground'>
+                <IconButton style={{ color: "#086D67", marginLeft: "700px" }} onClick={handleBack}>
+                    <FastRewindIcon />
+                </IconButton>
+            </Tooltip>
         </GridToolbarContainer>
     );
 }
 const ScoreCard = (props) => {
-    console.log(props.iqr);
+    
     const user = JSON.parse(localStorage.getItem("user"));
     const [rows, setRows] = useState([]);
     const columns = [
@@ -54,7 +63,7 @@ const ScoreCard = (props) => {
         },
     ]
     useEffect(() => {
-        if(props.iqr!==0){
+        if (props.iqr !== 0) {
             const updateQuizDataToUser = async () => {
                 const quizUserData = {
                     quizId: props.quizId,
@@ -146,7 +155,7 @@ const Root = styled.div`
         border-radius: 0;
       }
       .toolbar{
-        margin: auto;
+        margin-right: auto;
         margin-bottom : 10px;
       }
       .export{

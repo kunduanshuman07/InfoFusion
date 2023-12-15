@@ -85,6 +85,20 @@ const Quiz = ({ questions, quizId }) => {
       setShowScore(true);
     }
   };
+  const getCategoryLabel = (type) => {
+    switch (type) {
+      case '1':
+        return 'Easy';
+      case '2':
+        return 'Medium';
+      case '3':
+        return 'Hard';
+      case '4':
+        return 'Misc';
+      default:
+        return 'Unknown';
+    }
+  };
   useEffect(() => {
     console.log(attemptedQuestions);
   }, [attemptedQuestions]);
@@ -95,7 +109,7 @@ const Quiz = ({ questions, quizId }) => {
   return (
     <Root>
       {showScore ? (
-        <ScoreCard score={score} iqr = {IQR} quizId={quizId} questionsLength={questionsLength} attemptedQuestions={attemptedQuestions}/>
+        <ScoreCard score={score} iqr = {IQR} quizId={quizId} questionsLength={questionsLength} attemptedQuestions={attemptedQuestions} setShowScore={setShowScore}/>
       ) : (
         <>
           <Box className='timer'>
@@ -105,7 +119,8 @@ const Quiz = ({ questions, quizId }) => {
           <Box className='container'>
             <Box className='question-box'>
               <Typography className='question-info'>
-                <h3>Question No. {currentQuestion + 1} :</h3>
+                <h3>Question No. {currentQuestion + 1}: </h3>
+                <Button style={{backgroundColor:'whitesmoke', color: "#086D67", fontSize: "10px", fontWeight: "bold"}}>Category : {getCategoryLabel(questions[currentQuestion].type)}</Button>
                 <h2>{questions[currentQuestion].questionText}</h2>
               </Typography>
             </Box>
@@ -129,12 +144,11 @@ const Quiz = ({ questions, quizId }) => {
 
 
 const Root = styled.div`
-    margin-top: 10px;
+    
     .timer{
       color: #086d67;
       display:flex;
       flex-direction:row;
-      padding: 10px;
       box-shadow: 8px 4px 8px rgba(0.1, 0.1, 0.1, 0.2);
       cursor: pointer;
       border-left: 2px solid #086D67;
@@ -159,7 +173,8 @@ const Root = styled.div`
   }
   .question-box{
     background-color: #086D67;
-    padding: 5px;
+    padding-top: 4px;
+    padding-bottom : 4px;
     box-shadow: 8px 4px 8px rgba(0.1, 0.1, 0.1, 0.2);
     cursor: pointer;
     border-radius: 10px;
@@ -168,9 +183,9 @@ const Root = styled.div`
     color: whitesmoke;
   }
   .option-box{
-    margin-top: 20px;
+    margin-top: 50px;
     border-radius: 5px;
-    width: 50%;
+    width: 60%;
     margin-left: auto;
     margin-right: auto;
   }
@@ -178,9 +193,13 @@ const Root = styled.div`
     display:flex;
     justify-content: center;
     align-items: center;
+    
   }
   .option-btn{
     color: #086D67;
+    font-weight: bold;
+    min-width: 150px;
+    max-width: 150px;
     &:hover {
         background-color: #086D67;
         color: whitesmoke;

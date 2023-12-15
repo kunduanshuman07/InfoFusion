@@ -23,11 +23,11 @@ export const updateProfile = async (req, res) => {
             return res.status(404).send({ error: "Error updating the profile" });
         }
 
-        res.status(200).send({updatedUser});
+        res.status(200).send({ updatedUser });
     } catch (error) {
         console.log(error);
         res.status(500).send(error);
-       
+
     }
 }
 
@@ -51,4 +51,53 @@ export const getOverallLeaderboard = async (req, res) => {
         res.status(500).send(error);
     }
 
+}
+
+export const userDetails = async (req, res) => {
+    const { userId } = req.body;
+    try {
+        const user = User.findById(userId);
+        res.status(200).send(user);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
+
+
+export const userDashboard = async (req, res) => {
+    const { userId } = req.body;
+    try {
+        const user = await User.findById(userId);
+        const rating = user.rating;
+        const maxRating = user.highestRating;
+        let quizCount;
+        if (user && user.quizzes) {
+            quizCount = user.quizzes.length;
+        } else {
+            console.error("User or user.quizzes is undefined.");
+        }
+        let maxiqr = 0;
+        if (user && user.quizzes && user.quizzes.length > 0) {
+            user.quizzes.map((quiz) => {
+                if (quiz.rating !== undefined && quiz.rating > maxiqr) {
+                    maxiqr = quiz.rating;
+                }
+            });
+        } else {
+            console.error("User or user.quizzes is undefined or empty.");
+        }
+
+
+        const dashboardData = {
+            rating: rating,
+            maxRating: maxRating,
+            quizcount: quizCount,
+            maxiqr: maxiqr,
+        }
+        res.status(200).send({dashboardData:dashboardData});
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
 }

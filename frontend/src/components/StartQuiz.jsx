@@ -119,7 +119,6 @@ const StartQuiz = (props) => {
           <Button className='start-quiz' variant='outlined' onClick={handleStartQuiz} disabled={!isQuizEnabled}>
             Start the quiz
           </Button>
-           
         </Box>
         <Box className='leaderboard-box'>
           <Button variant='outlined' className='leaderboard-btn'>Current Quiz Leaderboard <EmojiEventsIcon style={{color: "#d4af37", marginLeft: "5px"}}/></Button>
@@ -142,6 +141,7 @@ const StartQuiz = (props) => {
 const Root = styled.div`
   padding: 10px;
   .container {
+    margin-top: 20px;
     display: flex;
     justify-content: center;
   }

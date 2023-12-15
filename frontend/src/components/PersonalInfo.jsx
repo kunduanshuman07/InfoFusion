@@ -19,7 +19,7 @@ const PersonalInfo = () => {
                     <IconButton color="inherit">
                         <Avatar alt={user.name} src='avatar' className='avatar-style' />
                     </IconButton>
-                    <h3>{user.name}</h3>
+                    <h3 style={{color: "#086D67"}}>{user.name}</h3>
                     <Button className='edit-profile' onClick={() => setOpenModal(true)}>Edit Profile</Button>
                 </Box>
 

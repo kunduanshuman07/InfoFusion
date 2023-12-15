@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import AppBarComponent from '../components/AppBar';
 import { Box, Grid, IconButton, Avatar } from '@mui/material';
@@ -7,9 +7,29 @@ import WhatshotIcon from '@mui/icons-material/Whatshot';
 import VideogameAssetIcon from '@mui/icons-material/VideogameAsset';
 import StarIcon from '@mui/icons-material/Star';
 import CalendarHeatmapComponent from './CalendarHeatmapComponent';
+import axios from "axios";
 import { LineChart } from '@mui/x-charts/LineChart';
 const QuizDashboard = () => {
   const user = JSON.parse(localStorage.getItem("user"));
+  const [rating, setRating] = useState(100);
+  const [quizCount, setQuizCount] = useState(0);
+  const [highestRating, setHighestRating] = useState(100);
+  const [maxiqr, setMaxiqr] = useState(0);
+  useEffect(()=>{
+    const fetchDashboard = async() => {
+      const userData ={
+        userId: user._id
+      }
+      const {data, status} = await axios.post('http://localhost:3000/user/user-dashboard', userData);
+      if(status===200){
+        setRating(data.dashboardData.rating);
+        setQuizCount(data.dashboardData.quizcount);
+        setHighestRating(data.dashboardData.maxRating);
+        setMaxiqr(data.dashboardData.maxiqr);
+      }
+    }
+    fetchDashboard();
+  },[])
   return (
     <Root>
       <AppBarComponent comp={'profile'} />
@@ -23,7 +43,7 @@ const QuizDashboard = () => {
                   <Avatar alt={user.name} src='avatar' className='avatar-style' />
                 </IconButton>
                 <h4 style={{ color: "#086D67" }}>{user.name}</h4>
-                <h5 style={{ color: "#086D67" }}>Quiz count: 109</h5>
+                <h5 style={{ color: "#086D67", marginBottom: "-10px" }}>Quiz count: {quizCount}</h5>
                 <h6 style={{ color: "gray" }}>1st Quiz attempt: 14.12.2023 </h6>
               </Box>
             </Box>
@@ -34,9 +54,9 @@ const QuizDashboard = () => {
                 <EmojiEventsIcon className='trophy-icon' />
               </Box>
               <Box className='rank-info'>
-                <h2>Rating: 146</h2>
-                <h3>Highest Rating: 167</h3>
-                <h4>Max IQR: 80</h4>
+                <h2>Rating: {rating}</h2>
+                <h3>Highest Rating: {highestRating}</h3>
+                <h4>Max IQR: {maxiqr}</h4>
               </Box>
             </Box>
           </Grid>
@@ -153,26 +173,20 @@ const Root = styled.div`
   }
   .trophy-icon {
     color: #d4af37;
-    font-size: 70px;
-    margin-top: 40px;
+    font-size: 60px;
+    margin-top: 80%;
     margin-left: 10px;
   }
   .streak-icon{
     color: #eb6e2f;
     font-size: 60px;
-    margin-top: 60px;
+    margin-top: 80%;
     margin-left: 10px;
   }
   .quiz-icon{
     color: #310261;
     font-size: 60px;
-    margin-top: 60px;
-    margin-left: 10px;
-  }
-  .best-icon{
-    color: #65962d;
-    font-size: 60px;
-    margin-top: 60px;
+    margin-top: 80%;
     margin-left: 10px;
   }
 `;
