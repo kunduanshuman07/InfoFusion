@@ -173,14 +173,14 @@ const Root = styled.div`
   }
   .question-box{
     background-color: #086D67;
-    padding-top: 4px;
-    padding-bottom : 4px;
+    padding: 5px;
     box-shadow: 8px 4px 8px rgba(0.1, 0.1, 0.1, 0.2);
     cursor: pointer;
     border-radius: 10px;
   }
   .question-info{
     color: whitesmoke;
+    padding: 5px;
   }
   .option-box{
     margin-top: 50px;

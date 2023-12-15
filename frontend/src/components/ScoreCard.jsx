@@ -28,7 +28,7 @@ const ScoreCard = (props) => {
 
             field: "question",
             headerName: "Questions",
-            flex: 1,
+            flex: 1.5,
             headerClassName: "mytableheader",
             sortable: false,
             headerAlign: "center",
