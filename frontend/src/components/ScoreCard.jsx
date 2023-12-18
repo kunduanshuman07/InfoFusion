@@ -2,18 +2,20 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Box, IconButton, Tooltip, Typography } from "@mui/material";
 import { DataGrid, GridToolbarContainer, GridToolbarExport } from "@mui/x-data-grid";
-import FastRewindIcon from '@mui/icons-material/FastRewind';
+import SportsScoreIcon from '@mui/icons-material/SportsScore';
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 function CustomToolbar() {
-    const handleBack = () => {
-        
+    const navigate = useNavigate();
+    const handleClick = () => {
+        navigate('/score-cards');
     }
     return (
         <GridToolbarContainer className='toolbar'>
             <GridToolbarExport className='export' />
             <Tooltip title='Back to Playground'>
-                <IconButton style={{ color: "#086D67", marginLeft: "700px" }} onClick={handleBack}>
-                    <FastRewindIcon />
+                <IconButton style={{ color: "#086D67", marginLeft: "700px" }} onClick={handleClick}>
+                    <SportsScoreIcon/>
                 </IconButton>
             </Tooltip>
         </GridToolbarContainer>
@@ -70,6 +72,8 @@ const ScoreCard = (props) => {
                     score: props.score,
                     userId: user._id,
                     iqr: props.iqr,
+                    dateOfQuiz: new Date(),
+                    scoreCard: props.attemptedQuestions,
                 }
                 console.log(quizUserData);
                 const response = await axios.patch('http://localhost:3000/quiz/update-user-quiz-data', quizUserData);

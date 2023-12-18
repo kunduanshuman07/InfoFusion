@@ -32,7 +32,7 @@ const userSchema = new mongoose.Schema({
     default: "",
   },
   age: {
-    type: Number, 
+    type: Number,
     required: true,
   },
   city: {
@@ -51,19 +51,19 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
-  education:{
+  education: {
     type: String,
     default: "",
   },
-  university:{
+  university: {
     type: String,
     default: "",
   },
-  rating:{
+  rating: {
     type: Number,
     default: 100,
   },
-  highestRating:{
+  highestRating: {
     type: Number,
     default: ""
   },
@@ -71,7 +71,7 @@ const userSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-  maxstreak:{
+  maxstreak: {
     type: Number,
     default: 0,
   },
@@ -85,6 +85,10 @@ const userSchema = new mongoose.Schema({
         type: Number,
         required: true,
       },
+      scorecard: [],
+      dateOfQuiz: {
+        type: Date,
+      },
       rating: {
         type: Number,
         required: true,
@@ -94,9 +98,9 @@ const userSchema = new mongoose.Schema({
       },
     },
   ],
-},{
-    timestamps:true
+}, {
+  timestamps: true
 });
 
-const User=mongoose.model("User",userSchema);
+const User = mongoose.model("User", userSchema);
 export default User;

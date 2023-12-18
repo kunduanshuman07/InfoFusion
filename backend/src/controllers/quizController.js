@@ -24,7 +24,8 @@ export const latestQuiz = async (req, res) => {
 }
 
 export const updateUserQuizData = async (req, res) => {
-    const { quizId, score, userId, iqr } = req.body;
+    const { quizId, score, userId, iqr, dateOfQuiz, scoreCard } = req.body;
+    console.log(quizId, score, userId, iqr, dateOfQuiz, scoreCard);
     try {
         const user = await User.findById(userId);
         user.rating = user.rating+iqr;
@@ -40,6 +41,8 @@ export const updateUserQuizData = async (req, res) => {
                         quizId: quizId,
                         score: score,
                         rating: iqr,
+                        dateOfQuiz: dateOfQuiz,
+                        scorecard: scoreCard,
                     },
                 },
             }

@@ -24,6 +24,7 @@ import PlaygroundPage from "../pages/PlaygroundPage";
 import FactcheckPage from "../pages/FactcheckPage";
 import OverallLeaderboard from '../pages/OverallLeaderboard';
 import HelpSupport from '../pages/HelpSupport';
+import ScoreCardPage from '../pages/ScoreCardPage';
 
 const UserLayout = () => {
     const [drawerWidth, setDrawerWidth] = React.useState(220);
@@ -180,6 +181,7 @@ const UserLayout = () => {
                         <Route path="/factcheck" element={<FactcheckPage />} />
                         <Route path="/leaderboard" element={<OverallLeaderboard/>}/>
                         <Route path='/help-support' element={<HelpSupport/>}/>
+                        <Route path='/score-cards' element={<ScoreCardPage />}/>
                     </Routes>
                 </div>
             </main>

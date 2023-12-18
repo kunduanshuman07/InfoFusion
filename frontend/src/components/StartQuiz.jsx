@@ -1,15 +1,19 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { Button, Box, Typography, IconButton, Avatar } from '@mui/material';
+import { Button, Box, Typography, IconButton, Avatar, Tooltip } from '@mui/material';
 import styled from 'styled-components';
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import { DataGrid } from "@mui/x-data-grid";
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
+import SportsScoreIcon from '@mui/icons-material/SportsScore';
+import { useNavigate } from "react-router-dom";
 const StartQuiz = (props) => {
   const user = JSON.parse(localStorage.getItem("user"));
-  console.log(user);
-  console.log(props.quizId)
   const [rows, setRows] = useState([]);
   const [isQuizEnabled, setIsQuizEnabled] = useState(true);
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate('/score-cards');
+  }
   useEffect(() => {
     const isQuizIdPresent = user.quizzes.some((quiz) => quiz.quizId === props.quizId);
     setIsQuizEnabled(!isQuizIdPresent);
@@ -109,19 +113,22 @@ const StartQuiz = (props) => {
           </IconButton>
           <Typography className='greet'>
             <h2>Hi {user.name} !</h2>
-            {isQuizEnabled===false && <h4 style={{color: "red"}}>"You have already given today's quiz!"</h4>}
-            <h3 style={{color: "purple"}}>Next Quiz starts in</h3>
+            {isQuizEnabled === false && <h4 style={{ color: "red" }}>"You have already given today's quiz!"</h4>}
+            <h3 style={{ color: "purple" }}>Next Quiz starts in</h3>
           </Typography>
           <Box className='timer'>
             <AccessAlarmIcon fontSize='medium' className='timer-icon' />
             <h3>{formatTime(timeRemaining)}</h3>
           </Box>
-          <Button className='start-quiz' variant='outlined' onClick={handleStartQuiz} disabled={!isQuizEnabled}>
+          {/* <Button className='start-quiz' variant='outlined' onClick={handleStartQuiz} disabled={!isQuizEnabled}>
             Start the quiz
-          </Button>
+          </Button> */}
+          <Button className='start-quiz' variant='outlined' onClick={handleStartQuiz}>Start the quiz</Button>
+            
         </Box>
+        <Button variant='outlined' startIcon={<SportsScoreIcon/>} className='scorecards-btn' onClick={handleClick}>Scorecards</Button>
         <Box className='leaderboard-box'>
-          <Button variant='outlined' className='leaderboard-btn'>Current Quiz Leaderboard <EmojiEventsIcon style={{color: "#d4af37", marginLeft: "5px"}}/></Button>
+          <Button variant='outlined' className='leaderboard-btn'>Current Quiz Leaderboard <EmojiEventsIcon style={{ color: "#d4af37", marginLeft: "5px" }} /></Button>
           <Box className='data-grid'>
             <DataGrid
               sx={{ border: "0px" }}
@@ -146,7 +153,8 @@ const Root = styled.div`
     justify-content: center;
   }
   .quiz-box{
-    width: 60%;
+    width: 40%;
+    min-width: 40%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -174,8 +182,8 @@ const Root = styled.div`
     border-radius: 5px;
     display:flex;
     flex-direction: column;
-    width: 50%;
-    margin-left: 20px;
+    width: 45%;
+    max-width: 45%;
     margin-top: 10px;
   }
   .leaderboard-btn{
@@ -195,6 +203,19 @@ const Root = styled.div`
       color: whitesmoke;
       box-shadow: 8px 4px 8px rgba(0.1, 0.1, 0.1, 0.4);
     }
+  }
+  .scorecards-btn{
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 20%;
+    height: 30%;
+    padding: 0px;
+    margin-left: 5px;
+    margin-right: 5px;
+    color: #086D67;
+    text-transform: none;
+    font-weight: bold;
+    box-shadow: 8px 4px 8px rgba(0.1, 0.1, 0.1, 0.4);
   }
   .greet {
     color: #086d67;
