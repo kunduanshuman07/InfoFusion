@@ -120,13 +120,11 @@ const StartQuiz = (props) => {
             <AccessAlarmIcon fontSize='medium' className='timer-icon' />
             <h3>{formatTime(timeRemaining)}</h3>
           </Box>
-          {/* <Button className='start-quiz' variant='outlined' onClick={handleStartQuiz} disabled={!isQuizEnabled}>
+          <Button className='start-quiz' variant='outlined' onClick={handleStartQuiz} disabled={!isQuizEnabled}>
             Start the quiz
-          </Button> */}
-          <Button className='start-quiz' variant='outlined' onClick={handleStartQuiz}>Start the quiz</Button>
-            
+          </Button>
         </Box>
-        <Button variant='outlined' startIcon={<SportsScoreIcon/>} className='scorecards-btn' onClick={handleClick}>Scorecards</Button>
+        <Button variant='outlined' startIcon={<SportsScoreIcon />} className='scorecards-btn' onClick={handleClick}>Scorecards</Button>
         <Box className='leaderboard-box'>
           <Button variant='outlined' className='leaderboard-btn'>Current Quiz Leaderboard <EmojiEventsIcon style={{ color: "#d4af37", marginLeft: "5px" }} /></Button>
           <Box className='data-grid'>

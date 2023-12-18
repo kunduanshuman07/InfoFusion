@@ -118,6 +118,8 @@ const ScoreCardModal = (props) => {
                                 sx={{ border: "0px", width: "100%" }}
                                 rows={rows}
                                 columns={columns}
+                                showCellVerticalBorder
+                                showColumnVerticalBorder={false}
                                 disableRowSelectionOnClick
                                 pageSizeOptions={[]}
                                 disableColumnMenu
