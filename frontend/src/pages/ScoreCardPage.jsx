@@ -3,12 +3,18 @@ import styled from 'styled-components'
 import { Box, Button, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import SportsScoreIcon from '@mui/icons-material/SportsScore';
+import ScoreCardModal from '../components/ScoreCardModal';
+    
 const ScoreCardPage = () => {
     const user = JSON.parse(localStorage.getItem("user"));
-    console.log(user);
     const [rows, setRows] = useState([]);
+    const [openModal, setOpenModal] = useState(false);
+    const [selectedDate, setSelectedDate] = useState("");
+    const [quizRawDates, setQuizRawDates] = useState();
     useEffect(() => {
         const quizzes = user?.quizzes;
+        const rawDates = quizzes.map(quiz=>quiz.dateOfQuiz);
+        setQuizRawDates(rawDates);
         const quizDates = quizzes.map(quiz => {
             const rawDate = quiz.dateOfQuiz;
             const dateObject = new Date(rawDate);
@@ -27,6 +33,13 @@ const ScoreCardPage = () => {
         }));
         setRows(formattedRows);
     }, [user])
+    const handleCheckScorecard = (rowId) => {
+        setSelectedDate(quizRawDates[rowId]);
+        setOpenModal(true);
+    }
+    const handleClose = () => {
+        setOpenModal(false);
+    }
     const columns = [
         {
 
@@ -65,29 +78,39 @@ const ScoreCardPage = () => {
             headerAlign: "center",
             align: "center",
             renderCell: (rowData) => (
-                <Button variant='filled' style={{ color: "#086D67", fontWeight: "bold", textTransform: "none" }}>Check</Button>
+                <Button variant='filled' style={{ color: "#086D67", fontWeight: "bold", textTransform: "none" }} onClick={()=>{handleCheckScorecard(rowData.id)}}>Check</Button>
             ),
         },
     ]
     return (
-        <Root>
-            <Box className='container'>
-                <Typography className='score'>Scorecards <SportsScoreIcon fontSize='30px' /> </Typography>
-            </Box>
-            <Box className='data-grid'>
-                <DataGrid
-                    sx={{ border: "0px" }}
-                    rows={rows}
-                    columns={columns}
-                    disableRowSelectionOnClick
-                    pageSizeOptions={[]}
-                    disableColumnMenu
-                    hideFooter
-                />
-            </Box>
-        </Root>
+        <>  
+            <GlobalStyles openModal={openModal} />
+            <Root style={{filter: openModal ? 'blur(5px)' : 'none' }}>
+                <Box className='container'>
+                    <Typography className='score'>Scorecards <SportsScoreIcon fontSize='30px' /> </Typography>
+                </Box>
+                <Box className='data-grid'>
+                    <DataGrid
+                        sx={{ border: "0px" }}
+                        rows={rows}
+                        columns={columns}
+                        disableRowSelectionOnClick
+                        pageSizeOptions={[]}
+                        disableColumnMenu
+                        hideFooter
+                    />
+                </Box>
+            </Root>
+            {openModal && <ScoreCardModal onCloseModal={handleClose} selectedDate={selectedDate}/>}
+        </>
     )
 }
+const GlobalStyles = styled.div`
+  body {
+    filter: ${({ openModal }) => (openModal ? 'blur(5px)' : 'none')};
+    transition: filter 0.3s ease; 
+  }
+`;
 const Root = styled.div`
     .container{
         padding: 10px;
