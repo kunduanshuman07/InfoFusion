@@ -1,17 +1,20 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import emailjs from '@emailjs/browser';
-import { Box, Button, InputLabel, TextField } from '@mui/material';
+import { Box, Button, CircularProgress, TextField } from '@mui/material';
 import styled from 'styled-components';
 const HelpSupport = () => {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const [sending, setSending] = useState(false);
+  const [sentEmail, setSentEmail] = useState(false);
   const form = useRef();
 
   const sendEmail = (e) => {
     e.preventDefault();
-
+    setSending(true);
     emailjs.sendForm("service_wc69jm2", "template_jfkp92k", form.current, 'QRcx83RqeIKFrS5pe')
       .then((result) => {
         console.log(result.text);
+        setSending(false);
+        setSentEmail(true);
       }, (error) => {
         console.log(error.text);
       });
@@ -19,13 +22,15 @@ const HelpSupport = () => {
   return (
     <Root>
       <Box className='container'>
-        <Box className='header'>Write your query</Box>
+        {sentEmail ? <Box className='header'>Thanks for reaching out. We will revert back very soon.
+        Untill then browse and play.</Box> : <Box className='header'>Write your query</Box>}
         <Box className='form'>
-          <form ref={form}>
-            <TextField type="email" name="from_name" placeholder='Your Email' fullWidth className='textfield'/>
-            <TextField name="message" placeholder='Write your Query' multiline fullWidth className='textfield'/>
-          </form>
-          <Button onClick={sendEmail} variant='filled' style={{backgroundColor: "#086D67", color:"white", marginTop: "10px"}}>Send email</Button>
+          {!sentEmail && <form ref={form}>
+            <TextField type="email" name="from_name" placeholder='Your Email' fullWidth className='textfield' />
+            <TextField name="message" placeholder='Write your Query' multiline fullWidth className='textfield' />
+          </form>}
+          <Button onClick={sendEmail} variant='filled' style={{ backgroundColor: "#086D67", color: "white", marginTop: sentEmail? "5px": "20px", fontWeight: "bold" }}>{sending ? <CircularProgress style={{ color: "white", fontSize: "10px" }} /> :
+            sentEmail ? "Email Sent" : "Send Email"}</Button>
         </Box>
       </Box>
     </Root>
