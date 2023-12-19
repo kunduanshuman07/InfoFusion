@@ -1,10 +1,13 @@
 import React from 'react'
 import RouteJS from './Routes';
 import { AuthProvider } from './context/AuthProvider';
+import { ModalProvider } from './context/ModalContext';
 const App = () => {
   return (
     <AuthProvider>
-      <RouteJS />
+      <ModalProvider>
+        <RouteJS />
+      </ModalProvider>
     </AuthProvider>
   )
 }

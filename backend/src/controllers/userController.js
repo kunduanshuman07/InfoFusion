@@ -101,3 +101,14 @@ export const userDashboard = async (req, res) => {
         res.status(500).send(error);
     }
 }
+
+export const deleteAccount = async(req,res)=>{
+    const {userid} = req.params;
+    try {
+        const response = await User.deleteOne({_id: userid});
+        res.status(200).send(response.acknowledged);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send(error);
+    }
+}

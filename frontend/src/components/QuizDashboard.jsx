@@ -15,7 +15,13 @@ const QuizDashboard = () => {
   const [quizCount, setQuizCount] = useState(0);
   const [highestRating, setHighestRating] = useState(100);
   const [maxiqr, setMaxiqr] = useState(0);
+  const [iqrRow, setIqrRow] = useState([]);
+  const [seriesRow, setSeriesRow] = useState([]);
   useEffect(()=>{
+    const xAxisData = user.quizzes.map((quiz, index) => index + 1);
+    const seriesData = user.quizzes.map(quiz => quiz.rating);
+    setIqrRow(xAxisData);
+    setSeriesRow(seriesData);
     const fetchDashboard = async() => {
       const userData ={
         userId: user._id
@@ -76,10 +82,10 @@ const QuizDashboard = () => {
             <Box className='grids'>
               <Box className='iqr-graph'>
                 <LineChart
-                  xAxis={[{ data: [1, 2, 3, 5, 8, 10] }]}
+                  xAxis={[{ data: iqrRow}]}
                   series={[
                     {
-                      data: [2, 5.5, 2, 8.5, 1.5, 5],
+                      data: seriesRow,
                       label: "Individual Quiz Rating",
                       color: "#7d37a1"
                     },

@@ -2,17 +2,12 @@ import React, { useState } from 'react';
 import styled from "styled-components";
 import AppBarComponent from "../components/AppBar";
 import { Box, IconButton, Typography, Avatar, Button } from '@mui/material';
-import DeleteIcon from "@mui/icons-material/Delete";
 import EditProfile from './EditProfile';
-
 const PersonalInfo = () => {
     const user = JSON.parse(localStorage.getItem("user"));
     const [openModal, setOpenModal] = useState(false);
-    const handleChangePassword = () => {
-        console.log(user.password);
-    }
     return (
-        <Root>
+        <Root style={{filter: openModal ? 'blur(5px)' : 'none' }}>
             <AppBarComponent comp={'profile'} />
             <Box className='container'>
                 <Box className='profile-box'>
@@ -57,14 +52,6 @@ const PersonalInfo = () => {
                     </Box>
                     <Box className='info'>
                         <Typography><span style={{ fontWeight: "bold" }}>Pincode:</span> {user.pincode}</Typography>
-                    </Box>
-                    <Box className='info-type'>Privacy</Box>
-                    <Box className='info'>
-                        <Typography className='change-pass' onClick={handleChangePassword}>Change password</Typography>
-                    </Box>
-                    <Box className='info'>
-                        <Typography className='delete-acc'>Delete account</Typography>
-                        <IconButton size='small' className='del-btn'><DeleteIcon fontSize='small' /></IconButton>
                     </Box>
                 </Box>
             </Box>

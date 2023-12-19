@@ -25,8 +25,10 @@ import FactcheckPage from "../pages/FactcheckPage";
 import OverallLeaderboard from '../pages/OverallLeaderboard';
 import HelpSupport from '../pages/HelpSupport';
 import ScoreCardPage from '../pages/ScoreCardPage';
+import { useModal } from '../context/ModalContext';
 
 const UserLayout = () => {
+    const {isModalOpen} = useModal();
     const [drawerWidth, setDrawerWidth] = React.useState(220);
     const [open, setOpen] = React.useState(true);
     const handleDrawerOpen = () => {
@@ -34,7 +36,7 @@ const UserLayout = () => {
         setOpen(!open);
     }
     return (
-        <Root>
+        <Root style={{filter: isModalOpen ? 'blur(5px)' : 'none',}} >
             <AppBarComponent />
             <Drawer
                 variant="permanent"
@@ -179,9 +181,9 @@ const UserLayout = () => {
                         <Route path="/regional" element={<RegionalPage />} />
                         <Route path="/playground" element={<PlaygroundPage />} />
                         <Route path="/factcheck" element={<FactcheckPage />} />
-                        <Route path="/leaderboard" element={<OverallLeaderboard/>}/>
-                        <Route path='/help-support' element={<HelpSupport/>}/>
-                        <Route path='/score-cards' element={<ScoreCardPage />}/>
+                        <Route path="/leaderboard" element={<OverallLeaderboard />} />
+                        <Route path='/help-support' element={<HelpSupport />} />
+                        <Route path='/score-cards' element={<ScoreCardPage />} />
                     </Routes>
                 </div>
             </main>

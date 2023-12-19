@@ -4,13 +4,16 @@ import { Box, Button, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import SportsScoreIcon from '@mui/icons-material/SportsScore';
 import ScoreCardModal from '../components/ScoreCardModal';
+import { useModal } from '../context/ModalContext';
     
 const ScoreCardPage = () => {
     const user = JSON.parse(localStorage.getItem("user"));
+    const {setIsModalOpen} = useModal();
     const [rows, setRows] = useState([]);
     const [openModal, setOpenModal] = useState(false);
     const [selectedDate, setSelectedDate] = useState("");
     const [quizRawDates, setQuizRawDates] = useState();
+    
     useEffect(() => {
         const quizzes = user?.quizzes;
         const rawDates = quizzes.map(quiz=>quiz.dateOfQuiz);
@@ -35,9 +38,11 @@ const ScoreCardPage = () => {
     }, [user])
     const handleCheckScorecard = (rowId) => {
         setSelectedDate(quizRawDates[rowId]);
+        setIsModalOpen(true);
         setOpenModal(true);
     }
     const handleClose = () => {
+        setIsModalOpen(false);
         setOpenModal(false);
     }
     const columns = [

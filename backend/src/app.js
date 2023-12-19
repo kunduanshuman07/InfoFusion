@@ -13,7 +13,7 @@ app.use(json());
 app.use(
     cors({
       origin: '*',
-      methods: ['GET', 'POST', 'PATCH'],
+      methods: ['GET', 'POST', 'PATCH', 'DELETE'],
     })
   );
 app.use(urlencoded({ extended: true }));

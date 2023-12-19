@@ -59,9 +59,9 @@ function AppBarComponent({ comp }) {
                                     <HomeIcon />
                                 </IconButton>
                                 <NavLink to='/personal-info' style={({ isActive }) =>
-                                    (isActive ? { borderBottom: "5px solid #086D67" } : { color: '#086D67' })} className='profile-btn' >Personal Info</NavLink>
+                                    (isActive ? { borderBottom: "5px solid #086D67", borderRadius: "5px" } : { color: '#086D67' })} className='profile-btn' >Personal Info</NavLink>
                                 <NavLink to='/quiz-dashboard' style={({ isActive }) =>
-                                    (isActive ? { borderBottom: "5px solid #086D67" } : { color: '#086D67' })} className='profile-btn'>Quiz Dashboard</NavLink>
+                                    (isActive ? { borderBottom: "5px solid #086D67", borderRadius: "5px" } : { color: '#086D67' })} className='profile-btn'>Quiz Dashboard</NavLink>
                             </Box>}
                             <Box sx={{ ml: "auto" }}>
                                 <IconButton color="inherit" onClick={handleMenu}>
