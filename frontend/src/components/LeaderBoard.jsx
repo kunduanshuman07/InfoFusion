@@ -1,29 +1,44 @@
 import React from 'react'
 import styled from 'styled-components'
-import { DataGrid } from "@mui/x-data-grid";
-import { Box, Tooltip, Typography } from "@mui/material";
+import { DataGrid, GridToolbarContainer } from "@mui/x-data-grid";
+import { Box, Tooltip, Typography, IconButton } from "@mui/material";
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import RefreshIcon from '@mui/icons-material/Refresh';
-const LeaderBoard = (props) => {
+import RuleBookIcon from '@mui/icons-material/Rule';
+function CustomToolbar() {
   const handleRefresh = () => {
     window.location.reload();
   };
   return (
+    <GridToolbarContainer className='toolbar'>
+      <Tooltip title='Refresh Leaderboard'>
+        <IconButton style={{ color: "#086D67", marginRight: "auto" }} onClick={handleRefresh}>
+          <RefreshIcon />
+        </IconButton>
+      </Tooltip>
+      <Box className='header'>
+        <Typography className='header-title'>Leaderboard</Typography>
+      </Box>
+      <Tooltip title='Rulebooks'>
+        <IconButton style={{ color: "#086D67", marginLeft: "auto" }} onClick={handleRefresh}>
+          <RuleBookIcon />
+        </IconButton>
+      </Tooltip>
+    </GridToolbarContainer>
+  );
+}
+const LeaderBoard = (props) => {
+  return (
     <Root>
       <Box className='container'>
-        <Box className='header'>
-          <EmojiEventsIcon className='trophy-icon' />
-          <Typography className='header-title'>Leaderboard</Typography>
-          <Tooltip title='refresh page'>
-            <RefreshIcon className='refresh-icon' onClick={handleRefresh} />
-          </Tooltip>
-        </Box>
+
         <DataGrid
           sx={{ boxShadow: "8px 4px 8px rgba(0.1, 0.1, 0.2, 0.2)", width: "95%", maxWidth: "95%" }}
           rows={props.rows}
           columns={props.columns}
           disableRowSelectionOnClick
           disableColumnMenu
+          slots={{ toolbar: CustomToolbar }}
         />
       </Box>
     </Root>
@@ -47,7 +62,6 @@ align-items: center;
   text-align: center;
 }
 .toolbar{
-  margin: auto;
   margin-bottom : 5px;
   margin-top: 5px;
 }
@@ -56,7 +70,6 @@ align-items: center;
   font-weight: bold;
 }
 .header{
-  margin-bottom: 10px;
   display: flex;
   flex-direction: row;
 }
@@ -64,15 +77,16 @@ align-items: center;
   background-color: #086D67;
   border-radius: 5px;
   color: white;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding: 10px;
+  padding-bottom: 8px;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 15px;
+  margin-right: 15px;
+  margin-left: 5px;
 }
 .refresh-icon{
-  margin-left: 15px;
+  margin-left: auto;
+  margin-right: auto;
   margin-top: 13px;
   font-size: 25px;
   color: #086D67;
@@ -81,7 +95,6 @@ align-items: center;
   font-size: 40px;
   color: #d4af37;
   margin-right: 15px;
-  margin-top: 5px;
 }
 `
 export default LeaderBoard
