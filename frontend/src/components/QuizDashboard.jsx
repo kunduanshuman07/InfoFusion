@@ -5,8 +5,6 @@ import { Box, Grid, IconButton, Avatar } from '@mui/material';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import WhatshotIcon from '@mui/icons-material/Whatshot';
 import VideogameAssetIcon from '@mui/icons-material/VideogameAsset';
-import StarIcon from '@mui/icons-material/Star';
-import CalendarHeatmapComponent from './CalendarHeatmapComponent';
 import axios from "axios";
 import { LineChart } from '@mui/x-charts/LineChart';
 const QuizDashboard = () => {

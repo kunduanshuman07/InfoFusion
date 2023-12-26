@@ -2,7 +2,7 @@ import { TextField, Button, Typography, Box } from '@mui/material'
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useAuth } from '../context/AuthProvider'
-import axios from 'axios'
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom'
 const LoginTile = () => {
     const [email, setEmail] = useState('');

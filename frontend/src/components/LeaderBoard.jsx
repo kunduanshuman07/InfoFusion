@@ -1,11 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 import { DataGrid } from "@mui/x-data-grid";
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 const LeaderBoard = (props) => {
-  console.log(props.rows);
-  console.log(props.columns);
+  const handleRefresh = () => {
+    window.location.reload();
+  };
   return (
     <Root>
       <Box className='container'>
@@ -20,6 +21,7 @@ const LeaderBoard = (props) => {
           disableRowSelectionOnClick
           disableColumnMenu
         />
+        <Button onClick={handleRefresh}>Refresh</Button>
       </Box>
     </Root>
   )
