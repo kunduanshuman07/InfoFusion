@@ -7,6 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { verifyPasswordCriteria } from '../utils/PasswordCriteria';
 const SignupTile = () => {
   const navigate = useNavigate();
   const [name, setName] = useState('');
@@ -17,23 +18,29 @@ const SignupTile = () => {
   const [age, setAge] = useState();
   const [showPassword, setShowPassword] = useState(false);
   const [valid, setValid] = useState(true);
+  const [passwordCriteria, setPasswordCriteria] = useState(true);
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
   const handleSignUp = async () => {
     if (password === cpassword) {
-      setValid(false);
-      try {
-        const userData = {
-          name, email, password, phone, age
+      if (!verifyPasswordCriteria(password)) {
+        setPasswordCriteria(false);
+        toast.error("Your password should contain atleast 1 Uppercase, 1 lowercase, 1 special character, 1 number and should be of minimum 8 characters");
+      }
+      else {
+        try {
+          const userData = {
+            name, email, password, phone, age
+          }
+          const { data, status } = await axios.post('http://localhost:3000/auth/register', userData);
+          if (status === 200) {
+            console.log(data);
+            navigate('/login')
+          }
+        } catch (error) {
+          console.log(error);
         }
-        const { data, status } = await axios.post('http://localhost:3000/auth/register', userData);
-        if (status === 200) {
-          console.log(data);
-          navigate('/login')
-        }
-      } catch (error) {
-        console.log(error);
       }
     }
     else {
@@ -66,8 +73,8 @@ const SignupTile = () => {
           onChange={(e) => setEmail(e.target.value)}
         />
         <TextField
-          error={!valid}
-          label={!valid ? "Password Mismatch" : "Password"}
+          error={!valid || !passwordCriteria}
+          label={!valid ? "Password Mismatch" :!passwordCriteria? "Criteria Unfulfilled": "Password"}
           name="password"
           type={showPassword ? 'text' : 'password'}
           variant="outlined"
@@ -87,8 +94,8 @@ const SignupTile = () => {
           }}
         />
         <TextField
-          error={!valid}
-          label={!valid ? "Password Mismatch" : "Confirm Password"}
+          error={!valid || !passwordCriteria}
+          label={!valid ? "Password Mismatch" :!passwordCriteria? "Criteria Unfulfilled": "Password"}
           name="cpassword"
           type='text'
           variant="outlined"

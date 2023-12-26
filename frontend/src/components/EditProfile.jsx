@@ -86,46 +86,51 @@ const EditProfile = (props) => {
                 <form>
                     <Grid container spacing={3}>
                         <Grid item xs={6}>
-                            <InputLabel required>Phone</InputLabel>
                             <TextField
+                                label="Phone"
                                 name="phone"
                                 variant="outlined"
                                 fullWidth
                                 size="small"
                                 value={phone}
+                                placeholder="Phone"
                                 onChange={(e) => setPhone(e.target.value)}
                             />
                         </Grid>
                         <Grid item xs={6}>
-                            <InputLabel required>Age</InputLabel>
                             <TextField
                                 name="age"
                                 variant="outlined"
                                 fullWidth
                                 size="small"
                                 value={age}
+                                label='Age'
+                                placeholder="Age"
                                 onChange={(e) => setAge(e.target.value)}
                             />
                         </Grid>
                         <Grid item xs={6}>
-                            <InputLabel required>Gender</InputLabel>
+                           
                             <TextField
                                 name="gender"
                                 variant="outlined"
                                 fullWidth
                                 size="small"
                                 value={gender}
+                                label='Gender'
+                                placeholder="Gender"
                                 onChange={(e) => setGender(e.target.value)}
                             />
                         </Grid>
                         <Grid item xs={6}>
-                            <InputLabel required>Education</InputLabel>
                             <TextField
                                 name="education"
                                 variant="outlined"
                                 fullWidth
                                 size="small"
                                 value={education}
+                                label='Education'
+                                placeholder="Education"
                                 select
                                 onChange={(e) => setEducation(e.target.value)}
                             >
@@ -137,24 +142,26 @@ const EditProfile = (props) => {
                             </TextField>
                         </Grid>
                         {education === "Graduate" && <Grid item xs={6}>
-                            <InputLabel required>University</InputLabel>
                             <TextField
                                 name="university"
                                 variant="outlined"
                                 fullWidth
                                 size="small"
                                 value={university}
+                                label='University'
+                                placeholder="University"
                                 onChange={(e) => setUniversity(e.target.value)}
                             />
                         </Grid>}
                         <Grid item xs={6}>
-                            <InputLabel required>Employment</InputLabel>
                             <TextField
                                 name="employment"
                                 variant="outlined"
                                 fullWidth
                                 size="small"
                                 value={employment}
+                                label='Employment'
+                                placeholder="Employment"
                                 select
                                 onChange={(e) => setEmployment(e.target.value)}
                             >
@@ -166,35 +173,39 @@ const EditProfile = (props) => {
                             </TextField>
                         </Grid>
                         <Grid item xs={6}>
-                            <InputLabel required>City</InputLabel>
                             <TextField
                                 name="city"
                                 variant="outlined"
                                 fullWidth
                                 size="small"
                                 value={city}
+                                label='City'
+                                placeholder="City"
                                 onChange={(e) => setCity(e.target.value)}
                             />
                         </Grid>
                         <Grid item xs={6}>
-                            <InputLabel required>State</InputLabel>
                             <TextField
                                 name="state"
                                 variant="outlined"
                                 fullWidth
                                 size="small"
                                 value={state}
+                                label='State'
+                                placeholder="State"
                                 onChange={(e) => setState(e.target.value)}
                             />
                         </Grid>
                         <Grid item xs={6}>
-                            <InputLabel required>Pincode</InputLabel>
+                    
                             <TextField
                                 name="pincode"
                                 variant="outlined"
                                 fullWidth
                                 size="small"
                                 value={pincode}
+                                label='Pincode'
+                                placeholder="Pincode"
                                 onChange={(e) => setPincode(e.target.value)}
                             />
                         </Grid>

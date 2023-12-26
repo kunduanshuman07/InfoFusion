@@ -20,13 +20,14 @@ const PersonalizedPage = () => {
     <Root>
       <Box className='personalized-box'>
         <Box className='country'>
-          <InputLabel className='country-label'>Country</InputLabel>
           <TextField
             name="country"
             variant="outlined"
             fullWidth
             size="small"
             value={country}
+            label='Country'
+            placeholder="Country"
             onChange={(e) => { console.log(e.target); setCountry(e.target.value) }}
             select
           >
@@ -38,13 +39,14 @@ const PersonalizedPage = () => {
           </TextField>
         </Box>
         <Box className='category'>
-          <InputLabel className='category-label'>Category</InputLabel>
           <TextField
             name="category"
             variant="outlined"
             fullWidth
             size="small"
             value={category}
+            label='Category'
+            placeholder="Category"
             onChange={(e) => { console.log(e.target); setCategory(e.target.value) }}
             select
           >
@@ -92,7 +94,6 @@ const Root = styled.div`
     margin-left: 25px;
   }
   .makeurl-btn{
-    margin-top: 30px;
     width: 90%;
     font-weight: bold;
     background-color: white;
