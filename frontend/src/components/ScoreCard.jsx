@@ -4,8 +4,7 @@ import { Box, IconButton, Tooltip, Typography } from "@mui/material";
 import { DataGrid, GridToolbarContainer, GridToolbarExport } from "@mui/x-data-grid";
 import SportsScoreIcon from '@mui/icons-material/SportsScore';
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import useFetch from '../hooks/useFetch';
+import {useNavigate} from "react-router-dom";
 function CustomToolbar() {
     const navigate = useNavigate();
     const handleClick = () => {
@@ -16,27 +15,15 @@ function CustomToolbar() {
             <GridToolbarExport className='export' />
             <Tooltip title='Back to Playground'>
                 <IconButton style={{ color: "#086D67", marginLeft: "700px" }} onClick={handleClick}>
-                    <SportsScoreIcon />
+                    <SportsScoreIcon/>
                 </IconButton>
             </Tooltip>
         </GridToolbarContainer>
     );
 }
 const ScoreCard = (props) => {
+    
     const user = JSON.parse(localStorage.getItem("user"));
-    const quizUserData = {
-        quizId: props.quizId,
-        score: props.score,
-        userId: user._id,
-        iqr: props.iqr,
-        dateOfQuiz: new Date(),
-        scoreCard: props.attemptedQuestions,
-    }
-    const { data } = useFetch({
-        method: 'PATCH',
-        url: '/quiz/update-user-quiz-data',
-        body: quizUserData,
-    })
     const [rows, setRows] = useState([]);
     const columns = [
         {
@@ -79,8 +66,21 @@ const ScoreCard = (props) => {
     ]
     useEffect(() => {
         if (props.iqr !== 0) {
-            if (data) {
-                localStorage.setItem("user", JSON.stringify(data));
+            const updateQuizDataToUser = async () => {
+                const quizUserData = {
+                    quizId: props.quizId,
+                    score: props.score,
+                    userId: user._id,
+                    iqr: props.iqr,
+                    dateOfQuiz: new Date(),
+                    scoreCard: props.attemptedQuestions,
+                }
+                console.log(quizUserData);
+                const response = await axios.patch('http://localhost:3000/quiz/update-user-quiz-data', quizUserData);
+                if (response.status === 200) {
+                    console.log(response.data);
+                    localStorage.setItem("user", JSON.stringify(response.data));
+                }
             }
             const formattedRows = props.attemptedQuestions.map((item, index) => ({
                 id: index,
@@ -91,8 +91,9 @@ const ScoreCard = (props) => {
             }),
             );
             setRows(formattedRows);
+            updateQuizDataToUser();
         }
-    }, []);
+    }, [props.iqr]);
     return (
         <Root>
             <Box className='container'>

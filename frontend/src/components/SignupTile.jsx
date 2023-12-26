@@ -1,8 +1,12 @@
-import { TextField, Button, Typography, Box } from '@mui/material'
+import { TextField, Button, Typography, Box, IconButton, InputAdornment } from '@mui/material'
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 const SignupTile = () => {
   const navigate = useNavigate();
   const [name, setName] = useState('');
@@ -11,8 +15,14 @@ const SignupTile = () => {
   const [phone, setPhone] = useState(0);
   const [cpassword, setCPassword] = useState('');
   const [age, setAge] = useState();
+  const [showPassword, setShowPassword] = useState(false);
+  const [valid, setValid] = useState(true);
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
   const handleSignUp = async () => {
     if (password === cpassword) {
+      setValid(false);
       try {
         const userData = {
           name, email, password, phone, age
@@ -27,14 +37,17 @@ const SignupTile = () => {
       }
     }
     else {
-      console.log("Password mismatch");
+      setValid(false);
+      toast.error("Password Mismatch!");
     }
   }
   return (
     <Root>
+      <ToastContainer position='top-center' />
       <form>
         <TextField
           name="name"
+          label="Full Name"
           variant="outlined"
           fullWidth
           size="small"
@@ -44,6 +57,7 @@ const SignupTile = () => {
         />
         <TextField
           name="email"
+          label="Email Id"
           variant="outlined"
           fullWidth
           size="small"
@@ -52,18 +66,31 @@ const SignupTile = () => {
           onChange={(e) => setEmail(e.target.value)}
         />
         <TextField
+          error={!valid}
+          label={!valid ? "Error" : "Password"}
           name="password"
-          type='password'
+          type={showPassword ? 'text' : 'password'}
           variant="outlined"
           fullWidth
           size="small"
           placeholder='Password'
           className='form-textfield'
           onChange={(e) => setPassword(e.target.value)}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={togglePasswordVisibility} size='small'>
+                  {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                </IconButton>
+              </InputAdornment>
+            )
+          }}
         />
         <TextField
+          error={!valid}
+          label={!valid ? "Error" : "Confirm Password"}
           name="cpassword"
-          type='password'
+          type='text'
           variant="outlined"
           fullWidth
           size="small"
@@ -73,6 +100,7 @@ const SignupTile = () => {
         />
         <TextField
           name="phone"
+          label='Phone'
           type='number'
           variant="outlined"
           fullWidth
@@ -83,6 +111,7 @@ const SignupTile = () => {
         />
         <TextField
           name="age"
+          label='Age'
           type='number'
           variant="outlined"
           fullWidth

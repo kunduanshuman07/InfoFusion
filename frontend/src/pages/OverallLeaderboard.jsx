@@ -10,7 +10,6 @@ const OverallLeaderboard = () => {
     method: 'GET',
     url: '/user/overall-leaderboard',
   });
-
   const columns = [
     {
       field: 'rank',
