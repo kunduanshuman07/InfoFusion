@@ -67,7 +67,7 @@ const SignupTile = () => {
         />
         <TextField
           error={!valid}
-          label={!valid ? "Error" : "Password"}
+          label={!valid ? "Password Mismatch" : "Password"}
           name="password"
           type={showPassword ? 'text' : 'password'}
           variant="outlined"
@@ -88,7 +88,7 @@ const SignupTile = () => {
         />
         <TextField
           error={!valid}
-          label={!valid ? "Error" : "Confirm Password"}
+          label={!valid ? "Password Mismatch" : "Confirm Password"}
           name="cpassword"
           type='text'
           variant="outlined"
