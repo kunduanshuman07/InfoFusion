@@ -76,7 +76,7 @@ export const getLeaderBoard = async (req, res) => {
         const usersDetails = await User.find({ _id: { $in: userIds } });
         const leaderboard = usersDetails.map(userDetail => ({
             userId: userDetail._id,
-            username: userDetail.name,
+            username: userDetail.username,
             iqr: quiz.users.find(user => user.userId.equals(userDetail._id)).iqr,
         }));
         leaderboard.sort((a, b) => b.iqr - a.iqr);

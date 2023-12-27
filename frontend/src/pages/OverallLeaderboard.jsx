@@ -3,18 +3,26 @@ import styled from 'styled-components';
 import LeaderBoard from '../components/LeaderBoard';
 import CircularProgress from '@mui/material/CircularProgress';
 import useFetch from '../hooks/useFetch';
+import { IconButton } from '@mui/material';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 const OverallLeaderboard = () => {
   const [rows, setRows] = useState([]);
+  const [profileModal, setProfileModal] = useState(false);
+  const [username, setUsername] = useState("");
   const { data } = useFetch({
     method: 'GET',
     url: '/user/overall-leaderboard',
   });
+  const handleProfileView = (rowData) => {
+    setUsername(rowData.row.username);
+    setProfileModal(true);
+  }
   const columns = [
     {
       field: 'rank',
       headerName: 'Rank',
-      flex: 0.5,
+      flex: 0,
       sortable: false,
       headerAlign: 'center',
       headerClassName: 'mytableheader',
@@ -23,7 +31,16 @@ const OverallLeaderboard = () => {
     {
       field: 'username',
       headerName: 'Username',
-      flex: 1,
+      flex: 0.5,
+      sortable: false,
+      headerAlign: 'center',
+      headerClassName: 'mytableheader',
+      align: 'center',
+    },
+    {
+      field: 'name',
+      headerName: 'Name',
+      flex: 0.5,
       sortable: false,
       headerAlign: 'center',
       headerClassName: 'mytableheader',
@@ -40,12 +57,26 @@ const OverallLeaderboard = () => {
     },
     {
       field: 'quizcount',
-      headerName: 'Total Quiz Count',
-      flex: 0.5,
+      headerName: 'Quiz Count',
+      flex: 0,
       sortable: false,
       headerAlign: 'center',
       headerClassName: 'mytableheader',
       align: 'center',
+    },
+    {
+      field: 'viewprofile',
+      headerName: "View Profile",
+      flex: 0,
+      sortable: false,
+      headerAlign: "center",
+      headerClassName: "mytableheader",
+      align: " center ",
+      renderCell: (rowData) => (
+        <IconButton size='small' style={{margin: "auto"}}>
+          <VisibilityIcon onClick={handleProfileView(rowData)}/>
+        </IconButton>
+      ),
     },
   ];
 
@@ -54,7 +85,8 @@ const OverallLeaderboard = () => {
       const formattedRows = data.leaderboard.map((item, index) => ({
         id: index,
         rank: index + 1,
-        username: item.user.name,
+        name: item.user.name,
+        username: item.user.username,
         rating: item.rating,
         quizcount: item.quizcount,
       }));
@@ -64,7 +96,7 @@ const OverallLeaderboard = () => {
 
   return (
     <Root>
-      {!data ? <CircularProgress className="progress-bar" /> : <LeaderBoard rows={rows} columns={columns} />}
+      {!data ? <CircularProgress className="progress-bar" /> : <LeaderBoard rows={rows} profileModal={profileModal} columns={columns} username={username} onCloseModal={() => setProfileModal(false)}/>}
     </Root>
   );
 };

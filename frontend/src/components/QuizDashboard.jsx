@@ -15,17 +15,17 @@ const QuizDashboard = () => {
   const [maxiqr, setMaxiqr] = useState(0);
   const [iqrRow, setIqrRow] = useState([]);
   const [seriesRow, setSeriesRow] = useState([]);
-  useEffect(()=>{
+  useEffect(() => {
     const xAxisData = user.quizzes.map((quiz, index) => index + 1);
     const seriesData = user.quizzes.map(quiz => quiz.rating);
     setIqrRow(xAxisData);
     setSeriesRow(seriesData);
-    const fetchDashboard = async() => {
-      const userData ={
+    const fetchDashboard = async () => {
+      const userData = {
         userId: user._id
       }
-      const {data, status} = await axios.post('http://localhost:3000/user/user-dashboard', userData);
-      if(status===200){
+      const { data, status } = await axios.post('http://localhost:3000/user/user-dashboard', userData);
+      if (status === 200) {
         setRating(data.dashboardData.rating);
         setQuizCount(data.dashboardData.quizcount);
         setHighestRating(data.dashboardData.maxRating);
@@ -33,7 +33,7 @@ const QuizDashboard = () => {
       }
     }
     fetchDashboard();
-  },[])
+  }, [])
   return (
     <Root>
       <AppBarComponent comp={'profile'} />
@@ -47,8 +47,7 @@ const QuizDashboard = () => {
                   <Avatar alt={user.name} src='avatar' className='avatar-style' />
                 </IconButton>
                 <h4 style={{ color: "#086D67" }}>{user.name}</h4>
-                <h5 style={{ color: "#086D67", marginBottom: "-10px" }}>Quiz count: {quizCount}</h5>
-                <h6 style={{ color: "gray" }}>1st Quiz attempt: 14.12.2023 </h6>
+                <h5 style={{ color: "#086D67", marginBottom: "10px" }}>Username: {user.username}</h5>
               </Box>
             </Box>
           </Grid>
@@ -80,7 +79,7 @@ const QuizDashboard = () => {
             <Box className='grids'>
               <Box className='iqr-graph'>
                 <LineChart
-                  xAxis={[{ data: iqrRow}]}
+                  xAxis={[{ data: iqrRow }]}
                   series={[
                     {
                       data: seriesRow,

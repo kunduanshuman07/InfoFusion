@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { DataGrid, GridToolbarContainer } from "@mui/x-data-grid";
-import { Box, Tooltip, Typography, IconButton } from "@mui/material";
-import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
+import { Box, Tooltip, Typography, IconButton, TextField, InputAdornment } from "@mui/material";
 import RefreshIcon from '@mui/icons-material/Refresh';
 import RuleBookIcon from '@mui/icons-material/Rule';
+import SearchIcon from '@mui/icons-material/Search';
 function CustomToolbar() {
   const handleRefresh = () => {
     window.location.reload();
@@ -19,6 +19,17 @@ function CustomToolbar() {
       <Box className='header'>
         <Typography className='header-title'>Leaderboard</Typography>
       </Box>
+      <Box className='search-bar'>
+        <TextField label='Search' placeholder='Search' size='small' InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton size='small'>
+                <SearchIcon />
+              </IconButton>
+            </InputAdornment>
+          )
+        }} />
+      </Box>
       <Tooltip title='Rulebooks'>
         <IconButton style={{ color: "#086D67", marginLeft: "auto" }} onClick={handleRefresh}>
           <RuleBookIcon />
@@ -31,7 +42,6 @@ const LeaderBoard = (props) => {
   return (
     <Root>
       <Box className='container'>
-
         <DataGrid
           sx={{ boxShadow: "8px 4px 8px rgba(0.1, 0.1, 0.2, 0.2)", width: "95%", maxWidth: "95%" }}
           rows={props.rows}
@@ -95,6 +105,10 @@ align-items: center;
   font-size: 40px;
   color: #d4af37;
   margin-right: 15px;
+}
+.search-bar{
+  display: flex;
+  flex-direction: row;
 }
 `
 export default LeaderBoard

@@ -12,8 +12,8 @@ const SignupTile = () => {
   const navigate = useNavigate();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [phone, setPhone] = useState(0);
   const [cpassword, setCPassword] = useState('');
   const [age, setAge] = useState();
   const [showPassword, setShowPassword] = useState(false);
@@ -31,7 +31,7 @@ const SignupTile = () => {
       else {
         try {
           const userData = {
-            name, email, password, phone, age
+            name, email, password, username, age
           }
           const { data, status } = await axios.post('http://localhost:3000/auth/register', userData);
           if (status === 200) {
@@ -61,6 +61,16 @@ const SignupTile = () => {
           placeholder='Full Name'
           className='form-textfield'
           onChange={(e) => setName(e.target.value)}
+        />
+        <TextField
+          name="username"
+          label="Username"
+          variant="outlined"
+          fullWidth
+          size="small"
+          placeholder='Create Username'
+          className='form-textfield'
+          onChange={(e) => setUsername(e.target.value)}
         />
         <TextField
           name="email"
@@ -95,7 +105,7 @@ const SignupTile = () => {
         />
         <TextField
           error={!valid || !passwordCriteria}
-          label={!valid ? "Password Mismatch" :!passwordCriteria? "Criteria Unfulfilled": "Password"}
+          label={!valid ? "Password Mismatch" :!passwordCriteria? "Criteria Unfulfilled": "Confirm Password"}
           name="cpassword"
           type='text'
           variant="outlined"
@@ -104,17 +114,6 @@ const SignupTile = () => {
           placeholder='Confirm Password'
           className='form-textfield'
           onChange={(e) => setCPassword(e.target.value)}
-        />
-        <TextField
-          name="phone"
-          label='Phone'
-          type='number'
-          variant="outlined"
-          fullWidth
-          size="small"
-          placeholder='Phone'
-          className='form-textfield'
-          onChange={(e) => setPhone(e.target.value)}
         />
         <TextField
           name="age"

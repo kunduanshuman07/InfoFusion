@@ -4,12 +4,12 @@ import jwt from "jsonwebtoken";
 import User from '../models/userModel.js';
 const JWT_SECRET='infofusionsuperhardkey'
 export const register = async (req, res) => {
-    const { name, email, password, phone, age } = req.body;
+    const { name, email, password, username, age } = req.body;
     try {
         const salt = await bcrypt.genSalt();
         const hashPassword = await bcrypt.hash(password, salt);
         const newUser = new User({
-            name, email, password: hashPassword, phone, age
+            name, email, password: hashPassword, username, age
         });
         const savedNewUser = await newUser.save();
         console.log(savedNewUser);
