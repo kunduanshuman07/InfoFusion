@@ -9,7 +9,6 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import TrendingIcon from '@mui/icons-material/Whatshot';
 import PersonalizedIcon from '@mui/icons-material/PersonalVideo';
-import RegionalIcon from '@mui/icons-material/SouthAmerica';
 import PlaygroundIcon from '@mui/icons-material/SportsEsports';
 import FactCheckIcon from '@mui/icons-material/FactCheck';
 import { Routes, Route, NavLink } from "react-router-dom";
@@ -19,24 +18,24 @@ import AppBarComponent from '../components/AppBar'
 import TrendingPage from '../pages/TrendingPage';
 import styled from "styled-components";
 import PersonalizedPage from '../pages/PersonalizedPage';
-import RegionalPage from '../pages/RegionalPage';
+import OpinionPage from '../pages/OpinionPage';
 import PlaygroundPage from "../pages/PlaygroundPage";
 import FactcheckPage from "../pages/FactcheckPage";
 import OverallLeaderboard from '../pages/OverallLeaderboard';
 import HelpSupport from '../pages/HelpSupport';
 import ScoreCardPage from '../pages/ScoreCardPage';
 import { useModal } from '../context/ModalContext';
-
+import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 const UserLayout = () => {
-    const {isModalOpen} = useModal();
-    const [drawerWidth, setDrawerWidth] = React.useState(220);
+    const { isModalOpen } = useModal();
+    const [drawerWidth, setDrawerWidth] = React.useState(230);
     const [open, setOpen] = React.useState(true);
     const handleDrawerOpen = () => {
         setDrawerWidth(open ? 75 : 220);
         setOpen(!open);
     }
     return (
-        <Root style={{filter: isModalOpen ? 'blur(5px)' : 'none',}} >
+        <Root style={{ filter: isModalOpen ? 'blur(5px)' : 'none', }} >
             <AppBarComponent />
             <Drawer
                 variant="permanent"
@@ -102,29 +101,6 @@ const UserLayout = () => {
                             />
                         </ListItem>
                         <ListItem
-                            to="/regional"
-                            component={NavLink}
-                            style={({ isActive }) =>
-                                (isActive ? { color: 'white', borderRight: '9px solid white' } : { color: 'white' })}
-                        >
-                            <ListItemIcon>
-                                <IconButton style={{ color: "white" }}>
-                                    <RegionalIcon
-                                        width={16}
-                                        height="100%"
-                                    />
-                                </IconButton>
-                            </ListItemIcon>
-                            <ListItemText
-                                primary={
-                                    <Typography>
-                                        Regional
-                                    </Typography>
-                                }
-                                style={{ display: open ? "" : "none" }}
-                            />
-                        </ListItem>
-                        <ListItem
                             to="/playground"
                             component={NavLink}
                             style={({ isActive }) =>
@@ -142,6 +118,29 @@ const UserLayout = () => {
                                 primary={
                                     <Typography>
                                         Playground
+                                    </Typography>
+                                }
+                                style={{ display: open ? "" : "none" }}
+                            />
+                        </ListItem>
+                        <ListItem
+                            to="/opinion-debate"
+                            component={NavLink}
+                            style={({ isActive }) =>
+                                (isActive ? { color: 'white', borderRight: '9px solid white' } : { color: 'white' })}
+                        >
+                            <ListItemIcon>
+                                <IconButton style={{ color: "white" }}>
+                                    <QuestionAnswerIcon
+                                        width={16}
+                                        height="100%"
+                                    />
+                                </IconButton>
+                            </ListItemIcon>
+                            <ListItemText
+                                primary={
+                                    <Typography>
+                                        Debate
                                     </Typography>
                                 }
                                 style={{ display: open ? "" : "none" }}
@@ -178,7 +177,7 @@ const UserLayout = () => {
                     <Routes>
                         <Route path="/" element={<TrendingPage />} />
                         <Route path="/personalized" element={<PersonalizedPage />} />
-                        <Route path="/regional" element={<RegionalPage />} />
+                        <Route path="/opinion-debate" element={<OpinionPage />} />
                         <Route path="/playground" element={<PlaygroundPage />} />
                         <Route path="/factcheck" element={<FactcheckPage />} />
                         <Route path="/leaderboard" element={<OverallLeaderboard />} />
