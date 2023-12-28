@@ -1,4 +1,3 @@
-// app.js
 import express, { json, urlencoded } from 'express';
 import http from 'http';
 import connectDB from './config/db.js';
@@ -6,7 +5,7 @@ import authRoutes from './routes/auth.js';
 import quizRoutes from './routes/quiz.js';
 import userRoutes from './routes/user.js';
 import cors from 'cors';
-import { initializeSocket } from './path-to-your-socket.js'; // Change this path
+import { initializeSocket } from './socket.js'; 
 
 const app = express();
 const server = http.createServer(app);

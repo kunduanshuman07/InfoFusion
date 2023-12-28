@@ -7,7 +7,7 @@ const Header = ({ title }) => {
             display: "flex",
             flexDirection: "row",
             color: "#086D67",
-            borderBottom: "1px solid #086D67",
+            borderBottom: "3px solid #086D67",
             paddingBottom: "10px"
         }}>
             <Typography variant='h4' style={{ borderBlock: "10px" }}>{title}</Typography>

@@ -1,30 +1,72 @@
-import React, {useEffect, useState} from 'react'
-import {Box, Button, TextField, Typography} from "@mui/material";
 import io from "socket.io-client";
-const socket = io.connect('http://localhost:3000');
-const ChatRoom = ({category, username, topic}) => {
-    const [message, setMessage] = useState("");
-    const [messageRecieved, setMessageRecieved] = useState("");
-    const [room, setRoom] = useState("");
-    const sendMessage = () =>{
-        socket.emit("Message sent", message);
+import { useState } from "react";
+import Chat from "./Chat";
+import styled from "styled-components";
+import { Box, Button, TextField, Typography } from "@mui/material";
+const socket = io.connect("http://localhost:3000");
+const ChatRoom= () => {
+  const [username, setUsername] = useState("");
+  const [room, setRoom] = useState("");
+  const [showChat, setShowChat] = useState(false);
+  const joinRoom = () => {
+    if (username !== "" && room !== "") {
+      socket.emit("join_room", room);
+      setShowChat(true);
     }
-    useEffect(()=>{
-        const joinRoom = () =>{
-            socket.emit("join_room", room);
-        }
-        socket.on("recieve_message", (data)=>{
-            setMessageRecieved(data);
-        })
-    },[socket])
+  };
+
   return (
-    <Box>
-        <Typography>Hi {username}</Typography>
-        <TextField placeholder='message' label='Write Message' fullWidth size='small' name='message' onChange={(e)=>{setMessage(e.target.value)}}/>
-        <Button onClick={sendMessage}>Send Message</Button>
-        <h4>Message: {messageRecieved}</h4>
-    </Box>
-  )
+    <Root className="chat-room">
+      {!showChat ? (
+        <Box className="joinChatContainer">
+          <Typography variant="h5" style={{color: "#086D67", marginBottom: "10px"}}>Join Debate Room</Typography>
+          <TextField
+            type="text"
+            size="small"
+            placeholder="Username"
+            className="text-field"
+            onChange={(event) => {
+              setUsername(event.target.value);
+            }}
+          />
+          <TextField
+            type="text"
+            size="small"
+            placeholder="Enter Debate Room Id"
+            className="text-field"
+            onChange={(event) => {
+              setRoom(event.target.value);
+            }}
+          />
+          <Button variant="contained" onClick={joinRoom} className="join">Join</Button>
+        </Box>
+      ) : (
+        <Chat socket={socket} username={username} room={room} onCloseChat={()=> setShowChat(false)}/>
+      )}
+    </Root>
+  );
 }
 
-export default ChatRoom
+const Root = styled.div`
+  padding-top: 30px;
+ .joinChatContainer {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 80%;
+    border: 2px solid #086D67;
+    border-radius: 10px;
+    margin: auto;
+  }
+  .text-field{
+    margin-top: 10px;
+  }
+  .join{
+    width: 30%;
+    margin: auto;
+    margin-top: 10px;
+    background-color: #086D67;
+  }
+`
+export default ChatRoom;
