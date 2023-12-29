@@ -1,12 +1,11 @@
 import express from "express";
 import User from "../models/userModel.js";
 export const updateProfile = async (req, res) => {
-    const { id, phone, age, gender, education, university, employment, city, state, pincode } = req.body;
+    const { id, age, gender, education, university, employment, city, state, pincode } = req.body;
     try {
         const updatedUser = await User.findByIdAndUpdate(
             id,
             {
-                phone,
                 age,
                 gender,
                 education,

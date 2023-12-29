@@ -83,7 +83,7 @@ const LoginTile = () => {
                     </Button>
                     <Typography className='login-signup'>New User? <a href='/signup'>SignUp</a></Typography>
                 </Box>
-
+                <Typography className='forgot-password'><a href='/forgot-password'>Forgot password?</a></Typography>
             </form>
         </Root>
     )
@@ -93,7 +93,7 @@ const Root = styled.div`
     .form-submit{
       background-color: #086d67;
       color: white;
-      margin-top: 12px;
+      margin-top: 15px;
       text-transform: none;
       &:hover {
         background-color: #045350;
@@ -121,6 +121,9 @@ const Root = styled.div`
     .error {
         animation: shake .6s linear;
     }
-
+    .forgot-password{
+      margin-left: auto;
+      margin-top:10px;
+    }
 `;
 export default LoginTile

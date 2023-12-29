@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import User from '../models/userModel.js';
 const JWT_SECRET='infofusionsuperhardkey'
 export const register = async (req, res) => {
+    console.log(req.body);
     const { name, email, password, username, age } = req.body;
     try {
         const salt = await bcrypt.genSalt();
@@ -15,6 +16,7 @@ export const register = async (req, res) => {
         console.log(savedNewUser);
         res.status(200).send(savedNewUser);
     } catch (error) {
+        console.log(error);
         res.status(500).send(error);
     }
 }

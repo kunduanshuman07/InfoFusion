@@ -43,7 +43,6 @@ const employmentOptions = [
     },
 ];
 const EditProfile = (props) => {
-    const [phone, setPhone] = useState(props.values.phone);
     const [age, setAge] = useState(props.values.age);
     const [gender, setGender] = useState(props.values.gender);
     const [education, setEducation] = useState(props.values.education);
@@ -57,7 +56,7 @@ const EditProfile = (props) => {
     }
     const handleUpdate = async () => {
         const updatedData = {
-            id: props.values._id, phone, age, gender, education, university, employment, city, state, pincode
+            id: props.values._id, age, gender, education, university, employment, city, state, pincode
         }
         const { data, status } = await axios.patch('http://localhost:3000/user/update-profile', updatedData);
         if (status === 200) {
@@ -84,18 +83,6 @@ const EditProfile = (props) => {
             <DialogContent style={{ padding: "20px 25px 10px 25px" }}>
                 <form>
                     <Grid container spacing={3}>
-                        <Grid item xs={6}>
-                            <TextField
-                                label="Phone"
-                                name="phone"
-                                variant="outlined"
-                                fullWidth
-                                size="small"
-                                value={phone}
-                                placeholder="Phone"
-                                onChange={(e) => setPhone(e.target.value)}
-                            />
-                        </Grid>
                         <Grid item xs={6}>
                             <TextField
                                 name="age"
