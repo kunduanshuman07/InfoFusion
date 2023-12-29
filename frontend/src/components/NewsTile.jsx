@@ -87,6 +87,7 @@ const Root = styled.div`
     font-size: 100px;
   }
   .title{
+    font-weight: bold;
     font-size: 18px;
     padding-bottom: 10px;
     border-bottom: 1px solid #086D67;

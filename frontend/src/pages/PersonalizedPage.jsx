@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components';
-import { Box, TextField, MenuItem, Button, InputLabel } from "@mui/material";
+import { Box, TextField, MenuItem, Button} from "@mui/material";
 import NewsTile from "../components/NewsTile";
 import { countries } from "../utils/Countries";
 import { newsCategories } from "../utils/newsCategories";
@@ -12,7 +12,6 @@ const PersonalizedPage = () => {
   const [loading, setLoading] = useState(true);
   const handleAddPreferrences = () => {
     const prefUrl = `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&apiKey=63ad2b1e940942df92a9bec4373642e3`;
-    console.log(prefUrl);
     setPersonalizedUrl(prefUrl);
     setLoading(false);
   }

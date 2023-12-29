@@ -26,6 +26,7 @@ function Chat({ socket, username, room, onCloseChat }) {
     const [messageList, setMessageList] = useState([]);
 
     const sendMessage = async () => {
+        console.log(messageList);
         if (currentMessage !== "") {
             const messageData = {
                 room: room,
@@ -57,7 +58,7 @@ function Chat({ socket, username, room, onCloseChat }) {
                     }}
                 >
                     <Typography style={{ color: "white" }}>Debate Room Id: #{room}</Typography>
-                    <Typography style={{ color: "white", margin: " auto", fontWeight: "bolder" }}>Live Chat</Typography>
+                    <Typography style={{ color: "white", margin: " auto", fontWeight: "bolder" }}>Live Debate - {username}</Typography>
                     <CloseIcon className="close-icon" style={{ color: 'white', cursor: "pointer" }} onClick={onCloseChat} />
                 </DialogTitle>
                 <DialogContent style={{ padding: "20px 25px 10px 25px" }}>
@@ -148,12 +149,12 @@ const Root = styled.div`
     }
     .yourmessage {
         margin-left: auto;
-        max-width: 50%;
+        max-width: 60%;
     }
 
     .othermessage {
         margin-right: auto;
-        max-width: 50%;
+        max-width: 60%;
     }
     .message-meta{
         display: flex;
@@ -166,7 +167,7 @@ const Root = styled.div`
         border-radius: 10px;
     }
     .avatar-style{
-        background-color: #42d1f5;
+        background-color: #086D67;
     }
 `;
 

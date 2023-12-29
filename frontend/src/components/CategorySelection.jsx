@@ -47,7 +47,7 @@ const CategorySelection = () => {
             }}
           >
             <LinearProgress color="inherit" style={{ marginBottom: "10px" }} />
-            Select a category to view trending topics for Debate !
+            Select a category to view trending topics for Debate!
             <Box style={{backgroundColor: "white", borderRadius: "10px", marginTop: "10px", padding: "10px"}}>
               <TextField
                 name="category"

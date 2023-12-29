@@ -18,7 +18,6 @@ import AppBarComponent from '../components/AppBar'
 import TrendingPage from '../pages/TrendingPage';
 import styled from "styled-components";
 import PersonalizedPage from '../pages/PersonalizedPage';
-import OpinionPage from '../pages/OpinionPage';
 import PlaygroundPage from "../pages/PlaygroundPage";
 import FactcheckPage from "../pages/FactcheckPage";
 import OverallLeaderboard from '../pages/OverallLeaderboard';
@@ -26,6 +25,9 @@ import HelpSupport from '../pages/HelpSupport';
 import ScoreCardPage from '../pages/ScoreCardPage';
 import { useModal } from '../context/ModalContext';
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
+import AccessibilityIcon from '@mui/icons-material/Accessibility';
+import DebatePage from '../pages/DebatePage';
+import OpinionPage from '../pages/OpinionPage';
 const UserLayout = () => {
     const { isModalOpen } = useModal();
     const [drawerWidth, setDrawerWidth] = React.useState(230);
@@ -124,7 +126,7 @@ const UserLayout = () => {
                             />
                         </ListItem>
                         <ListItem
-                            to="/opinion-debate"
+                            to="/debate"
                             component={NavLink}
                             style={({ isActive }) =>
                                 (isActive ? { color: 'white', borderRight: '9px solid white' } : { color: 'white' })}
@@ -141,6 +143,29 @@ const UserLayout = () => {
                                 primary={
                                     <Typography>
                                         Debate
+                                    </Typography>
+                                }
+                                style={{ display: open ? "" : "none" }}
+                            />
+                        </ListItem>
+                        <ListItem
+                            to="/your-opinion"
+                            component={NavLink}
+                            style={({ isActive }) =>
+                                (isActive ? { color: 'white', borderRight: '9px solid white' } : { color: 'white' })}
+                        >
+                            <ListItemIcon>
+                                <IconButton style={{ color: "white" }}>
+                                    <AccessibilityIcon
+                                        width={16}
+                                        height="100%"
+                                    />
+                                </IconButton>
+                            </ListItemIcon>
+                            <ListItemText
+                                primary={
+                                    <Typography>
+                                        Opinion ?
                                     </Typography>
                                 }
                                 style={{ display: open ? "" : "none" }}
@@ -177,7 +202,8 @@ const UserLayout = () => {
                     <Routes>
                         <Route path="/" element={<TrendingPage />} />
                         <Route path="/personalized" element={<PersonalizedPage />} />
-                        <Route path="/opinion-debate" element={<OpinionPage />} />
+                        <Route path="/debate" element={<DebatePage />} />
+                        <Route path="/your-opinion" element={<OpinionPage />} />
                         <Route path="/playground" element={<PlaygroundPage />} />
                         <Route path="/factcheck" element={<FactcheckPage />} />
                         <Route path="/leaderboard" element={<OverallLeaderboard />} />
