@@ -205,7 +205,7 @@ const UserLayout = () => {
                         <Route path="/debate" element={<DebatePage />} />
                         <Route path="/your-opinion" element={<OpinionPage />} />
                         <Route path="/playground" element={<PlaygroundPage />} />
-                        <Route path="/factcheck" element={<FactcheckPage />} />
+                        <Route path="/fact-check" element={<FactcheckPage />} />
                         <Route path="/leaderboard" element={<OverallLeaderboard />} />
                         <Route path='/help-support' element={<HelpSupport />} />
                         <Route path='/score-cards' element={<ScoreCardPage />} />

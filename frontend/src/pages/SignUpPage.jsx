@@ -18,8 +18,8 @@ const SignUpPage = () => {
         </Box>
       </Card>
       <Box className='side-box'>
-        <img src={Logo} width={250} alt='InfoFusion' className='logo' />
-        <Typography>Play around the latest news !</Typography>
+        <img src={Logo} width={320} alt='InfoFusion' className='logo' />
+        <Typography style={{fontWeight: "bold"}}>Play & Compete around Current Affairs!</Typography>
       </Box>
     </Root>
   )

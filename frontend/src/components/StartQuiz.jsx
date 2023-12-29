@@ -109,8 +109,8 @@ const StartQuiz = (props) => {
           <Button className='start-quiz' variant='outlined' onClick={handleStartQuiz} disabled={!isQuizEnabled}>
             Start the quiz
           </Button>
+          <Button variant='contained' startIcon={<SportsScoreIcon />} className='scorecards-btn' onClick={handleClick}>Scorecards</Button>
         </Box>
-        <Button variant='outlined' startIcon={<SportsScoreIcon />} className='scorecards-btn' onClick={handleClick}>Scorecards</Button>
         <Box className='leaderboard-box'>
           <Button variant='outlined' className='leaderboard-btn'>Current Quiz Leaderboard <EmojiEventsIcon style={{ color: "#d4af37", marginLeft: "5px" }} /></Button>
           <Box className='data-grid'>
@@ -132,12 +132,14 @@ const StartQuiz = (props) => {
 const Root = styled.div`
   padding: 10px;
   .container {
-    margin-top: 20px;
+    margin-top: -30px;
     display: flex;
     justify-content: center;
   }
   .quiz-box{
-    width: 40%;
+    border: 2px solid #A5A5A5;
+    padding: 10px;
+    width: 50%;
     min-width: 40%;
     display: flex;
     flex-direction: column;
@@ -150,14 +152,12 @@ const Root = styled.div`
       box-shadow: 8px 4px 8px rgba(0.1, 0.1, 0.1, 0.4);
     }
     border-radius: 5px;
-    border-right: 2px solid #086D67;
-    border-left: 2px solid #086D67;
     padding: 20px;
     text-align: center;
   }
   .leaderboard-box{
-    border-left: 2px solid #086D67;
-    border-right: 2px solid #086D67;
+    border: 2px solid #A5A5A5;
+    padding: 10px;
     box-shadow: 8px 4px 8px rgba(0.1, 0.1, 0.1, 0.2);
     cursor: pointer;
     &:hover {
@@ -165,9 +165,10 @@ const Root = styled.div`
     }
     border-radius: 5px;
     display:flex;
+    margin-left: 20px;
     flex-direction: column;
-    width: 45%;
-    max-width: 45%;
+    width: 50%;
+    max-width: 50%;
     margin-top: 10px;
   }
   .leaderboard-btn{
@@ -191,15 +192,16 @@ const Root = styled.div`
   .scorecards-btn{
     margin-top: auto;
     margin-bottom: auto;
-    width: 20%;
+    background-color: #086D67;
+    color: white;
+    width: 40%;
     height: 30%;
     padding: 0px;
     margin-left: 5px;
     margin-right: 5px;
-    color: #086D67;
+    margin-top: 20px;
     text-transform: none;
     font-weight: bold;
-    box-shadow: 8px 4px 8px rgba(0.1, 0.1, 0.1, 0.4);
   }
   .greet {
     color: #086d67;

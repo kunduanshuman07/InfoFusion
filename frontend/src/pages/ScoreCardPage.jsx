@@ -124,8 +124,8 @@ const Root = styled.div`
         &:hover {
             box-shadow: 8px 4px 8px rgba(0.1, 0.1, 0.1, 0.4);
         }   
-        border-left: 2px solid #086D67;
-        border-radius: 5px;
+        border: 2px solid #ddd;
+        border-radius: 10px;
         padding: 20px;
         text-align: center;
     }
@@ -147,9 +147,9 @@ const Root = styled.div`
         &:hover {
             box-shadow: 8px 4px 8px rgba(0.1, 0.1, 0.1, 0.4);
         }   
-        border-left: 2px solid #086D67;
-        border-radius: 5px;
-        padding: 20px;
+        border: 2px solid #ddd;
+        border-radius: 10px;
+        padding: 10px;
     }
     .mytableheader{
         background-color: #086D67;

@@ -21,10 +21,10 @@ const PersonalInfo = () => {
                 <Box className='info-line'>
                     <Box className='info-type'>Account Details</Box>
                     <Box className='info'>
-                        <Typography><span style={{ fontWeight: "bold" }}>Email :</span> {user.email}</Typography>
+                        <Typography><span style={{ fontWeight: "bold" }}>Username :</span> {user.username}</Typography>
                     </Box>
                     <Box className='info'>
-                        <Typography><span style={{ fontWeight: "bold" }}>Phone :</span> {user.phone}</Typography>
+                        <Typography><span style={{ fontWeight: "bold" }}>Email :</span> {user.email}</Typography>
                     </Box>
                     <Box className='info-type'>Personal Details</Box>
                     <Box className='info'>

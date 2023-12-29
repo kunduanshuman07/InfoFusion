@@ -148,7 +148,7 @@ const Root = styled.div`
         margin-left: -20px;
         margin-right: -20px;
         cursor: pointer; 
-        padding: 20px;
+        padding: 10px;
     }
     .mytableheader{
         background-color: #086D67;

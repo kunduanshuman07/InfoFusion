@@ -42,11 +42,25 @@ const employmentOptions = [
         label: "Employed",
     },
 ];
+const genderOptions = [
+    {
+        value: "Male",
+        label: "Male",
+    },
+    {
+        value: "Female",
+        label: "Female",
+    },
+    {
+        value: "Others",
+        label: "Others",
+    },
+]
 const EditProfile = (props) => {
     const [age, setAge] = useState(props.values.age);
     const [gender, setGender] = useState(props.values.gender);
     const [education, setEducation] = useState(props.values.education);
-    const [university, setUniversity] = useState("");
+    const [university, setUniversity] = useState(props.values.university);
     const [employment, setEmployment] = useState(props.values.employment);
     const [city, setCity] = useState(props.values.city);
     const [state, setState] = useState(props.values.state);
@@ -106,7 +120,14 @@ const EditProfile = (props) => {
                                 label='Gender'
                                 placeholder="Gender"
                                 onChange={(e) => setGender(e.target.value)}
-                            />
+                                select
+                            >
+                                {genderOptions.map((option) => (
+                                    <MenuItem key={option.value} value={option.value}>
+                                        {option.label}
+                                    </MenuItem>
+                                ))}
+                            </TextField>
                         </Grid>
                         <Grid item xs={6}>
                             <TextField
