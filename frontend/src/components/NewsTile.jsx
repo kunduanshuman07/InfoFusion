@@ -58,6 +58,8 @@ const Root = styled.div`
   .card-box {
     display: flex;
     margin: 20px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
     cursor: pointer;
     padding: 10px;
     box-shadow: 8px 4px 8px rgba(0.1, 0.1, 0.1, 0.2);
@@ -109,7 +111,7 @@ const Root = styled.div`
     text-transform: none;
     padding: 0px;
     &:hover {
-      background-color: whitesmoke;
+      background-color: white;
       color: #086D67;
     }
   }

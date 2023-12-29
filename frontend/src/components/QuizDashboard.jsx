@@ -140,10 +140,10 @@ const Root = styled.div`
     padding: 0px;
     min-width: 300px;
     min-height: 200px;
-    border-radius: 5px;
+    border-radius: 10px;
     margin-left: 4px;
     margin-right: 18px;
-    border-left: 2px solid #086D67;
+    border: 2px solid #ddd;
     box-shadow: 8px 4px 8px rgba(0.1, 0.1, 0.1, 0.15);
     cursor: pointer;
     &:hover {

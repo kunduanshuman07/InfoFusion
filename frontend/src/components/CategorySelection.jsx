@@ -58,6 +58,7 @@ const CategorySelection = () => {
                 placeholder="Select a Category to enter Debate Room"
                 onChange={handleCategoryChange}
                 select
+                style={{border: "0px"}}
               >
                 {newsCategories.map((category) => (
                   <MenuItem key={category} value={category}>{category}</MenuItem>

@@ -76,7 +76,7 @@ const Root = styled.div`
         &:hover {
             box-shadow: 8px 4px 8px rgba(0.1, 0.1, 0.1, 0.4);
         }
-        border-left: 2px solid #086D67;
+        border: 2px solid #ddd;
         border-radius: 5px;
         padding: 20px;
         text-align: center;
@@ -85,7 +85,7 @@ const Root = styled.div`
         display: flex;
         flex-direction: column;
         margin-left: 50px; 
-        border-left: 5px solid #086D67;
+        border-left: 5px solid #A5A5A5;
         padding-left: 50px;
     }
 
@@ -107,7 +107,7 @@ const Root = styled.div`
         &:hover {
             box-shadow: 8px 4px 8px rgba(0.1, 0.1, 0.1, 0.4);
         }
-        border-left: 2px solid #086D67;
+        border: 2px solid #ddd;
         border-radius: 5px;
         min-width: 600px;
         color: #045350;

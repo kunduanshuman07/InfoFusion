@@ -46,7 +46,7 @@ const Root = styled.div`
     &:hover {
         box-shadow: 8px 4px 8px rgba(0.1, 0.1, 0.1, 0.4);
     }   
-    border-left: 2px solid #086D67;
+    border: 2px solid #ddd;
     border-radius: 5px;
     padding: 20px;
     text-align: center;
