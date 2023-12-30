@@ -51,9 +51,6 @@ function AppBarComponent({ comp }) {
                     <Container maxWidth="xl">
                         <Toolbar disableGutters>
                             <img alt="InfoFusion" src={Logo} width={150} height="100%" onClick={() => navigate('/')} className='logo-style' />
-                            <IconButton style={{ color: "#086D67", marginLeft: -5 }}>
-                                <NewsIcon />
-                            </IconButton>
                             {comp === 'profile' && <Box className='profile-btns'>
                                 <IconButton style={{ color: "#086D67", marginRight: "20px" }} onClick={() => navigate('/')}>
                                     <HomeIcon />

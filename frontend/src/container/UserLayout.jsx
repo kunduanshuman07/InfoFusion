@@ -28,6 +28,7 @@ import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 import AccessibilityIcon from '@mui/icons-material/Accessibility';
 import DebatePage from '../pages/DebatePage';
 import OpinionPage from '../pages/OpinionPage';
+import SettingsPage from "../pages/SettingsPage";
 const UserLayout = () => {
     const { isModalOpen } = useModal();
     const [drawerWidth, setDrawerWidth] = React.useState(230);
@@ -208,6 +209,7 @@ const UserLayout = () => {
                         <Route path="/fact-check" element={<FactcheckPage />} />
                         <Route path="/leaderboard" element={<OverallLeaderboard />} />
                         <Route path='/help-support' element={<HelpSupport />} />
+                        <Route path='/settings' element={<SettingsPage />} />
                         <Route path='/score-cards' element={<ScoreCardPage />} />
                     </Routes>
                 </div>

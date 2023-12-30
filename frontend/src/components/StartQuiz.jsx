@@ -1,18 +1,24 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { Button, Box, Typography, IconButton, Avatar, Tooltip } from '@mui/material';
+import { Button, Box, Typography, IconButton, Avatar} from '@mui/material';
 import styled from 'styled-components';
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import { DataGrid } from "@mui/x-data-grid";
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import SportsScoreIcon from '@mui/icons-material/SportsScore';
 import { useNavigate } from "react-router-dom";
+import QuizChoices from './QuizChoices';
 const StartQuiz = (props) => {
   const user = JSON.parse(localStorage.getItem("user"));
   const [rows, setRows] = useState([]);
   const [isQuizEnabled, setIsQuizEnabled] = useState(true);
+  const [quizSelection, setQuizSelection] = useState(true);
+  const [quizChoice, setQuizChoice] = useState("Today");
   const navigate = useNavigate();
   const handleClick = () => {
     navigate('/score-cards');
+  }
+  const handleQuizChoiceSelection = (choice) =>{
+    setQuizChoice(choice);
   }
   useEffect(() => {
     const isQuizIdPresent = user.quizzes.some((quiz) => quiz.quizId === props.quizId);
@@ -61,7 +67,6 @@ const StartQuiz = (props) => {
   const handleStartQuiz = () => {
     props.setStartQuiz(true);
   }
-
   const getTimeRemainingUntilNextDay = useCallback(() => {
     const now = new Date();
     const tomorrow = new Date(now);
@@ -92,7 +97,8 @@ const StartQuiz = (props) => {
   }
   return (
     <Root>
-      <Box className='container'>
+      <QuizChoices setQuizSelection={setQuizSelection} handleQuizChoiceSelection={handleQuizChoiceSelection}/>
+      <Box className='container' style={{ filter: !quizSelection ? 'blur(5px)' : quizChoice!=="Today"? 'blur(5px)':'none' }}>
         <Box className='quiz-box'>
           <IconButton>
             <Avatar alt={user.name} src='avatar' className='avatar-style' />
@@ -100,19 +106,19 @@ const StartQuiz = (props) => {
           <Typography className='greet'>
             <h2>Hi {user.name} !</h2>
             {isQuizEnabled === false && <h4 style={{ color: "red" }}>"You have already given today's quiz!"</h4>}
+            <Button className='start-quiz' variant='outlined' onClick={handleStartQuiz} disabled={!isQuizEnabled}>
+            Start the quiz
+          </Button>
             <h3 style={{ color: "purple" }}>Next Quiz starts in</h3>
           </Typography>
           <Box className='timer'>
             <AccessAlarmIcon fontSize='medium' className='timer-icon' />
             <h3>{formatTime(timeRemaining)}</h3>
           </Box>
-          <Button className='start-quiz' variant='outlined' onClick={handleStartQuiz} disabled={!isQuizEnabled}>
-            Start the quiz
-          </Button>
           <Button variant='contained' startIcon={<SportsScoreIcon />} className='scorecards-btn' onClick={handleClick}>Scorecards</Button>
         </Box>
         <Box className='leaderboard-box'>
-          <Button variant='outlined' className='leaderboard-btn'>Current Quiz Leaderboard <EmojiEventsIcon style={{ color: "#d4af37", marginLeft: "5px" }} /></Button>
+          <Button variant='outlined' className='leaderboard-btn'>Today's Quiz Leaderboard <EmojiEventsIcon style={{ color: "#d4af37", marginLeft: "5px" }} /></Button>
           <Box className='data-grid'>
             <DataGrid
               sx={{ border: "0px" }}
@@ -132,7 +138,7 @@ const StartQuiz = (props) => {
 const Root = styled.div`
   padding: 10px;
   .container {
-    margin-top: -30px;
+    margin-top: -10px;
     display: flex;
     justify-content: center;
   }
@@ -199,7 +205,6 @@ const Root = styled.div`
     padding: 0px;
     margin-left: 5px;
     margin-right: 5px;
-    margin-top: 20px;
     text-transform: none;
     font-weight: bold;
   }

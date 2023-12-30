@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { Card, CardContent, CardMedia, Typography, Button } from '@mui/material';
+import { Card, CardContent, CardMedia, Typography} from '@mui/material';
 import axios from "axios";
 import styled from 'styled-components';
 import CircularProgress from '@mui/material/CircularProgress';
 const NewsTile = ({ url }) => {
   const [headlines, setHeadlines] = useState([]);
   const [loading, setLoading] = useState(true);
+  const handleNewsClick = (newsUrl) =>{
+    window.open(newsUrl, '_blank');
+  }
   useEffect(() => {
     const fetchHeadlines = async () => {
       try {
@@ -24,7 +27,7 @@ const NewsTile = ({ url }) => {
       <div className={loading ? 'blur' : ''}>
         {loading ? <CircularProgress className='progress-bar' /> : headlines.map((e, index) => {
           return (
-            <Card key={index} className='card-box' >
+            <Card key={index} className='card-box' onClick={()=>handleNewsClick(e.url)}>
               <CardMedia
                 component="img"
                 className='card-media'
@@ -38,9 +41,6 @@ const NewsTile = ({ url }) => {
                 <Typography className='description'>
                   {e.description}
                 </Typography>
-                <Button variant="outlined" className="check-button" href={e.url} target="_blank">
-                  Check it out!
-                </Button>
               </CardContent>
             </Card>
           );

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Quiz from '../components/Quiz';
 import axios from "axios";
 import StartQuiz from '../components/StartQuiz';
-import LeaderBoard from '../components/LeaderBoard';
 import styled from 'styled-components';
 
 const PlaygroundPage = () => {
@@ -32,7 +31,7 @@ const PlaygroundPage = () => {
     <>
       {
         startQuiz ? <Quiz questions={questions} quizId={quizId} /> : <Root>
-          <StartQuiz setStartQuiz={setStartQuiz} quizId={quizId} rows={rows}/>
+          <StartQuiz setStartQuiz={setStartQuiz} quizId={quizId} rows={rows} />
         </Root>
       }
 
