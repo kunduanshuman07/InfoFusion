@@ -5,18 +5,21 @@ import CircularProgress from '@mui/material/CircularProgress';
 import useFetch from '../hooks/useFetch';
 import { IconButton } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-
+import ViewProfile from "../components/ViewProfile";
 const OverallLeaderboard = () => {
   const [rows, setRows] = useState([]);
   const [profileModal, setProfileModal] = useState(false);
-  const [username, setUsername] = useState("");
+  const [userId, setUserId] = useState();
   const { data } = useFetch({
     method: 'GET',
     url: '/user/overall-leaderboard',
   });
   const handleProfileView = (rowData) => {
-    setUsername(rowData.row.username);
+    setUserId(rowData.row.userId);
     setProfileModal(true);
+  }
+  const handleClose = () =>{
+    setProfileModal(false);
   }
   const columns = [
     {
@@ -73,8 +76,8 @@ const OverallLeaderboard = () => {
       headerClassName: "mytableheader",
       align: " center ",
       renderCell: (rowData) => (
-        <IconButton size='small' style={{margin: "auto"}}>
-          <VisibilityIcon onClick={handleProfileView(rowData)}/>
+        <IconButton size='small' style={{ margin: "auto" }}>
+          <VisibilityIcon onClick={() => handleProfileView(rowData)} />
         </IconButton>
       ),
     },
@@ -87,16 +90,19 @@ const OverallLeaderboard = () => {
         rank: index + 1,
         name: item.user.name,
         username: item.user.username,
+        userId: item.user._id,
         rating: item.rating,
         quizcount: item.quizcount,
       }));
+      console.log(formattedRows);
       setRows(formattedRows);
     }
   }, [data]);
 
   return (
     <Root>
-      {!data ? <CircularProgress className="progress-bar" /> : <LeaderBoard rows={rows} profileModal={profileModal} columns={columns} username={username} onCloseModal={() => setProfileModal(false)}/>}
+      {!data && !profileModal ? <CircularProgress className="progress-bar" /> : <LeaderBoard rows={rows} columns={columns}/>}
+      {profileModal && <ViewProfile userId={userId} onCloseModal={handleClose}/>}
     </Root>
   );
 };

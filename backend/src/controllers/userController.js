@@ -55,13 +55,14 @@ export const getOverallLeaderboard = async (req, res) => {
 export const userDetails = async (req, res) => {
     const { userId } = req.body;
     try {
-        const user = User.findById(userId);
+        const user = await User.findById(userId).lean();
         res.status(200).send(user);
     } catch (error) {
         console.log(error);
         res.status(500).send(error);
     }
 }
+
 
 
 export const userDashboard = async (req, res) => {
