@@ -4,25 +4,16 @@ import { Box, IconButton, Tooltip, Typography } from "@mui/material";
 import { DataGrid, GridToolbarContainer, GridToolbarExport } from "@mui/x-data-grid";
 import SportsScoreIcon from '@mui/icons-material/SportsScore';
 import axios from "axios";
-import {useNavigate} from "react-router-dom";
+
 function CustomToolbar() {
-    const navigate = useNavigate();
-    const handleClick = () => {
-        navigate('/score-cards');
-    }
-    return (
+        return (
         <GridToolbarContainer className='toolbar'>
             <GridToolbarExport className='export' />
-            <Tooltip title='Back to Playground'>
-                <IconButton style={{ color: "#086D67", marginLeft: "700px" }} onClick={handleClick}>
-                    <SportsScoreIcon/>
-                </IconButton>
-            </Tooltip>
         </GridToolbarContainer>
     );
 }
 const ScoreCard = (props) => {
-    
+
     const user = JSON.parse(localStorage.getItem("user"));
     const [rows, setRows] = useState([]);
     const columns = [
@@ -76,10 +67,12 @@ const ScoreCard = (props) => {
                     scoreCard: props.attemptedQuestions,
                 }
                 console.log(quizUserData);
-                const response = await axios.patch('http://localhost:3000/quiz/update-user-quiz-data', quizUserData);
-                if (response.status === 200) {
-                    console.log(response.data);
-                    localStorage.setItem("user", JSON.stringify(response.data));
+                if (props.callFrom !== 'Past') {
+                    const response = await axios.patch('http://localhost:3000/quiz/update-user-quiz-data', quizUserData);
+                    if (response.status === 200) {
+                        console.log(response.data);
+                        localStorage.setItem("user", JSON.stringify(response.data));
+                    }
                 }
             }
             const formattedRows = props.attemptedQuestions.map((item, index) => ({
@@ -97,7 +90,7 @@ const ScoreCard = (props) => {
     return (
         <Root>
             <Box className='container'>
-                <Typography className='complete'>Quiz Complete!</Typography>
+                {props.callFrom!=='Past' && <Typography className='complete'>Quiz Complete!</Typography>}
                 <Typography className='score'>Your Score: {props.score} / {props.questionsLength} </Typography>
             </Box>
             <Box className='data-grid'>
@@ -123,10 +116,11 @@ const Root = styled.div`
         &:hover {
             box-shadow: 8px 4px 8px rgba(0.1, 0.1, 0.1, 0.4);
         }   
-        border-left: 2px solid #086D67;
-        border-radius: 5px;
+        border: 2px solid #ddd;
+        border-radius: 10px;
         padding: 20px;
         text-align: center;
+        margin-top: 10px;
     }
     .complete{
         font-size: 20px;

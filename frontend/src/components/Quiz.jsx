@@ -110,7 +110,7 @@ const Quiz = ({ questions, quizId, setOpenQuizModal }) => {
   return (
     <>
       {showScore ? (
-        <ScoreCard score={score} iqr={IQR} quizId={quizId} questionsLength={questionsLength} attemptedQuestions={attemptedQuestions} setShowScore={setShowScore} />
+        <ScoreCard score={score} iqr={IQR} quizId={quizId} questionsLength={questionsLength} attemptedQuestions={attemptedQuestions} setShowScore={setShowScore} callFrom='Past'/>
       ) : (
         <>
           <Dialog open={true} fullScreen>

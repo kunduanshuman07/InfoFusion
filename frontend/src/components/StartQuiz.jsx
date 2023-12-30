@@ -7,6 +7,7 @@ import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import SportsScoreIcon from '@mui/icons-material/SportsScore';
 import { useNavigate } from "react-router-dom";
 import QuizChoices from './QuizChoices';
+import PastQuizzes from './PastQuizzes';
 const StartQuiz = (props) => {
   const user = JSON.parse(localStorage.getItem("user"));
   const [rows, setRows] = useState([]);
@@ -98,7 +99,7 @@ const StartQuiz = (props) => {
   return (
     <Root>
       <QuizChoices setQuizSelection={setQuizSelection} handleQuizChoiceSelection={handleQuizChoiceSelection}/>
-      <Box className='container' style={{ filter: !quizSelection ? 'blur(5px)' : quizChoice!=="Today"? 'blur(5px)':'none' }}>
+      {quizChoice==="Today" && <Box className='container' style={{ filter: !quizSelection ? 'blur(5px)' :'none' }}>
         <Box className='quiz-box'>
           <IconButton>
             <Avatar alt={user.name} src='avatar' className='avatar-style' />
@@ -131,7 +132,8 @@ const StartQuiz = (props) => {
             />
           </Box>
         </Box>
-      </Box>
+      </Box>}
+      {quizChoice === 'Past' && <PastQuizzes/>}
     </Root>
   )
 }

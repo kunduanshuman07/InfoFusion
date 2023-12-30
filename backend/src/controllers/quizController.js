@@ -86,3 +86,28 @@ export const getLeaderBoard = async (req, res) => {
         res.status(500).send(error);
     }
 };
+
+export const getAllPastQuizzes = async (req,res) =>{
+    try {
+        const allQuizzes = await Quiz.find();
+        const formattedRows = allQuizzes.map((quiz) => ({
+            createdAt: quiz.createdAt,
+            _id: quiz._id,
+        }));
+        res.status(200).send(formattedRows);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
+
+export const getQuizData = async(req, res) => {
+    const {quizId} = req.body;
+    try {
+        const quizData = await Quiz.findById(quizId);
+        res.status(200).send(quizData);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
