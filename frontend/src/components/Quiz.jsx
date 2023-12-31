@@ -5,7 +5,7 @@ import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import ScoreCard from './ScoreCard';
 import { ratingAlgorithm } from '../utils/RatingAlgo';
 import CloseIcon from "@mui/icons-material/Close";
-const Quiz = ({ questions, quizId, setOpenQuizModal }) => {
+const Quiz = ({ questions, quizId, callFrom }) => {
   const [timeLeft, setTimeLeft] = useState(1200);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
@@ -21,7 +21,9 @@ const Quiz = ({ questions, quizId, setOpenQuizModal }) => {
   const [incHard, setIncHard] = useState(0);
   const [incMisc, setIncMisc] = useState(0);
   const [IQR, setIQR] = useState(0);
+  const [callFromComp, setCallFromComp] = useState('')
   useEffect(() => {
+    if(callFrom==="Past") setCallFromComp("Past");
     if (!timeLeft) setShowScore(true);
 
     const intervalId = setInterval(() => {
@@ -110,7 +112,7 @@ const Quiz = ({ questions, quizId, setOpenQuizModal }) => {
   return (
     <>
       {showScore ? (
-        <ScoreCard score={score} iqr={IQR} quizId={quizId} questionsLength={questionsLength} attemptedQuestions={attemptedQuestions} setShowScore={setShowScore} callFrom='Past'/>
+        <ScoreCard score={score} iqr={IQR} quizId={quizId} questionsLength={questionsLength} attemptedQuestions={attemptedQuestions} setShowScore={setShowScore} callFrom={callFromComp}/>
       ) : (
         <>
           <Dialog open={true} fullScreen>

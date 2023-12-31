@@ -15,11 +15,16 @@ const QuizDashboard = () => {
   const [maxiqr, setMaxiqr] = useState(0);
   const [iqrRow, setIqrRow] = useState([]);
   const [seriesRow, setSeriesRow] = useState([]);
+  const [overallRatingRow, setOverallRatingRow] = useState([]);
+  const [overallRatingSeries, setOverallRatingSeries] = useState([]);
   useEffect(() => {
     const xAxisData = user.quizzes.map((quiz, index) => index + 1);
     const seriesData = user.quizzes.map(quiz => quiz.rating);
+    const overallRatingdata = user.quizzes.map(quiz => quiz.overallRating);
     setIqrRow(xAxisData);
     setSeriesRow(seriesData);
+    setOverallRatingRow(xAxisData);
+    setOverallRatingSeries(overallRatingdata);
     const fetchDashboard = async () => {
       const userData = {
         userId: user._id
@@ -109,10 +114,10 @@ const QuizDashboard = () => {
             <Box className='grids'>
               <Box className='overallrating-graph'>
                 <LineChart
-                  xAxis={[{ data: [1, 2, 3, 5, 8, 10] }]}
+                  xAxis={[{ data: overallRatingRow }]}
                   series={[
                     {
-                      data: [2, 5.5, 2, 8.5, 1.5, 5],
+                      data: overallRatingSeries,
                       label: "Rating",
                       color: 'Red',
                     },

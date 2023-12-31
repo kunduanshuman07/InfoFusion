@@ -98,6 +98,9 @@ const userSchema = new mongoose.Schema({
       timetaken: {
         type: Date,
       },
+      overallRating: {
+        type: Number,
+      }
     },
   ],
 }, {
