@@ -87,13 +87,37 @@ export const userDashboard = async (req, res) => {
         } else {
             console.error("User or user.quizzes is undefined or empty.");
         }
-
-
+        const solvedQuestions = quizCount*10;
+        let correctanswers=0;
+        let hardanswers=0;
+        let miscanswers=0;
+        if(user && user.quizzes.length> 0 ){
+            const quizzes = user.quizzes;
+            quizzes.map((quiz)=>{
+                const scorecard = quiz.scorecard;
+                scorecard.map((scores)=>{
+                    if(scores.points===1){
+                        correctanswers=correctanswers+1;
+                        if(scores.type==="3"){
+                            hardanswers=hardanswers+1;
+                        }
+                        else if(scores.type==="4"){
+                            miscanswers=miscanswers+1;
+                        }
+                    }
+                })
+                
+            })
+        }
         const dashboardData = {
             rating: rating,
             maxRating: maxRating,
             quizcount: quizCount,
             maxiqr: maxiqr,
+            solvedQuestions: solvedQuestions,
+            hardAnswers: hardanswers,
+            miscAnswers: miscanswers,
+            correctAnswers: correctanswers,
         }
         res.status(200).send({dashboardData:dashboardData});
     } catch (error) {

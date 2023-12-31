@@ -9,6 +9,7 @@ import axios from "axios";
 import { LineChart } from '@mui/x-charts/LineChart';
 const QuizDashboard = () => {
   const user = JSON.parse(localStorage.getItem("user"));
+  console.log(user);
   const [rating, setRating] = useState(100);
   const [quizCount, setQuizCount] = useState(0);
   const [highestRating, setHighestRating] = useState(100);
@@ -17,6 +18,10 @@ const QuizDashboard = () => {
   const [seriesRow, setSeriesRow] = useState([]);
   const [overallRatingRow, setOverallRatingRow] = useState([]);
   const [overallRatingSeries, setOverallRatingSeries] = useState([]);
+  const [solvedQuestions, setSolvedQuestions] = useState(0);
+  const [correctAnswers, setCorrectAnswers] = useState(0);
+  const [hardAnswers, setHardAnswers] = useState(0);
+  const [miscAnswers, setMiscAnswers] = useState(0);
   useEffect(() => {
     const xAxisData = user.quizzes.map((quiz, index) => index + 1);
     const seriesData = user.quizzes.map(quiz => quiz.rating);
@@ -31,10 +36,15 @@ const QuizDashboard = () => {
       }
       const { data, status } = await axios.post('http://localhost:3000/user/user-dashboard', userData);
       if (status === 200) {
+        console.log(data);
         setRating(data.dashboardData.rating);
         setQuizCount(data.dashboardData.quizcount);
         setHighestRating(data.dashboardData.maxRating);
         setMaxiqr(data.dashboardData.maxiqr);
+        setCorrectAnswers(data.dashboardData.correctAnswers);
+        setHardAnswers(data.dashboardData.hardAnswers);
+        setMiscAnswers(data.dashboardData.miscAnswers);
+        setSolvedQuestions(data.dashboardData.solvedQuestions);
       }
     }
     fetchDashboard();
@@ -51,8 +61,9 @@ const QuizDashboard = () => {
                 <IconButton>
                   <Avatar alt={user.name} src='avatar' className='avatar-style' />
                 </IconButton>
-                <h4 style={{ color: "#086D67" }}>{user.name}</h4>
-                <h5 style={{ color: "#086D67", marginBottom: "10px" }}>Username: {user.username}</h5>
+                <h5 style={{ color: "#086D67" }}>{user.name}</h5>
+                <h4 style={{ color: "#086D67", marginBottom: "0px" }}>Quiz attempts: {quizCount}</h4>
+                <h5 style={{ color: "#086D67", marginBottom: "0px" }}>Username: {user.username}</h5>
               </Box>
             </Box>
           </Grid>
@@ -104,9 +115,10 @@ const QuizDashboard = () => {
                 <VideogameAssetIcon className='quiz-icon' />
               </Box>
               <Box className='quiz-info'>
-                <h4>Solved questions: 800</h4>
-                <h4>Correct Answers: 700</h4>
-                <h4>Correct Misc + Hard: 150</h4>
+                <h4>Solved questions: {solvedQuestions}</h4>
+                <h4>Correct Answers: {correctAnswers}</h4>
+                <h4>Correct Hard: {hardAnswers}</h4>
+                <h4>Correct Miscellaneous: {miscAnswers}</h4>
               </Box>
             </Box>
           </Grid>
@@ -142,7 +154,6 @@ const Root = styled.div`
   }
   .grids {
     display: flex;
-    padding: 0px;
     min-width: 300px;
     min-height: 200px;
     border-radius: 10px;
@@ -158,8 +169,8 @@ const Root = styled.div`
   .rank-info{
     margin: auto;
     color: #086D67;
-    text-align: center;
-    margin-left: 150px;
+    text-align: left;
+    margin-left: 100px;
   }
   .streak-info{
     margin: auto;
@@ -169,10 +180,10 @@ const Root = styled.div`
   .quiz-info{
     margin: auto;
     color: #086D67;
-    text-align: center;
+    text-align: left;
   }
   .profile-box {
-    margin: auto;
+    margin: 0px auto;
     text-align: center;
   }
   .avatar-style {
@@ -181,9 +192,9 @@ const Root = styled.div`
   }
   .trophy-icon {
     color: #d4af37;
-    font-size: 60px;
-    margin-top: 80%;
-    margin-left: 10px;
+    font-size: 100px;
+    margin-top: 25%;
+    margin-left: 80px;
   }
   .streak-icon{
     color: #eb6e2f;
@@ -195,7 +206,7 @@ const Root = styled.div`
     color: #310261;
     font-size: 60px;
     margin-top: 80%;
-    margin-left: 10px;
+    margin-left: 30px;
   }
 `;
 
