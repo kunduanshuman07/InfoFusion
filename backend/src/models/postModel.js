@@ -15,14 +15,13 @@ const postSchema = new mongoose.Schema({
     opinions: [
         {
             username: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "User",
+                type: String,
             },
             opinionText: {
                 type: String, 
             },
             timeOfPost: {
-                type: Date,
+                type: String,
             },
         }
     ],

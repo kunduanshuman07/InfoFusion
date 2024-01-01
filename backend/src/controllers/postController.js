@@ -9,11 +9,22 @@ export const getPosts = async (req,res) => {
         res.status(500).send(error);
     }
 }
+export const getSinglePost = async (req,res) => {
+    const {postId} = req.body;
+    console.log(postId);
+    try {
+        const singlePost = await Post.findById(postId);
+        res.status(200).send(singlePost);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
 
 export const createPost = async (req,res) =>{
-    const {postTitle, postDescription, postImg} = req.body;
+    const {postTitle, postDescription} = req.body;
     try {
-        const newPost = new Post({postTitle, postDescription, postImg});
+        const newPost = new Post({postTitle, postDescription});
         const savedPost = await newPost.save();
         res.status(200).send(savedPost);
     } catch (error) {
@@ -25,8 +36,8 @@ export const createPost = async (req,res) =>{
 export const postOpinion = async(req,res)=>{
     const {postId, username, opinionText, timeOfPost} = req.body;
     try {
-        const findPost = await Post.findById(postId);
-        const updatedPost = await Post.updateOne(
+        
+        await Post.updateOne(
             { _id: postId },
             {
                 $push: {
@@ -38,7 +49,8 @@ export const postOpinion = async(req,res)=>{
                 },
             }
         );
-        res.status(200).send(updatedPost);
+        const findPost = await Post.findById(postId);
+        res.status(200).send(findPost);
     } catch (error) {
         console.log(error);
         res.status(500).send(error);
