@@ -56,3 +56,17 @@ export const postOpinion = async(req,res)=>{
         res.status(500).send(error);
     }
 }
+
+export const deleteOpinion = async(req,res)=>{
+    const {opinionId, postId} = req.body;
+    try {
+        const findPost = await Post.findById(postId);
+        findPost.opinions.pull({ _id: opinionId });
+        await findPost.save();
+        res.status(200).send(findPost);
+        
+    } catch (error) {
+        res.status(500).send(error);
+    }
+    
+}

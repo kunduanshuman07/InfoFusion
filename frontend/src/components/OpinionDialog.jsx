@@ -6,28 +6,39 @@ import SendIcon from "@mui/icons-material/Send";
 import RohitLogo from "../assets/RohitSharma.avif";
 import axios from "axios";
 import moment from "moment";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ReplyIcon from '@mui/icons-material/Reply';
 const OpinionDialog = ({ onCloseModal, postId }) => {
     const [post, setPost] = useState([]);
     const user = JSON.parse(localStorage.getItem("user"));
     const [opinion, setOpinion] = useState('');
     const [opinions, setOpinions] = useState([]);
-    useEffect(()=>{
-        const fetchPost = async() =>{
-            const {data} = await axios.post('http://localhost:3000/post/get-single-post', {postId: postId});
+    const handleDeleteOpinion=async(id) =>{
+        const deletingData ={
+            opinionId: id,
+            postId: postId,
+        }
+        console.log(deletingData);
+        const {data} = await axios.post('http://localhost:3000/post/delete-opinion', deletingData);
+        setOpinions(data.opinions);
+    }
+    useEffect(() => {
+        const fetchPost = async () => {
+            const { data } = await axios.post('http://localhost:3000/post/get-single-post', { postId: postId });
             setOpinions(data.opinions);
             setPost(data);
         }
         fetchPost();
-    },[postId])
-    
+    }, [postId])
+
     const handleDisplayOpinion = async () => {
         const opinionData = {
             username: user.username,
             postId: postId,
             opinionText: opinion,
-            timeOfPost: moment().format('YYYY-MM-DD HH:mm:ss')
+            timeOfPost: moment().format('DD-MM-YYYY HH:mm:ss')
         }
-        const {data} = await axios.patch('http://localhost:3000/post/post-opinion', opinionData);
+        const { data } = await axios.patch('http://localhost:3000/post/post-opinion', opinionData);
         setOpinions(data.opinions);
         setOpinion('');
     };
@@ -50,7 +61,7 @@ const OpinionDialog = ({ onCloseModal, postId }) => {
                 </Box>
                 <Box className='timer' style={{ display: "flex", cursor: "pointer", marginLeft: "auto", backgroundColor: "white", color: "#086D67", borderRadius: "20px", fontWeight: "bolder", padding: "0px" }}>
                     <IconButton onClick={onCloseModal} size='small'>
-                        <CloseIcon className="close-icon" style={{fontWeight: "bolder"}} />
+                        <CloseIcon className="close-icon" style={{ fontWeight: "bolder" }} />
                     </IconButton>
                 </Box>
 
@@ -90,10 +101,21 @@ const OpinionDialog = ({ onCloseModal, postId }) => {
                     <Box className="opinions">
                         {opinions.map((opinion, index) => (
                             <Box className='text-avatar'>
-                                <IconButton color='inherit'>
-                                    <Avatar alt={user.name} src='avatar' className='avatar-style' size='small' />
+                                <IconButton color='inherit' size='small'>
+                                    <Avatar alt={opinion.username} src='avatar' className='avatar-style' size='small' />
                                 </IconButton>
-                                <Typography key={index} style={{ margin: "auto 10px", border: "2px solid #ddd", borderRadius: "10px", padding: "10px", color: "#086D67" }}>{opinion.opinionText}</Typography>
+                                <Typography key={index} style={{ margin: "auto 10px", border: "1px solid #ddd", borderRadius: "10px", padding: "5px", color: "#086D67", fontSize: "14px" }}>{opinion.opinionText}</Typography>
+                                <Box className='time-delete'>
+                                    <Typography key={index} className='time-post'>{opinion.timeOfPost}</Typography>
+                                    <Box className='reply-delete'>
+                                        <IconButton>
+                                            <ReplyIcon style={{ fontSize: '13px', color: "black" }} />
+                                        </IconButton>
+                                        <IconButton onClick={()=>handleDeleteOpinion(opinion._id)} >
+                                            <DeleteIcon style={{ fontSize: '13px', color: "red" }} />
+                                        </IconButton>
+                                    </Box>
+                                </Box>
                             </Box>
                         ))}
                     </Box>
@@ -146,6 +168,21 @@ flex-direction: column;
   }
   .avatar-style{
     background-color: #086D67;
+  }
+  .time-delete{
+    display: flex;
+    flex-direction: column;
+  }
+  .time-post{
+    color: #A5A5A5;
+    font-size: 9px;
+    font-weight: bold;
+    margin-bottom: -7px;
+    margin-top: 10px;
+  }
+  .reply-delete{
+    padding: 0px;
+    margin: auto;
   }
 `
 export default OpinionDialog
