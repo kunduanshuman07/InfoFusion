@@ -1,7 +1,6 @@
 import { Box, Typography, Card, CardMedia, CardContent } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import RohitLogo from "../assets/RohitSharma.avif";
 import OpinionDialog from './OpinionDialog';
 import axios from "axios";
 const OpinionPost = () => {

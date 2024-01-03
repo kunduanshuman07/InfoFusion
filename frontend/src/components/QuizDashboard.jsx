@@ -59,7 +59,7 @@ const QuizDashboard = () => {
             <Box className='grids'>
               <Box className='profile-box'>
                 <IconButton>
-                  <Avatar alt={user.name} src='avatar' className='avatar-style' />
+                  <Avatar alt={user.name} src={`http://localhost:3000/userImages/${user.picturePath}`} className='avatar-style' />
                 </IconButton>
                 <h5 style={{ color: "#086D67" }}>{user.name}</h5>
                 <h4 style={{ color: "#086D67", marginBottom: "0px" }}>Quiz attempts: {quizCount}</h4>

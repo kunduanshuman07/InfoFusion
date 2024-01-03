@@ -16,6 +16,7 @@ import LeaderboardIcon from '@mui/icons-material/Leaderboard';
 import styled from "styled-components";
 function AppBarComponent({ comp }) {
     const user = JSON.parse(localStorage.getItem("user"));
+    console.log(user.picturePath)
     const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
@@ -62,7 +63,7 @@ function AppBarComponent({ comp }) {
                             </Box>}
                             <Box sx={{ ml: "auto" }}>
                                 <IconButton color="inherit" onClick={handleMenu}>
-                                    <Avatar alt={user.name} src='avatar' className='avatar-style' />
+                                    <Avatar alt={user.name} src={`http://localhost:3000/userImages/${user.picturePath}`} className='avatar-style' />
                                 </IconButton>
                                 <Menu
                                     className='menu-style'

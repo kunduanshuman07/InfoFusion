@@ -3,7 +3,6 @@ import { Dialog, DialogTitle, Box, Typography, IconButton, DialogContent, TextFi
 import styled from 'styled-components'
 import CloseIcon from "@mui/icons-material/Close";
 import SendIcon from "@mui/icons-material/Send";
-import RohitLogo from "../assets/RohitSharma.avif";
 import axios from "axios";
 import moment from "moment";
 import DeleteIcon from "@mui/icons-material/Delete";

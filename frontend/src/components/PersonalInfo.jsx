@@ -3,18 +3,20 @@ import styled from "styled-components";
 import AppBarComponent from "../components/AppBar";
 import { Box, IconButton, Typography, Avatar, Button } from '@mui/material';
 import EditProfile from './EditProfile';
+import AvatarUpload from './AvatarUploadDialog';
 const PersonalInfo = () => {
     const user = JSON.parse(localStorage.getItem("user"));
     const [openModal, setOpenModal] = useState(false);
+    const [uploadImageModal, setUploadImageModal] = useState(false);
     return (
-        <Root style={{filter: openModal ? 'blur(5px)' : 'none' }}>
+        <Root style={{ filter: openModal ? 'blur(5px)' : 'none' }}>
             <AppBarComponent comp={'profile'} />
             <Box className='container'>
                 <Box className='profile-box'>
                     <IconButton color="inherit">
-                        <Avatar alt={user.name} src='avatar' className='avatar-style' />
+                        <Avatar alt={user.name} src={`http://localhost:3000/userImages/${user.picturePath}`} className='avatar-style' onClick={() => setUploadImageModal(true)}/>
                     </IconButton>
-                    <h3 style={{color: "#086D67"}}>{user.name}</h3>
+                    <h3 style={{ color: "#086D67" }}>{user.name}</h3>
                     <Button className='edit-profile' onClick={() => setOpenModal(true)}>Edit Profile</Button>
                 </Box>
 
@@ -56,6 +58,7 @@ const PersonalInfo = () => {
                 </Box>
             </Box>
             {openModal && <EditProfile values={user} onCloseModal={() => setOpenModal(false)} />}
+            {uploadImageModal && <AvatarUpload values={user} onCloseModal={() => setUploadImageModal(false)} />}
         </Root>
     );
 };

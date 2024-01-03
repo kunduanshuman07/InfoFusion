@@ -1,5 +1,18 @@
 import express from "express";
 import User from "../models/userModel.js";
+import multer from 'multer';
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, "../backend/public/userImages");
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + '-' + file.originalname);
+    },
+});
+
+export const upload = multer({ storage: storage });
+
 export const updateProfile = async (req, res) => {
     const { id, age, gender, education, university, employment, city, state, pincode } = req.body;
     try {
@@ -29,7 +42,29 @@ export const updateProfile = async (req, res) => {
 
     }
 }
+export const uploadUserImage = async (req, res) => {
+    const {id} = req.body;
+    const Img = req.file;
+    const picturePath = Img.filename;
+    try {
+        const updatedUser = await User.findByIdAndUpdate(
+            id,
+            {
+                picturePath
+            },
+            { new: true, runValidators: true }
+        );
 
+        if (!updatedUser) {
+            return res.status(404).send({ error: "Error updating the UserImage" });
+        }
+
+        res.status(200).send({ updatedUser });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
 export const getOverallLeaderboard = async (req, res) => {
     try {
         const allUsers = await User.find();
@@ -87,26 +122,26 @@ export const userDashboard = async (req, res) => {
         } else {
             console.error("User or user.quizzes is undefined or empty.");
         }
-        const solvedQuestions = quizCount*10;
-        let correctanswers=0;
-        let hardanswers=0;
-        let miscanswers=0;
-        if(user && user.quizzes.length> 0 ){
+        const solvedQuestions = quizCount * 10;
+        let correctanswers = 0;
+        let hardanswers = 0;
+        let miscanswers = 0;
+        if (user && user.quizzes.length > 0) {
             const quizzes = user.quizzes;
-            quizzes.map((quiz)=>{
+            quizzes.map((quiz) => {
                 const scorecard = quiz.scorecard;
-                scorecard.map((scores)=>{
-                    if(scores.points===1){
-                        correctanswers=correctanswers+1;
-                        if(scores.type==="3"){
-                            hardanswers=hardanswers+1;
+                scorecard.map((scores) => {
+                    if (scores.points === 1) {
+                        correctanswers = correctanswers + 1;
+                        if (scores.type === "3") {
+                            hardanswers = hardanswers + 1;
                         }
-                        else if(scores.type==="4"){
-                            miscanswers=miscanswers+1;
+                        else if (scores.type === "4") {
+                            miscanswers = miscanswers + 1;
                         }
                     }
                 })
-                
+
             })
         }
         const dashboardData = {
@@ -119,17 +154,17 @@ export const userDashboard = async (req, res) => {
             miscAnswers: miscanswers,
             correctAnswers: correctanswers,
         }
-        res.status(200).send({dashboardData:dashboardData});
+        res.status(200).send({ dashboardData: dashboardData });
     } catch (error) {
         console.log(error);
         res.status(500).send(error);
     }
 }
 
-export const deleteAccount = async(req,res)=>{
-    const {userid} = req.params;
+export const deleteAccount = async (req, res) => {
+    const { userid } = req.params;
     try {
-        const response = await User.deleteOne({_id: userid});
+        const response = await User.deleteOne({ _id: userid });
         res.status(200).send(response.acknowledged);
     } catch (error) {
         console.error(error);
