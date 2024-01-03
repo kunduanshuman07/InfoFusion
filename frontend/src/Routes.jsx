@@ -7,6 +7,7 @@ import PersonalInfo from './components/PersonalInfo';
 import QuizDashboard from './components/QuizDashboard';
 import { useAuth } from './context/AuthProvider';
 import QuizForm from './pages/QuizFormPage';
+import UploadPostAdmin from './pages/UploadPostAdmin';
 const RouteJS = () => {
   const { auth } = useAuth();
   return (
@@ -17,6 +18,7 @@ const RouteJS = () => {
       <Route path='/personal-info' element={auth && <PersonalInfo />} />
       <Route path='quiz-dashboard' element={auth && <QuizDashboard />} />
       <Route path='quiz-form-admin' element={auth && <QuizForm />} />
+      <Route path='/create-post-admin' element={<UploadPostAdmin />} />
     </Routes>
   )
 }

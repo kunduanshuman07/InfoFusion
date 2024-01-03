@@ -1,4 +1,16 @@
 import Post from "../models/postModel.js";
+import multer from 'multer';
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "../backend/public/postImages");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname);
+  },
+});
+
+export const upload = multer({ storage: storage });
 
 export const getPosts = async (req,res) => {
     try {
@@ -23,8 +35,10 @@ export const getSinglePost = async (req,res) => {
 
 export const createPost = async (req,res) =>{
     const {postTitle, postDescription} = req.body;
+    const postImageFile = req.file;
+    const postImg = postImageFile.filename;
     try {
-        const newPost = new Post({postTitle, postDescription});
+        const newPost = new Post({postTitle, postDescription, postImg});
         const savedPost = await newPost.save();
         res.status(200).send(savedPost);
     } catch (error) {

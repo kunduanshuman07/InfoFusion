@@ -5,12 +5,14 @@ import authRoutes from './routes/auth.js';
 import quizRoutes from './routes/quiz.js';
 import userRoutes from './routes/user.js';
 import postRoutes from './routes/post.js';
+import fcRoutes from "./routes/fcp.js";
+
 import cors from 'cors';
 import { initializeSocket } from './socket.js'; 
 
 const app = express();
 const server = http.createServer(app);
-
+app.use(express.static('public'));
 app.use(
   cors({
     origin: '*',
@@ -28,6 +30,7 @@ app.use('/auth', authRoutes);
 app.use('/quiz', quizRoutes);
 app.use('/user', userRoutes);
 app.use('/post', postRoutes);
+app.use('/fcp', fcRoutes);
 server.listen(3000, () => {
   console.log('Server Running on Port 3000');
 });

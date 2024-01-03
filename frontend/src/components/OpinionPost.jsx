@@ -16,6 +16,7 @@ const OpinionPost = () => {
     const fetchPosts = async () => {
       const { data } = await axios.get('http://localhost:3000/post/get-posts');
       setAllPosts(data);
+      console.log(data);
     }
     fetchPosts();
   }, [])
@@ -29,7 +30,7 @@ const OpinionPost = () => {
           {allPosts?.map((posts) => (
             <Card className="card-box" onClick={()=>handleOpinionDialog(posts._id)}>
               <Box className="card-content-media">
-                <CardMedia component="img" className="card-media" image={RohitLogo} alt="opinion img" />
+                <CardMedia component="img" className="card-media" image={`http://localhost:3000/postImages/${posts.postImg}`} alt="opinion img" />
                 <CardContent className="card-content">
                   <Typography className="title">{posts.postTitle}</Typography>
                 </CardContent>

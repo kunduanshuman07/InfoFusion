@@ -75,7 +75,7 @@ const OpinionDialog = ({ onCloseModal, postId }) => {
                             </Typography >
                         </Box>
                         <Box className="media-textfield">
-                            <CardMedia component="img" className="card-media" image={RohitLogo} alt="opinion img" />
+                            <CardMedia component="img" className="card-media" image={`http://localhost:3000/postImages/${post.postImg}`} alt="opinion img" />
                         </Box>
                     </Box>
                     <Box className="post-opinion">

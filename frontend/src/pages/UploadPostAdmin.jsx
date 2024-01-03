@@ -1,15 +1,17 @@
-import { Box, Typography, Card, CardContent, TextField, InputLabel, Button } from '@mui/material'
+import { Box, Card, CardContent, TextField, InputLabel, Button } from '@mui/material'
 import React, {useState} from 'react'
 import styled from 'styled-components'
 import axios from "axios";
-const FactcheckPage = () => {
+const UploadPostAdmin = () => {
   const [file, setFile] = useState();
-  const [description, setDescription] = useState("");
+  const [postDescription, setPostDescription] = useState("");
+  const [postTitle, setPostTitle] = useState("");
   const handleSubmit = async() =>{
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('description', description);
-    await axios.post('http://localhost:3000/fcp/fake-news-detect', formData);
+    formData.append('postDescription', postDescription);
+    formData.append('postTitle', postTitle);
+    await axios.post('http://localhost:3000/post/create-post', formData);
   }
   return (
     <Root>
@@ -17,8 +19,6 @@ const FactcheckPage = () => {
         <Card className="card-box">
           <Box className="card-content-media">
             <CardContent className="card-content">
-
-              <Typography className="title">A Rumor being spread. Fake or True?</Typography>
               <Box className="fact-pic">
                 <InputLabel className='input-label' required>Enter picture</InputLabel>
                 <TextField
@@ -31,14 +31,25 @@ const FactcheckPage = () => {
                 />
               </Box>
               <Box className='fact-desc'>
+                <InputLabel className='input-label' required>Enter Title</InputLabel>
+                <TextField
+                  size="small"
+                  name="opinion"
+                  placeholder="Title"
+                  fullWidth
+                  multiline
+                  onChange={(e)=>{setPostTitle(e.target.value)}}
+                />
+              </Box>
+              <Box className='fact-desc'>
                 <InputLabel className='input-label' required>Enter Description</InputLabel>
                 <TextField
                   size="small"
                   name="opinion"
-                  placeholder="Write or Paste description"
+                  placeholder="Description"
                   fullWidth
                   multiline
-                  onChange={(e)=>{setDescription(e.target.value)}}
+                  onChange={(e)=>{setPostDescription(e.target.value)}}
                 />
               </Box>
             </CardContent>
@@ -93,4 +104,4 @@ const Root = styled.div`
     margin-top: 20px;
   }
 `;
-export default FactcheckPage
+export default UploadPostAdmin
