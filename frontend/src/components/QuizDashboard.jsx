@@ -189,6 +189,7 @@ const Root = styled.div`
   .avatar-style {
     background-color: #086d67;
     color: white;
+    margin-top: 2px;
   }
   .trophy-icon {
     color: #d4af37;

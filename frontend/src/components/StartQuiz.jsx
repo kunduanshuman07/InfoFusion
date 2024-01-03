@@ -102,7 +102,7 @@ const StartQuiz = (props) => {
       {quizChoice==="Today" && <Box className='container' style={{ filter: !quizSelection ? 'blur(5px)' :'none' }}>
         <Box className='quiz-box'>
           <IconButton>
-            <Avatar alt={user.name} src='avatar' className='avatar-style' />
+            <Avatar alt={user.name} src={`http://localhost:3000/userImages/${user.picturePath}`} className='avatar-style' />
           </IconButton>
           <Typography className='greet'>
             <h2>Hi {user.name} !</h2>
