@@ -5,7 +5,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Toolbar from '@mui/material/Toolbar';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
-import NewsIcon from '@mui/icons-material/NewspaperRounded';
 import Container from '@mui/material/Container';
 import Logo from "../assets/InfoFusion.png";
 import { NavLink, useNavigate } from "react-router-dom";

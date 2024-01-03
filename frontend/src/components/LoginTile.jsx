@@ -8,12 +8,14 @@ import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import FPDialog from './FPDialog';
 const LoginTile = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [valid, setValid] = useState(true);
     const [showPassword, setShowPassword] = useState(false);
     const { setAuth } = useAuth();
+    const [fpDialog, setFpDialog] = useState(false);
     const navigate = useNavigate();
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -83,8 +85,9 @@ const LoginTile = () => {
                     </Button>
                     <Typography className='login-signup'>New User? <a href='/signup'>SignUp</a></Typography>
                 </Box>
-                <Typography className='forgot-password'><a href='/forgot-password'>Forgot password?</a></Typography>
+                <Typography className='forgot-password' onClick={()=>setFpDialog(true)}><a>Forgot password?</a></Typography>
             </form>
+            {fpDialog && <FPDialog onCloseModal = {()=>setFpDialog(false)}/>}
         </Root>
     )
 }
@@ -124,6 +127,7 @@ const Root = styled.div`
     .forgot-password{
       margin-left: auto;
       margin-top:10px;
+      cursor: pointer;
     }
 `;
 export default LoginTile
