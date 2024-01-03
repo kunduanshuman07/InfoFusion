@@ -6,7 +6,7 @@ import ScoreCard from './ScoreCard';
 import { ratingAlgorithm } from '../utils/RatingAlgo';
 import CloseIcon from "@mui/icons-material/Close";
 const Quiz = ({ questions, quizId, callFrom }) => {
-  const [timeLeft, setTimeLeft] = useState(1200);
+  const [timeLeft, setTimeLeft] = useState(600);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [showScore, setShowScore] = useState(false);

@@ -78,6 +78,20 @@ const ScoreCardModal = (props) => {
             align: "center",
         },
     ]
+    const getCategoryLabel = (type) => {
+        switch (type) {
+          case '1':
+            return 'Easy';
+          case '2':
+            return 'Medium';
+          case '3':
+            return 'Hard';
+          case '4':
+            return 'Misc';
+          default:
+            return 'Unknown';
+        }
+      };
     useEffect(() => {
         const quiz = user.quizzes.find(item => item.dateOfQuiz === props.selectedDate);
         const scorecard = quiz.scorecard;
@@ -86,7 +100,7 @@ const ScoreCardModal = (props) => {
             question: item.question.questionText,
             useranswer: item.yourAnswer,
             correctanswer: item.correctOption.optionText,
-            type: item.type,
+            type: getCategoryLabel(item.type),
             points: item.points,
         }));
         setRows(formattedRows);
