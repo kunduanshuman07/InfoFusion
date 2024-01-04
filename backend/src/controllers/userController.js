@@ -157,7 +157,7 @@ export const userDashboard = async (req, res) => {
             miscAnswers: miscanswers,
             correctAnswers: correctanswers,
         }
-        res.status(200).send({ dashboardData: dashboardData });
+        res.status(200).send({ dashboardData: dashboardData, user: user });
     } catch (error) {
         console.log(error);
         res.status(500).send(error);

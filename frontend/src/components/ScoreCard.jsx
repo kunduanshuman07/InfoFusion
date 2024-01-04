@@ -13,7 +13,7 @@ function CustomToolbar() {
     );
 }
 const ScoreCard = (props) => {
-
+    console.log(props);
     const user = JSON.parse(localStorage.getItem("user"));
     const [rows, setRows] = useState([]);
     const columns = [
@@ -56,36 +56,34 @@ const ScoreCard = (props) => {
         },
     ]
     useEffect(() => {
-        if (props.iqr !== 0) {
-            const updateQuizDataToUser = async () => {
-                const quizUserData = {
-                    quizId: props.quizId,
-                    score: props.score,
-                    userId: user._id,
-                    iqr: props.iqr,
-                    dateOfQuiz: new Date(),
-                    scoreCard: props.attemptedQuestions,
-                }
-                console.log(quizUserData);
-                if (props.callFrom !== 'Past') {
-                    const response = await axios.patch('http://localhost:3000/quiz/update-user-quiz-data', quizUserData);
-                    if (response.status === 200) {
-                        console.log(response.data);
-                        localStorage.setItem("user", JSON.stringify(response.data));
-                    }
+        const updateQuizDataToUser = async () => {
+            const quizUserData = {
+                quizId: props.quizId,
+                score: props.score,
+                userId: user._id,
+                iqr: props.iqr,
+                dateOfQuiz: new Date(),
+                scoreCard: props.attemptedQuestions,
+            }
+            console.log(quizUserData);
+            if (props.callFrom !== 'Past') {
+                const response = await axios.patch('http://localhost:3000/quiz/update-user-quiz-data', quizUserData);
+                if (response.status === 200) {
+                    console.log(response.data);
+                    localStorage.setItem("user", JSON.stringify(response.data));
                 }
             }
-            const formattedRows = props.attemptedQuestions.map((item, index) => ({
-                id: index,
-                question: item.question.questionText,
-                useranswer: item.yourAnswer,
-                correctanswer: item.correctOption.optionText,
-                points: item.points,
-            }),
-            );
-            setRows(formattedRows);
-            updateQuizDataToUser();
         }
+        const formattedRows = props.attemptedQuestions.map((item, index) => ({
+            id: index,
+            question: item.question.questionText,
+            useranswer: item.yourAnswer,
+            correctanswer: item.correctOption.optionText,
+            points: item.points,
+        }),
+        );
+        setRows(formattedRows);
+        updateQuizDataToUser();
     }, [props.iqr]);
     return (
         <Root>
@@ -143,6 +141,7 @@ const Root = styled.div`
         border-left: 2px solid #086D67;
         border-radius: 5px;
         padding: 20px;
+        max-width: 100%;
     }
     .mytableheader{
         background-color: #086D67;

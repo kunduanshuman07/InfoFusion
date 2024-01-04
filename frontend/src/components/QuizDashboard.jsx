@@ -27,13 +27,6 @@ const QuizDashboard = () => {
   const [picturePath, setPicturePath] = useState("");
   const [name, setName] = useState("");
   useEffect(() => {
-    const xAxisData = user.quizzes.map((quiz, index) => index + 1);
-    const seriesData = user.quizzes.map(quiz => quiz.rating);
-    const overallRatingdata = user.quizzes.map(quiz => quiz.overallRating);
-    setIqrRow(xAxisData);
-    setSeriesRow(seriesData);
-    setOverallRatingRow(xAxisData);
-    setOverallRatingSeries(overallRatingdata);
     const fetchDashboard = async () => {
       const userData = {
         userId: userId ? userId : user._id
@@ -53,8 +46,15 @@ const QuizDashboard = () => {
         setUserName(data.dashboardData.username);
         setPicturePath(data.dashboardData.picturePath);
         setName(data.dashboardData.name);
-      
+
       }
+      const xAxisData = data.user.quizzes.map((quiz, index) => index + 1);
+      const seriesData = data.user.quizzes.map(quiz => quiz.rating);
+      const overallRatingdata = data.user.quizzes.map(quiz => quiz.overallRating);
+      setIqrRow(xAxisData);
+      setSeriesRow(seriesData);
+      setOverallRatingRow(xAxisData);
+      setOverallRatingSeries(overallRatingdata);
     }
     fetchDashboard();
   }, [])

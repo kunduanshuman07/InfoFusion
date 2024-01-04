@@ -5,6 +5,7 @@ import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import ScoreCard from './ScoreCard';
 import { ratingAlgorithm } from '../utils/RatingAlgo';
 import CloseIcon from "@mui/icons-material/Close";
+import SkipNextIcon from '@mui/icons-material/SkipNext';
 const Quiz = ({ questions, quizId, callFrom }) => {
   const [timeLeft, setTimeLeft] = useState(600);
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -23,7 +24,7 @@ const Quiz = ({ questions, quizId, callFrom }) => {
   const [IQR, setIQR] = useState(0);
   const [callFromComp, setCallFromComp] = useState('')
   useEffect(() => {
-    if(callFrom==="Past") setCallFromComp("Past");
+    if (callFrom === "Past") setCallFromComp("Past");
     if (!timeLeft) setShowScore(true);
 
     const intervalId = setInterval(() => {
@@ -31,7 +32,7 @@ const Quiz = ({ questions, quizId, callFrom }) => {
     }, 1000);
 
     return () => clearInterval(intervalId);
-  }, [timeLeft]);
+  }, [callFrom, timeLeft]);
 
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
@@ -39,40 +40,42 @@ const Quiz = ({ questions, quizId, callFrom }) => {
     if (showScore) {
       const iqr = ratingAlgorithm(easyCount, mediumCount, hardCount, miscCount, score, incEasy, incMedium, incHard, incMisc);
       localStorage.setItem("useriqr", JSON.stringify(iqr));
-      console.log(iqr);
       setIQR(iqr);
     }
   }, [showScore, easyCount, mediumCount, hardCount, miscCount, score, incEasy, incMedium, incHard, incMisc]);
-  const handleAnswerButtonClick = (isCorrect, questionAttempted, correctOption, selectedOption, questionType) => {
-    if (isCorrect) {
-      if (questionType === '1') {
-        setEasyCount(easyCount + 1);
+  const handleAnswerButtonClick = (isCorrect, questionAttempted, correctOption, selectedOption, questionType, isSkipped) => {
+    if (!isSkipped) {
+      if (isCorrect) {
+        if (questionType === '1') {
+          setEasyCount(easyCount + 1);
+        }
+        else if (questionType === '2') {
+          setMediumCount(mediumCount + 1);
+        }
+        else if (questionType === '3') {
+          setHardCount(hardCount + 1);
+        }
+        else if (questionType === '4') {
+          setMiscCount(miscCount + 1);
+        }
+        setScore(score + 1);
       }
-      else if (questionType === '2') {
-        setMediumCount(mediumCount + 1);
+      else {
+        if (questionType === '1') {
+          setIncEasy(incEasy + 1);
+        }
+        else if (questionType === '2') {
+          setIncMedium(incMedium + 1);
+        }
+        else if (questionType === '3') {
+          setIncHard(incHard + 1);
+        }
+        else if (questionType === '4') {
+          setIncMisc(incMisc + 1);
+        }
       }
-      else if (questionType === '3') {
-        setHardCount(hardCount + 1);
-      }
-      else if (questionType === '4') {
-        setMiscCount(miscCount + 1);
-      }
-      setScore(score + 1);
     }
-    else {
-      if (questionType === '1') {
-        setIncEasy(incEasy + 1);
-      }
-      else if (questionType === '2') {
-        setIncMedium(incMedium + 1);
-      }
-      else if (questionType === '3') {
-        setIncHard(incHard + 1);
-      }
-      else if (questionType === '4') {
-        setIncMisc(incMisc + 1);
-      }
-    }
+    console.log(questionAttempted);
     const attempt = {
       question: questionAttempted,
       yourAnswer: selectedOption,
@@ -102,9 +105,6 @@ const Quiz = ({ questions, quizId, callFrom }) => {
         return 'Unknown';
     }
   };
-  useEffect(() => {
-    console.log(attemptedQuestions);
-  }, [attemptedQuestions]);
   const findCorrectOption = (options) => {
     const optionArray = Object.values(options);
     return optionArray.find((option) => option.isCorrect);
@@ -112,7 +112,7 @@ const Quiz = ({ questions, quizId, callFrom }) => {
   return (
     <>
       {showScore ? (
-        <ScoreCard score={score} iqr={IQR} quizId={quizId} questionsLength={questionsLength} attemptedQuestions={attemptedQuestions} setShowScore={setShowScore} callFrom={callFromComp}/>
+        <ScoreCard score={score} iqr={IQR} quizId={quizId} questionsLength={questionsLength} attemptedQuestions={attemptedQuestions} setShowScore={setShowScore} callFrom={callFromComp} />
       ) : (
         <>
           <Dialog open={true} fullScreen>
@@ -131,18 +131,18 @@ const Quiz = ({ questions, quizId, callFrom }) => {
                 <Typography style={{ color: "white", margin: "auto", fontWeight: "bolder" }}>Quiz Date : 30-12-2023
                 </Typography>
               </Box>
-              <Box className='timer' style={{display: "flex", }}>
-                <Box style={{marginLeft: "340px", fontWeight: "bold"}}>
-                  <IconButton style={{color: "white"}}>
+              <Box className='timer' style={{ display: "flex", }}>
+                <Box style={{ marginLeft: "340px", fontWeight: "bold" }}>
+                  <IconButton style={{ color: "white" }}>
                     <AccessAlarmIcon fontSize='medium' className='timer-icon' />
                   </IconButton>
                 </Box>
                 <Box>
-                  <Typography style={{color: "white", marginTop: "8px", }}>{minutes.toString().padStart(2, '0')} mins : {seconds.toString().padStart(2, '0')} secs</Typography>
+                  <Typography style={{ color: "white", marginTop: "8px", }}>{minutes.toString().padStart(2, '0')} mins : {seconds.toString().padStart(2, '0')} secs</Typography>
                 </Box>
-                <CloseIcon className="close-icon" style={{ color: 'white', cursor: "pointer", marginTop: "8px" , marginLeft: "500px" }} />
+                <CloseIcon className="close-icon" style={{ color: 'white', cursor: "pointer", marginTop: "8px", marginLeft: "500px" }}  onClick={()=>setShowScore(true)} />
               </Box>
-              
+
             </DialogTitle>
             <DialogContent>
               <Root>
@@ -158,12 +158,15 @@ const Quiz = ({ questions, quizId, callFrom }) => {
                     <List className='option-list'>
                       {questions[currentQuestion].options.map((option, index) => (
                         <ListItem key={index} className='option'>
-                          <Button className='option-btn' variant='outlined' onClick={() => handleAnswerButtonClick(option.isCorrect, questions[currentQuestion], findCorrectOption(questions[currentQuestion].options), option.optionText, questions[currentQuestion].type)}>
+                          <Button className='option-btn' variant='outlined' onClick={() => handleAnswerButtonClick(option.isCorrect, questions[currentQuestion], findCorrectOption(questions[currentQuestion].options), option.optionText, questions[currentQuestion].type, false)}>
                             {option.optionText}
                           </Button>
                         </ListItem>
                       ))}
                     </List>
+                  </Box>
+                  <Box >
+                    <Button startIcon={<SkipNextIcon />} className='skip-btn' onClick={() => handleAnswerButtonClick(false, questions[currentQuestion], findCorrectOption(questions[currentQuestion].options), "", questions[currentQuestion].type, true)}>Skip</Button>
                   </Box>
                 </Box>
               </Root>
@@ -252,6 +255,11 @@ const Root = styled.div`
     margin-right: 30px;
     margin-left: 40px;
     color: white
+  }
+  .skip-btn{
+    margin-top: 10px;
+    color: #086D67;
+    font-weight: bolder;
   }
 `;
 
