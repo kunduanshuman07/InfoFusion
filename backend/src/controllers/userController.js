@@ -145,6 +145,9 @@ export const userDashboard = async (req, res) => {
             })
         }
         const dashboardData = {
+            username: user.username,
+            name: user.name,
+            picturePath: user.picturePath,
             rating: rating,
             maxRating: maxRating,
             quizcount: quizCount,

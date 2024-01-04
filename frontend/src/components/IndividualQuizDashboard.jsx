@@ -7,10 +7,9 @@ import WhatshotIcon from '@mui/icons-material/Whatshot';
 import VideogameAssetIcon from '@mui/icons-material/VideogameAsset';
 import axios from "axios";
 import { LineChart } from '@mui/x-charts/LineChart';
-import { useParams } from 'react-router-dom';
-const QuizDashboard = () => {
-  const { userId } = useParams();
+const IndividualQuizDashboard = ({userid}) => {
   const user = JSON.parse(localStorage.getItem("user"));
+  console.log(user);
   const [rating, setRating] = useState(100);
   const [quizCount, setQuizCount] = useState(0);
   const [highestRating, setHighestRating] = useState(100);
@@ -23,9 +22,6 @@ const QuizDashboard = () => {
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [hardAnswers, setHardAnswers] = useState(0);
   const [miscAnswers, setMiscAnswers] = useState(0);
-  const [userName, setUserName] = useState("");
-  const [picturePath, setPicturePath] = useState("");
-  const [name, setName] = useState("");
   useEffect(() => {
     const xAxisData = user.quizzes.map((quiz, index) => index + 1);
     const seriesData = user.quizzes.map(quiz => quiz.rating);
@@ -36,10 +32,9 @@ const QuizDashboard = () => {
     setOverallRatingSeries(overallRatingdata);
     const fetchDashboard = async () => {
       const userData = {
-        userId: userId ? userId : user._id
+        userId: userid
       }
       const { data, status } = await axios.post('http://localhost:3000/user/user-dashboard', userData);
-      console.log(data);
       if (status === 200) {
         console.log(data);
         setRating(data.dashboardData.rating);
@@ -50,10 +45,6 @@ const QuizDashboard = () => {
         setHardAnswers(data.dashboardData.hardAnswers);
         setMiscAnswers(data.dashboardData.miscAnswers);
         setSolvedQuestions(data.dashboardData.solvedQuestions);
-        setUserName(data.dashboardData.username);
-        setPicturePath(data.dashboardData.picturePath);
-        setName(data.dashboardData.name);
-      
       }
     }
     fetchDashboard();
@@ -68,11 +59,11 @@ const QuizDashboard = () => {
             <Box className='grids'>
               <Box className='profile-box'>
                 <IconButton>
-                  <Avatar alt={name} src={`http://localhost:3000/userImages/${picturePath}`} className='avatar-style' />
+                  <Avatar alt={user.name} src={`http://localhost:3000/userImages/${user.picturePath}`} className='avatar-style' />
                 </IconButton>
-                <h5 style={{ color: "#086D67" }}>{name}</h5>
+                <h5 style={{ color: "#086D67" }}>{user.name}</h5>
                 <h4 style={{ color: "#086D67", marginBottom: "0px" }}>Quiz attempts: {quizCount}</h4>
-                <h5 style={{ color: "#086D67", marginBottom: "0px" }}>Username: {userName}</h5>
+                <h5 style={{ color: "#086D67", marginBottom: "0px" }}>Username: {user.username}</h5>
               </Box>
             </Box>
           </Grid>
@@ -220,4 +211,4 @@ const Root = styled.div`
   }
 `;
 
-export default QuizDashboard;
+export default IndividualQuizDashboard;

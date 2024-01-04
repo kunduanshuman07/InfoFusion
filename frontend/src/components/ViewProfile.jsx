@@ -5,15 +5,19 @@ import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import styled from 'styled-components'
 import axios from 'axios';
 import { LineChart } from '@mui/x-charts/LineChart';
-import QuizDashboard from './QuizDashboard';
+import {useNavigate} from "react-router-dom";
 const ViewProfile = ({ onCloseModal, userId }) => {
+  console.log(userId);
+  const navigate = useNavigate();
   const [rating, setRating] = useState(100);
   const [highestRating, setHighestRating] = useState(100);
   const [iqrRow, setIqrRow] = useState([]);
   const [seriesRow, setSeriesRow] = useState([]);
   const [username, setUsername] = useState();
   const [name, setName] = useState();
-  const [viewCompleteProfile, setViewCompleteProfile] = useState(false);
+  const handleViewFullDashboard = () => {
+    navigate(`/quiz-dashboard/${userId}`);
+  }
   useEffect(() => {
     const fetchUser = async () => {
       const userDetails = {
@@ -34,7 +38,7 @@ const ViewProfile = ({ onCloseModal, userId }) => {
   }, [])
   return (
     <>
-      {viewCompleteProfile ? <QuizDashboard userId={userId} callFrom='viewProfile' /> : <Dialog open={true} onClose={onCloseModal} fullWidth>
+      <Dialog open={true} onClose={onCloseModal} fullWidth>
         <DialogTitle
           sx={{
             backgroundColor: "#086D67",
@@ -74,9 +78,10 @@ const ViewProfile = ({ onCloseModal, userId }) => {
                 </Box>
               </Box>
             </Box>
+            <Button onClick={handleViewFullDashboard} variant='contained' style={{backgroundColor: "#086D67", color: "white", width: "40%", margin: "auto", marginTop: "10px", }}>View Full Profile</Button>
           </Root>
         </DialogContent>
-      </Dialog>}
+      </Dialog>
     </>
 
   )

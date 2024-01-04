@@ -16,7 +16,11 @@ const RouteJS = () => {
       <Route path='signup' element={<SignUpPage />} />
       <Route path='/*' element={auth ? <UserLayout /> : <Navigate to='/login' />} />
       <Route path='/personal-info' element={auth && <PersonalInfo />} />
-      <Route path='quiz-dashboard' element={auth && <QuizDashboard />} />
+      <Route path='/quiz-dashboard' element={auth && <QuizDashboard />} />
+      <Route
+        path='/quiz-dashboard/:userId'
+        element={auth && <QuizDashboard />}
+      />
       <Route path='quiz-form-admin' element={auth && <QuizForm />} />
       <Route path='/create-post-admin' element={<UploadPostAdmin />} />
     </Routes>
