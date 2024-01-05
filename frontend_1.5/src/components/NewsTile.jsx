@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Card, CardContent, CardMedia, Typography} from '@mui/material';
+import { Box, Card, CardContent, CardMedia, Typography} from '@mui/material';
 import axios from "axios";
 import styled from 'styled-components';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -24,8 +24,8 @@ const NewsTile = ({ url }) => {
   }, [headlines, url]);
   return (
     <Root>
-      <div className={loading ? 'blur' : ''}>
-        {loading ? <CircularProgress className='progress-bar' /> : headlines.map((e, index) => {
+      <Box>
+        {loading ? <CircularProgress className='progress-bar' size={60}/> : headlines.map((e, index) => {
           return (
             <Card key={index} className='card-box' onClick={()=>handleNewsClick(e.url)}>
               <CardMedia
@@ -45,13 +45,14 @@ const NewsTile = ({ url }) => {
             </Card>
           );
         })}
-      </div>
+      </Box>
     </Root>
   );
 };
 
 
 const Root = styled.div`
+  display: flex;
   .card-box {
     display: flex;
     margin: 20px;
@@ -82,8 +83,7 @@ const Root = styled.div`
   }
   .progress-bar{
     color: #063d40;
-    margin-left: 45%;
-    margin-top: 15%;
+    margin: 100px 400px;
     font-size: 100px;
   }
   .title{

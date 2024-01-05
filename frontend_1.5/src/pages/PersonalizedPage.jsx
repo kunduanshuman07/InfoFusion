@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components';
-import { Box, TextField, MenuItem} from "@mui/material";
+import { Box, TextField, MenuItem, Typography} from "@mui/material";
 import NewsTile from "../components/NewsTile";
 import { newsCategories } from "../utils/newsCategories";
 import LinearProgress from '@mui/material/LinearProgress';
@@ -25,7 +25,7 @@ const PersonalizedPage = () => {
             value={category}
             label='Category'
             placeholder="Category"
-            onChange={(e) => {setLoading(true);setCategory(e.target.value); handleAddPreferrences(e.target.value)}}
+            onChange={(e) => {setCategory(e.target.value); handleAddPreferrences(e.target.value)}}
             select
           >
             {newsCategories.map((category) => {
@@ -37,11 +37,16 @@ const PersonalizedPage = () => {
         </Box>
       </Box>
       {loading ? <LinearProgress className='progress-bar' color="inherit"/> : <NewsTile url={personalizedUrl} />}
+      {loading ? <Box className='choose-category'>
+        <Typography className='category-desc'>Set your category preferrence to read personallized news shorts !</Typography>
+      </Box>: ""}
     </Root>
   )
 }
 
 const Root = styled.div`
+display: flex;
+flex-direction: column;
   .personalized-box{
     display: flex;
     margin-bottom: 10px;
@@ -94,6 +99,17 @@ const Root = styled.div`
   .progress-bar{
     color: #063d40;
     margin-top: 1%;
+  }
+  .choose-category{
+    margin: 100px auto;
+    background-color: #063d40;
+    padding: 10px;
+    border-radius: 40px;
+  }
+  .category-desc{
+    color: white;
+    font-weight: bold;
+    padding: 10px;
   }
 `;
 
