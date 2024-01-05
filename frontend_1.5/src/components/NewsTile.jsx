@@ -52,9 +52,6 @@ const NewsTile = ({ url }) => {
 
 
 const Root = styled.div`
-  &.blur {
-    filter: blur(1px);
-  }
   .card-box {
     display: flex;
     margin: 20px;
@@ -66,6 +63,7 @@ const Root = styled.div`
     cursor: pointer;
     &:hover {
       box-shadow: 8px 4px 8px rgba(0.1, 0.1, 0.1, 0.4);
+      border: 2px solid #063d40;
     }
   }
   .card-media{
@@ -75,7 +73,7 @@ const Root = styled.div`
     max-width: 200px;
     height: 170px;
     min-width: 180px;
-    border-right: 2px solid #086D67;
+    border-right: 2px solid #063d40;
   }
   .card-content{
     display: flex;
@@ -83,7 +81,7 @@ const Root = styled.div`
     width: 90%;
   }
   .progress-bar{
-    color: #086d67;
+    color: #063d40;
     margin-left: 45%;
     margin-top: 15%;
     font-size: 100px;
@@ -92,7 +90,8 @@ const Root = styled.div`
     font-weight: bold;
     font-size: 18px;
     padding-bottom: 10px;
-    border-bottom: 1px solid #086D67;
+    border-bottom: 1px solid #063d40;\
+    color: #063d40;
   }
   .description{
     font-size: 15px;
@@ -105,14 +104,14 @@ const Root = styled.div`
     margin-top: 15px;
     margin-left: auto;
     font-weight: bold;
-    color: #086D67;
-    background-color: #086D67;
+    color: #063d40;
+    background-color: #063d40;
     color: whitesmoke;
     text-transform: none;
     padding: 0px;
     &:hover {
       background-color: white;
-      color: #086D67;
+      color: #063d40;
     }
   }
 `;

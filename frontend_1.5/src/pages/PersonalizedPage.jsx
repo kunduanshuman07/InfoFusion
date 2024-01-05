@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import styled from 'styled-components';
-import { Box, TextField, MenuItem, Button} from "@mui/material";
+import { Box, TextField, MenuItem} from "@mui/material";
 import NewsTile from "../components/NewsTile";
 import { newsCategories } from "../utils/newsCategories";
 import LinearProgress from '@mui/material/LinearProgress';
 const PersonalizedPage = () => {
   const [personalizedUrl, setPersonalizedUrl] = useState("");
-  const [category, setCategory] = useState("Category");
+  const [category, setCategory] = useState("Category")
   const [loading, setLoading] = useState(true);
-  const handleAddPreferrences = () => {
+  const handleAddPreferrences = (category) => {
     const prefUrl = `https://newsapi.org/v2/top-headlines?country=IN&category=${category}&apiKey=63ad2b1e940942df92a9bec4373642e3`;
     setPersonalizedUrl(prefUrl);
     setLoading(false);
@@ -25,7 +25,7 @@ const PersonalizedPage = () => {
             value={category}
             label='Category'
             placeholder="Category"
-            onChange={(e) => { console.log(e.target); setCategory(e.target.value) }}
+            onChange={(e) => {setLoading(true);setCategory(e.target.value); handleAddPreferrences(e.target.value)}}
             select
           >
             {newsCategories.map((category) => {
@@ -35,11 +35,8 @@ const PersonalizedPage = () => {
             })}
           </TextField>
         </Box>
-        <Box className='makeurl'>
-          <Button className='makeurl-btn' variant='outlined' onClick={handleAddPreferrences}>Find</Button>
-        </Box>
       </Box>
-      {loading ? <LinearProgress className='progress-bar' color="success"/> : <NewsTile url={personalizedUrl} />}
+      {loading ? <LinearProgress className='progress-bar' color="inherit"/> : <NewsTile url={personalizedUrl} />}
     </Root>
   )
 }
@@ -48,24 +45,22 @@ const Root = styled.div`
   .personalized-box{
     display: flex;
     margin-bottom: 10px;
-    padding: 10px 0px;
+    padding: 20px 10px;
     box-shadow: 8px 4px 8px rgba(0.1, 0.1, 0.1, 0.2);
     cursor: pointer;
-    border-left: 2px solid #086D67;
+    border: 1px solid #ddd;
     border-radius: 5px;
     min-width: 600px;
     min-height: 50px;
     color: #045350;
-  }
-  .country{
-    width: 40%;
-    margin-right: 20px;
-    margin-left: 15px;
+    justify-content: space-between;
   }
   .category{
-    width: 40%;
+    display: flex;
+    width: 100%;
     margin-right: 10px;
     margin-left: 10px;
+    justify-content
   }
   .makeurl{
     width: 10%;
@@ -75,27 +70,29 @@ const Root = styled.div`
     width: 90%;
     font-weight: bold;
     background-color: white;
-    color: #086D67;
+    border: 1px solid #063d40;
+    color: #063d40;
     text-transform: none;
     &:hover {
-      background-color: #086D67;
+      background-color: #063d40;
       color: whitesmoke;
+      border: 1px solid #063d40;
     }
   }
   .country-label{
     font-weight: bold;
     margin-bottom: 5px;
     margin-left: 150px;
-    color: #086D67;
+    color: #063d40;
   }
   .category-label{
     font-weight: bold;
     margin-bottom: 5px;
     margin-left: 150px;
-    color: #086D67;
+    color: #063d40;
   }
   .progress-bar{
-    color: #086d67;
+    color: #063d40;
     margin-top: 1%;
   }
 `;
