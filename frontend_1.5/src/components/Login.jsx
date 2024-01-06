@@ -1,41 +1,99 @@
-import React from 'react';
-import { Box, Button, TextField, Typography } from '@mui/material';
-import styled from "styled-components";
-import IFLogo from "../assets/InfoFusion.png"
+import { TextField, Button, Typography, Box, IconButton, InputAdornment } from '@mui/material'
+import React, { useState } from 'react'
+import styled from 'styled-components'
+import { useAuth } from '../context/AuthProvider'
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import FPDialog from './FPDialog';
+import IFLogo from "../assets/InfoFusion.png";
 const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [valid, setValid] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
+  const { setAuth } = useAuth();
+  const [fpDialog, setFpDialog] = useState(false);
+  const navigate = useNavigate();
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+  const handleLogin = async () => {
+    try {
+      const { data, status } = await axios.post('http://localhost:3000/auth/login', { email, password });
+      if (status === 200) {
+        await localStorage.setItem("authToken", data.token);
+        await localStorage.setItem("user", JSON.stringify(data.user));
+        setAuth(true);
+        setValid(true);
+        navigate('/');
 
+      }
+    } catch (error) {
+      setAuth(false);
+      setValid(false);
+      toast.error("Incorrect credentials")
+    }
+  }
   return (
     <Root>
+      <ToastContainer position='top-center' />
       <Box className="container">
         <Typography variant="h5" className="form-header">
           Login
         </Typography>
         <Box className="form">
           <TextField
-            placeholder="username"
-            label="Email"
+            error={!valid}
+            label={!valid ? "Error" : "Email Id"}
+            name="email"
+            value={email}
+            variant="outlined"
+            fullWidth
             size="small"
+            placeholder='Email Id'
+            onChange={(e) => setEmail(e.target.value)}
             className="text-field"
           />
           <TextField
-            placeholder="password"
-            label="Password"
-            className="text-field"
-            size="small"
+           error={!valid}
+           label={!valid ? "Error" : "Password"}
+           name="password"
+           value={password}
+           type={showPassword ? 'text' : 'password'}
+           variant="outlined"
+           fullWidth
+           size="small"
+           placeholder='Password'
+           onChange={(e) => setPassword(e.target.value)}
+           className="text-field"
+           InputProps={{
+               endAdornment: (
+                   <InputAdornment position="end">
+                       <IconButton onClick={togglePasswordVisibility} size='small'>
+                           {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                       </IconButton>
+                   </InputAdornment>
+               )
+           }}
           />
         </Box>
         <Box className="submit">
-          <Button className="submit-btn">Login</Button>
+          <Button className="submit-btn" onClick={handleLogin}>Login</Button>
         </Box>
         <Box className="footer">
-            <a href='/forgot-password' className="fpassword">Forgot Password</a>
-            <a href='/signup' className="fpassword">New User? Signup</a>
+          <a href='/forgot-password' className="fpassword" onClick={()=>setFpDialog(true)}>Forgot Password</a>
+          <a href='/signup' className="fpassword">New User? Signup</a>
         </Box>
       </Box>
       <Box className='image'>
-        <img src={IFLogo} alt='IFLogo' className='img' width={200} height={50}/>
+        <img src={IFLogo} alt='IFLogo' className='img' width={200} height={50} />
         <Typography className='intro'>Play & Compete around General Awareness !</Typography>
       </Box>
+      {fpDialog && <FPDialog onCloseModal = {()=>setFpDialog(false)}/>}
     </Root>
   );
 };

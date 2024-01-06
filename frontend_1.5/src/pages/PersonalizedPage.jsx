@@ -75,34 +75,34 @@ flex-direction: column;
     width: 90%;
     font-weight: bold;
     background-color: white;
-    border: 1px solid #063d40;
-    color: #063d40;
+    border: 1px solid #0a686e;
+    color: #0a686e;
     text-transform: none;
     &:hover {
-      background-color: #063d40;
+      background-color: #0a686e;
       color: whitesmoke;
-      border: 1px solid #063d40;
+      border: 1px solid #0a686e;
     }
   }
   .country-label{
     font-weight: bold;
     margin-bottom: 5px;
     margin-left: 150px;
-    color: #063d40;
+    color: #0a686e;
   }
   .category-label{
     font-weight: bold;
     margin-bottom: 5px;
     margin-left: 150px;
-    color: #063d40;
+    color: #0a686e;
   }
   .progress-bar{
-    color: #063d40;
+    color: #0a686e;
     margin-top: 1%;
   }
   .choose-category{
     margin: 100px auto;
-    background-color: #063d40;
+    background-color: #0a686e;
     padding: 10px;
     border-radius: 40px;
   }

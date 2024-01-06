@@ -1,9 +1,12 @@
 import React from 'react'
 import RouteJS from './Routes';
 import "./App.css"
+import { AuthProvider } from './context/AuthProvider';
 const App = () => {
   return (
-    <RouteJS />
+    <AuthProvider>
+      <RouteJS />
+    </AuthProvider>
   )
 }
 

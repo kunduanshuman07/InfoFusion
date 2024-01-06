@@ -9,7 +9,6 @@ import FactCheckPage from "../pages/FactcheckPage";
 import HelpSupport from "../pages/HelpSupport"
 import OpinionPage from "../pages/OpinionPage"
 import DebatePage from '../components/DebatePage'
-import PlaygroundPage from "../pages/PlaygroundPage"
 const Layout = () => {
 
   return (
@@ -25,7 +24,6 @@ const Layout = () => {
             <Route path='/help-support' element={<HelpSupport />} />
             <Route path='/your-opinion' element={<OpinionPage />} />
             <Route path='/debate' element={<DebatePage />} />
-            <Route path='/playground' element={<PlaygroundPage/>}/>
           </Routes>
         </div>
       </main>

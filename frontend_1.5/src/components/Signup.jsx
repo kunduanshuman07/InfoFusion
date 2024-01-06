@@ -1,49 +1,141 @@
-import React from 'react';
-import { Box, Button, TextField, Typography } from '@mui/material';
-import styled from "styled-components";
+import { TextField, Button, Typography, Box, IconButton, InputAdornment } from '@mui/material'
+import React, { useState } from 'react'
+import styled from 'styled-components'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { verifyPasswordCriteria } from '../utils/PasswordCriteria';
 import IFLogo from "../assets/InfoFusion.png"
 const Signup = () => {
-
+  const navigate = useNavigate();
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [cpassword, setCPassword] = useState('');
+  const [age, setAge] = useState();
+  const [showPassword, setShowPassword] = useState(false);
+  const [valid, setValid] = useState(true);
+  const [passwordCriteria, setPasswordCriteria] = useState(true);
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+  const handleSignUp = async () => {
+    if (password === cpassword) {
+      if (!verifyPasswordCriteria(password)) {
+        setPasswordCriteria(false);
+        toast.error("Your password should contain atleast 1 Uppercase, 1 lowercase, 1 special character, 1 number and should be of minimum 8 characters");
+      }
+      else {
+        try {
+          const userData = {
+            name, email, password, username, age
+          }
+          const { data, status } = await axios.post('http://localhost:3000/auth/register', userData);
+          if (status === 200) {
+            console.log(data);
+            navigate('/login')
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    }
+    else {
+      setValid(false);
+      toast.error("Password Mismatch!");
+    }
+  }
   return (
     <Root>
+      <ToastContainer position='top-center' />
       <Box className="container">
         <Typography variant="h5" className="form-header">
           Signup
         </Typography>
         <Box className="form">
           <TextField
-            placeholder="Name"
-            label="Name"
-            className="text-field"
+            name="name"
+            label="Full Name"
+            variant="outlined"
+            fullWidth
             size="small"
+            placeholder='Full Name'
+            className="text-field"
+            onChange={(e) => setName(e.target.value)}
+            
           />
           <TextField
-            placeholder="Username"
+            name="username"
             label="Username"
+            variant="outlined"
+            fullWidth
             size="small"
+            placeholder='Create Username'
             className="text-field"
+            onChange={(e) => setUsername(e.target.value)}
+            
           />
           <TextField
-            placeholder="Email"
-            label="Email"
-            className="text-field"
+            name="email"
+            label="Email Id"
+            variant="outlined"
+            fullWidth
             size="small"
+            placeholder='Email Id'
+            className="text-field"
+            onChange={(e) => setEmail(e.target.value)}
           />
           <TextField
-            placeholder="Password"
-            label="Password"
+            error={!valid || !passwordCriteria}
+            label={!valid ? "Password Mismatch" :!passwordCriteria? "Criteria Unfulfilled": "Password"}
+            name="password"
+            type={showPassword ? 'text' : 'password'}
+            variant="outlined"
+            fullWidth
             size="small"
+            placeholder='Password'
             className="text-field"
+            onChange={(e) => setPassword(e.target.value)}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={togglePasswordVisibility} size='small'>
+                    {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                  </IconButton>
+                </InputAdornment>
+              )
+            }}
           />
           <TextField
-            placeholder="Confirm Password"
-            label="Confirm Password"
-            className="text-field"
+            error={!valid || !passwordCriteria}
+            label={!valid ? "Password Mismatch" :!passwordCriteria? "Criteria Unfulfilled": "Confirm Password"}
+            name="cpassword"
+            type='text'
+            variant="outlined"
+            fullWidth
             size="small"
+            placeholder='Confirm Password'
+            className="text-field"
+            onChange={(e) => setCPassword(e.target.value)}
           />
+          <TextField
+          name="age"
+          label='Age'
+          type='number'
+          variant="outlined"
+          fullWidth
+          size="small"
+          placeholder='Age'
+          className="text-field"
+          onChange={(e) => setAge(e.target.value)}
+        />
         </Box>
         <Box className="submit">
-          <Button className="submit-btn">Signup</Button>
+          <Button className="submit-btn" onClick={handleSignUp}>Signup</Button>
         </Box>
         <Box className="footer">
             <a href='/login' className="fpassword">Already a user? Login</a>
@@ -94,12 +186,12 @@ flex-direction: row;
   color: white;
   width: 40%;
   border-radius: 20px;
-  margin-top: 40px;
+  margin-top: 20px;
 }
 .footer{
   display: flex;
   justify-content: space-between;
-  margin-top: 30px;
+  margin-top: 15px;
 }
 .fpassword{
   color: #0b4e52;

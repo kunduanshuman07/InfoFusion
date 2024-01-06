@@ -64,7 +64,7 @@ const Root = styled.div`
     cursor: pointer;
     &:hover {
       box-shadow: 8px 4px 8px rgba(0.1, 0.1, 0.1, 0.4);
-      border: 2px solid #063d40;
+      border: 2px solid #0a686e;
     }
   }
   .card-media{
@@ -74,7 +74,7 @@ const Root = styled.div`
     max-width: 200px;
     height: 170px;
     min-width: 180px;
-    border-right: 2px solid #063d40;
+    border-right: 2px solid #0a686e;
   }
   .card-content{
     display: flex;
@@ -82,7 +82,7 @@ const Root = styled.div`
     width: 90%;
   }
   .progress-bar{
-    color: #063d40;
+    color: #0a686e;
     margin: 100px 400px;
     font-size: 100px;
   }
@@ -90,8 +90,8 @@ const Root = styled.div`
     font-weight: bold;
     font-size: 18px;
     padding-bottom: 10px;
-    border-bottom: 1px solid #063d40;\
-    color: #063d40;
+    border-bottom: 1px solid #0a686e;\
+    color: #0a686e;
   }
   .description{
     font-size: 15px;
@@ -104,14 +104,14 @@ const Root = styled.div`
     margin-top: 15px;
     margin-left: auto;
     font-weight: bold;
-    color: #063d40;
-    background-color: #063d40;
+    color: #0a686e;
+    background-color: #0a686e;
     color: whitesmoke;
     text-transform: none;
     padding: 0px;
     &:hover {
       background-color: white;
-      color: #063d40;
+      color: #0a686e;
     }
   }
 `;
