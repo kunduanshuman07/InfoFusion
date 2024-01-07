@@ -50,7 +50,7 @@ export const AppBarComponent = ({comp}) => {
               <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, backgroundColor: "white", color: "#086D67" }}>
                   <Container maxWidth="xl">
                       <Toolbar disableGutters>
-                          <img alt="InfoFusion" src={Logo} width={150} height="100%" onClick={() => navigate('/')} className='logo-style' />
+                          <img alt="InfoFusion" src={Logo} width={150} height="100%" onClick={() => navigate('/trending')} className='logo-style' />
                           {comp === 'profile' && <Box className='profile-btns'>
                               <IconButton style={{ color: "#086D67", marginRight: "20px" }} onClick={() => navigate('/')}>
                                   <HomeIcon />

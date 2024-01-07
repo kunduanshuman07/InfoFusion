@@ -53,15 +53,16 @@ const Root = styled.div`
         margin: 150px auto 0px auto;
         display: flex;
         flex-direction: column;
-        background-color: #e1f2f2;
+        background-color: white;
         padding: 20px;
         border-radius: 20px;
         box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
     }
     .intro-img{
-        width: 200px;
+        width: 300px;
         height: 60px;
         margin: 5px auto 5px auto;
+        border-radius: 30px;
     }
     .intro-text{
        font-size: 20px;
@@ -86,7 +87,7 @@ const Root = styled.div`
         margin: 20px auto;
         width: 550px;
         height: 400px;
-        background-color: #e1f2f2;
+        background-color: white;
         box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
         border-radius: 60px;
         cursor: pointer;

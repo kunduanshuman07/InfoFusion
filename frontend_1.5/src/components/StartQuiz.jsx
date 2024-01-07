@@ -105,8 +105,8 @@ const StartQuiz = (props) => {
             <Avatar alt={user.name} src={`http://localhost:3000/userImages/${user.picturePath}`} className='avatar-style' />
           </IconButton>
           <Box className='greet'>
-            <Typography variant='h6' style={{backgroundColor: "#0a686e", color: "white", borderRadius: "20px", padding: "5px", fontSize: "15px"}}>Hi, {user.name} !</Typography>
-            {isQuizEnabled === false ? <Typography variant='h6' style={{ color: "red", marginTop: "15px", fontSize: "13px", fontWeight: "bold" }}>You have already given today's quiz!</Typography>:<Button className='start-quiz' variant='outlined' onClick={handleStartQuiz} disabled={!isQuizEnabled}>
+            <Typography variant='h6' style={{backgroundColor: "#0a686e", color: "white", borderRadius: "20px", padding: "10px", paddingTop: "10px", fontSize: "15px", fontWeight: "bold"}}>Hi, {user.name} !</Typography>
+            {isQuizEnabled === false ? <Typography variant='h6' style={{ color: "red", marginTop: "25px", fontSize: "13px", fontWeight: "bold" }}>You have already given today's quiz!</Typography>:<Button className='start-quiz' variant='outlined' onClick={handleStartQuiz} disabled={!isQuizEnabled}>
             Start the quiz
           </Button>}
             
@@ -200,7 +200,7 @@ const Root = styled.div`
     }
   }
   .scorecards-btn{
-    margin-top: auto;
+    margin-top: 10px;
     margin-bottom: auto;
     background-color: #0a686e;
     color: white;
@@ -210,6 +210,10 @@ const Root = styled.div`
     margin-right: 5px;
     text-transform: none;
     font-weight: bold;
+    &:hover{
+      background-color: white;
+      color: #0a686e;
+    }
   }
   .greet {
     color: #0a686e;
