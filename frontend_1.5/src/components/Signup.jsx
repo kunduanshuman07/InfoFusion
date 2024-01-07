@@ -3,11 +3,11 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { verifyPasswordCriteria } from '../utils/PasswordCriteria';
+import SnackBarComponent from './SnackBarComponent';
 import IFLogo from "../assets/InfoFusion.png"
 const Signup = () => {
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ const Signup = () => {
     if (password === cpassword) {
       if (!verifyPasswordCriteria(password)) {
         setPasswordCriteria(false);
-        toast.error("Your password should contain atleast 1 Uppercase, 1 lowercase, 1 special character, 1 number and should be of minimum 8 characters");
+        setValid(false);
       }
       else {
         try {
@@ -46,12 +46,11 @@ const Signup = () => {
     }
     else {
       setValid(false);
-      toast.error("Password Mismatch!");
     }
   }
   return (
     <Root>
-      <ToastContainer position='top-center' />
+    {!valid && <SnackBarComponent severity="error" message="Password Criteria not fulfilled"/>}
       <Box className="container">
         <Typography variant="h5" className="form-header">
           Signup

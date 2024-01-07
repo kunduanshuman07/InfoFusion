@@ -88,14 +88,18 @@ const PastQuizzes = () => {
     )
 }
 const Root = styled.div`
+background-color: white;
+padding: 10px;
+border-radius: 20px;
+box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.4);
     .try-btn{
         height: 25px;
-        color: #086D67;
+        color: #0a686e;
         background-color: white;
-        border: 2px solid #086D67;
+        border: 2px solid #0a686e;
         border-radius: 10px;
         &:hover {
-            background-color: #086D67;
+            background-color: #0a686e;
             color: white;
             
         }   

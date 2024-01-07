@@ -2,18 +2,22 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import LeaderBoard from '../components/LeaderBoard';
 import CircularProgress from '@mui/material/CircularProgress';
-import useFetch from '../hooks/useFetch';
 import { IconButton } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import ViewProfile from "../components/ViewProfile";
+import axios from "axios";
 const OverallLeaderboard = () => {
   const [rows, setRows] = useState([]);
   const [profileModal, setProfileModal] = useState(false);
   const [userId, setUserId] = useState();
-  const { data } = useFetch({
-    method: 'GET',
-    url: '/user/overall-leaderboard',
-  });
+  const [data,setData] = useState();
+  useEffect(()=>{
+    const fetchData = async() => {
+      const {data} = await axios.get('http://localhost:3000/user/overall-leaderboard');
+      setData(data);
+    }
+    fetchData();
+  },[])
   const handleProfileView = (rowData) => {
     setUserId(rowData.row.userId);
     setProfileModal(true);
@@ -109,7 +113,7 @@ const OverallLeaderboard = () => {
 
 const Root = styled.div`
   .mytableheader {
-    background-color: #086d67;
+    background-color: #0a686e;
     color: white;
     font-weight: bold;
     margin-top: 10px;
@@ -118,7 +122,7 @@ const Root = styled.div`
     padding: 0;
   }
   .progress-bar{
-    color: #086d67;
+    color: #0a686e;
     margin-left: 45%;
     margin-top: 15%;
     font-size: 100px;

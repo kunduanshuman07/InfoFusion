@@ -210,16 +210,16 @@ const Root = styled.div`
     margin: 10px;
   }
   .submit-btn{
-    color: #086D67;
+    color: #0a686e;
   }
   .questions-box{
-    border: 3px solid #086D67;
+    border: 3px solid #0a686e;
     padding: 20px;
     border-radius: 5px;
     margin: 2px;
   }
   .options-box{
-    border: 1px solid #086D67;
+    border: 1px solid #0a686e;
     padding: 10px;
     margin: 3px;
   }

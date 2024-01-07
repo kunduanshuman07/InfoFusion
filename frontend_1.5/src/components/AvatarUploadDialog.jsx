@@ -23,7 +23,7 @@ const AvatarUpload = (props) => {
         <Dialog open={true} onClose={props.onCloseModal}>
             <DialogTitle
                 sx={{
-                    backgroundColor: "#086D67",
+                    backgroundColor: "#0a686e",
                     borderRadius: " 4px 4px 0 0",
                     fontSize: "16px",
                 }}
@@ -46,14 +46,14 @@ const AvatarUpload = (props) => {
                                             type='file'
                                             placeholder="Upload Image"
                                             fullWidth
-                                            style={{ color: "#086D67" }}
+                                            style={{ color: "#0a686e" }}
                                             onChange={(e) => setFile(e.target.files[0])}
                                         />
                                     </Box>
                                 </CardContent>
                             </Box>
                             <Box style={{ display: "flex", marginTop: "10px" }}>
-                                <Button variant='contained' style={{ backgroundColor: "#086D67", width: "30%", margin: "auto" }} onClick={handleSubmit}>Submit</Button>
+                                <Button variant='contained' style={{ backgroundColor: "#0a686e", width: "30%", margin: "auto" }} onClick={handleSubmit}>Submit</Button>
                                 <Button variant='contained' style={{ backgroundColor: "#A5A5A5", width: "30%", margin: "auto", color: "black" }} onClick={handleClose}>Cancel</Button>
                             </Box>
                         </Card>
@@ -91,16 +91,16 @@ const Root = styled.div`
     font-size: 18px;
     font-weight: bold;
     padding-bottom: 10px;
-    border-bottom: 1px solid #086D67;
+    border-bottom: 1px solid #0a686e;
     margin: auto;
-    color: #086D67;
+    color: #0a686e;
   }
   .fact-pic{
     margin-top: 20px;
   }
   .input-label{
     margin-bottom: 5px;
-    color: #086D67;
+    color: #0a686e;
     font-weight: bold;
   }
   .fact-desc{

@@ -123,7 +123,7 @@ const Root = styled.div`
     .complete{
         font-size: 20px;
         font-weight: bold;
-        color: #086D67;
+        color: #0a686e;
         text-decoration: underline;
       }
       .score{
@@ -138,13 +138,13 @@ const Root = styled.div`
         &:hover {
             box-shadow: 8px 4px 8px rgba(0.1, 0.1, 0.1, 0.4);
         }   
-        border-left: 2px solid #086D67;
+        border-left: 2px solid #0a686e;
         border-radius: 5px;
         padding: 20px;
         max-width: 100%;
     }
     .mytableheader{
-        background-color: #086D67;
+        background-color: #0a686e;
         color: white;
         font-weight: bold;
         margin-top: 10px;
@@ -156,7 +156,7 @@ const Root = styled.div`
         margin-bottom : 10px;
       }
       .export{
-        color: #086D67;
+        color: #0a686e;
         font-weight: bold;
       }
 `

@@ -150,7 +150,7 @@ const Quiz = ({ questions, quizId, callFrom }) => {
                   <Box className='question-box'>
                     <Typography className='question-info'>
                       <h3>Question No. {currentQuestion + 1}: </h3>
-                      <Button style={{ backgroundColor: '#0a686e', color: "white", fontSize: "13px", fontWeight: "bold", borderRadius: "10px" }}>Category : {getCategoryLabel(questions[currentQuestion].type)}</Button>
+                      <Button style={{ backgroundColor: '#0a686e', color: "white", fontSize: "13px", fontWeight: "bold", borderRadius: "20px", padding: "10px" }}>Category : {getCategoryLabel(questions[currentQuestion].type)}</Button>
                       <h2>{questions[currentQuestion].questionText}</h2>
                     </Typography>
                   </Box>
@@ -215,12 +215,11 @@ const Root = styled.div`
     padding: 5px;
   }
   .option-box{
-    margin-top: 50px;
-    border-radius: 5px;
-    width: 60%;
-    border: 2px solid #ddd;
+    margin-top: 40px;
+    width: 70%;
     margin-left: auto;
     margin-right: auto;
+    border-bottom: 2px solid #A5A5A5;
   }
   .option-list{
     display:flex;
@@ -229,14 +228,18 @@ const Root = styled.div`
     
   }
   .option-btn{
-    color: #0a686e;
+    color: white;
+    background-color: #0a686e;
     font-weight: bold;
     min-width: 150px;
     max-width: 150px;
+    border-radius: 20px;
+    border: 2px solid #0a686e;
     &:hover {
-        background-color: #0a686e;
-        color: whitesmoke;
+        background-color: white;
+        color: #0a686e;
         box-shadow: 8px 4px 8px rgba(0.1, 0.1, 0.1, 0.4);
+        border: 2px solid #0a686e;
     }
   }
   .complete{
@@ -257,9 +260,10 @@ const Root = styled.div`
     color: white
   }
   .skip-btn{
-    margin-top: 10px;
+    margin-top: 20px;
     color: #0a686e;
     font-weight: bolder;
+    border: 2px solid #0a686e;
   }
 `;
 

@@ -16,7 +16,7 @@ const StartQuiz = (props) => {
   const [quizChoice, setQuizChoice] = useState("Today");
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate('/score-cards');
+    navigate('/playground/score-cards');
   }
   const handleQuizChoiceSelection = (choice) =>{
     setQuizChoice(choice);
@@ -104,14 +104,14 @@ const StartQuiz = (props) => {
           <IconButton>
             <Avatar alt={user.name} src={`http://localhost:3000/userImages/${user.picturePath}`} className='avatar-style' />
           </IconButton>
-          <Typography className='greet'>
-            <h2>Hi {user.name} !</h2>
-            {isQuizEnabled === false && <h4 style={{ color: "red" }}>"You have already given today's quiz!"</h4>}
-            <Button className='start-quiz' variant='outlined' onClick={handleStartQuiz} disabled={!isQuizEnabled}>
+          <Box className='greet'>
+            <Typography variant='h6' style={{backgroundColor: "#0a686e", color: "white", borderRadius: "20px", padding: "5px", fontSize: "15px"}}>Hi, {user.name} !</Typography>
+            {isQuizEnabled === false ? <Typography variant='h6' style={{ color: "red", marginTop: "15px", fontSize: "13px", fontWeight: "bold" }}>You have already given today's quiz!</Typography>:<Button className='start-quiz' variant='outlined' onClick={handleStartQuiz} disabled={!isQuizEnabled}>
             Start the quiz
-          </Button>
+          </Button>}
+            
             <h3 style={{ color: "purple" }}>Next Quiz starts in</h3>
-          </Typography>
+          </Box>
           <Box className='timer'>
             <AccessAlarmIcon fontSize='medium' className='timer-icon' />
             <h3>{formatTime(timeRemaining)}</h3>
@@ -138,14 +138,19 @@ const StartQuiz = (props) => {
   )
 }
 const Root = styled.div`
-  padding: 10px;
+  padding: 20px;
+  background-color: #0a686e;
+  margin-top: -10px;
+  border-radius: 20px;
+  margin: auto;
+  overflow: hidden;
   .container {
     margin-top: -10px;
     display: flex;
     justify-content: center;
   }
   .quiz-box{
-    border: 2px solid #A5A5A5;
+    background-color: white;
     padding: 10px;
     width: 50%;
     min-width: 40%;
@@ -154,24 +159,21 @@ const Root = styled.div`
     justify-content: center;
     align-items: center;
     margin-top: 10px;
-    box-shadow: 8px 4px 8px rgba(0.1, 0.1, 0.1, 0.2);
+    box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.4);
     cursor: pointer;
-    &:hover {
-      box-shadow: 8px 4px 8px rgba(0.1, 0.1, 0.1, 0.4);
-    }
-    border-radius: 5px;
+    border-radius: 20px;
     padding: 20px;
     text-align: center;
   }
   .leaderboard-box{
-    border: 2px solid #A5A5A5;
     padding: 10px;
     box-shadow: 8px 4px 8px rgba(0.1, 0.1, 0.1, 0.2);
     cursor: pointer;
     &:hover {
       box-shadow: 8px 4px 8px rgba(0.1, 0.1, 0.1, 0.4);
     }
-    border-radius: 5px;
+    border-radius: 20px;
+    background-color: white;
     display:flex;
     margin-left: 20px;
     flex-direction: column;
@@ -203,7 +205,6 @@ const Root = styled.div`
     background-color: #0a686e;
     color: white;
     width: 40%;
-    height: 30%;
     padding: 0px;
     margin-left: 5px;
     margin-right: 5px;
@@ -223,6 +224,7 @@ const Root = styled.div`
 
   .start-quiz {
     color: #0a686e;
+    margin-top: 10px;
     font-weight: bold;
     &:hover {
       background-color: #0a686e;

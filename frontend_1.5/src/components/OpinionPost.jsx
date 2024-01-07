@@ -67,7 +67,7 @@ const Root = styled.div`
     max-width: 120px;
     height: 100px;
     min-width: 180px;
-    border-right: 2px solid #063d40;
+    border-right: 2px solid #0a686e;
   }
   .card-content{
     display: flex;
@@ -87,7 +87,7 @@ const Root = styled.div`
   }
   .opinions{
     margin-top: 10px;
-    color: #063d40;
+    color: #0a686e;
   }
   .text-avatar{
     display: flex;
@@ -96,7 +96,7 @@ const Root = styled.div`
     font-size: 18px;
     font-weight: bold;
     padding-bottom: 10px;
-    color: #063d40;
+    color: #0a686e;
     border-bottom: 2px solid #ddd;
     margin: auto;
   }
@@ -107,7 +107,7 @@ const Root = styled.div`
     font-weight: bold;
   }
   .comment-btn{
-    color: #063d40;
+    color: #0a686e;
   }
 `;
 export default OpinionPost

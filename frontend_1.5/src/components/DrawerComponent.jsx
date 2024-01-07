@@ -40,7 +40,7 @@ const DrawerComponent = () => {
                         <MenuIcon width={16} height="100%" alt="menu" />
                     </IconButton>
                     <List style={{ marginTop: 15}}>
-                        <DrawerItem to="/" icon={<TrendingIcon width={16} height="100%" open={open} />} text="Trending" />
+                        <DrawerItem to="/trending" icon={<TrendingIcon width={16} height="100%" open={open} />} text="Trending" />
                         <DrawerItem to="/personalized" icon={<PersonalizedIcon width={16} height="100%" open={open} />} text="Personalized" />
                         <DrawerItem to="/playground" icon={<PlaygroundIcon width={16} height="100%" open={open} />} text="Playground" />
                         <DrawerItem to="/debate" icon={<QuestionAnswerIcon width={16} height="100%" open={open} />} text="Debate" />

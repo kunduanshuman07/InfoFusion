@@ -41,7 +41,7 @@ const ViewProfile = ({ onCloseModal, userId }) => {
       <Dialog open={true} onClose={onCloseModal} fullWidth>
         <DialogTitle
           sx={{
-            backgroundColor: "#086D67",
+            backgroundColor: "#0a686e",
             fontSize: "16px",
             display: "flex"
           }}
@@ -78,7 +78,7 @@ const ViewProfile = ({ onCloseModal, userId }) => {
                 </Box>
               </Box>
             </Box>
-            <Button onClick={handleViewFullDashboard} variant='contained' style={{backgroundColor: "#086D67", color: "white", width: "40%", margin: "auto", marginTop: "10px", }}>View Full Profile</Button>
+            <Button onClick={handleViewFullDashboard} variant='contained' style={{backgroundColor: "#0a686e", color: "white", width: "40%", margin: "auto", marginTop: "10px", }}>View Full Profile</Button>
           </Root>
         </DialogContent>
       </Dialog>
@@ -121,7 +121,7 @@ const Root = styled.div`
   }
   .rank-info{
     margin: auto;
-    color: #086D67;
+    color: #0a686e;
     text-align: center;
   }
   .trophy-icon {
@@ -136,12 +136,12 @@ const Root = styled.div`
   .profile-btn{
     margin: auto;
     margin-top: 20px;
-    background-color: #086D67;
-    border: 2px solid #086D67; 
+    background-color: #0a686e;
+    border: 2px solid #0a686e; 
     color: white;
     font-size: 11px;
     font-weight: bold;
-    border: 2px solid #086D67;
+    border: 2px solid #0a686e;
     border-radius: 10px;
   }
 `;

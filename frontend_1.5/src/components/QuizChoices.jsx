@@ -43,16 +43,16 @@ const QuizChoices = ({ setQuizSelection, handleQuizChoiceSelection }) => {
     return (
         <Root>
             <Box className='container'>
-                <Card className='card' onClick={()=>handleQuizChoices("Today's Quiz")} style={{backgroundColor:todaysQuiz?"white":"", color:todaysQuiz?"#0a686e":""}}>
+                <Card className='card' onClick={()=>handleQuizChoices("Today's Quiz")} style={{backgroundColor:todaysQuiz?"white":"", color:todaysQuiz?"#063d40":""}}>
                     <Typography>Today's Quiz</Typography>
                 </Card>
-                <Card className='card' onClick={()=>handleQuizChoices("Past Quizzes")} style={{backgroundColor:pastQuiz?"white":"", color:pastQuiz?"#0a686e":""}}>
+                <Card className='card' onClick={()=>handleQuizChoices("Past Quizzes")} style={{backgroundColor:pastQuiz?"white":"", color:pastQuiz?"#063d40":""}}>
                     <Typography>Past Quizzes</Typography>
                 </Card>
-                <Card className='card' onClick={()=>handleQuizChoices("Monthly Quiz")} style={{backgroundColor:monthlyQuiz?"white":"", color:monthlyQuiz?"#0a686e":""}}>
+                <Card className='card' onClick={()=>handleQuizChoices("Monthly Quiz")} style={{backgroundColor:monthlyQuiz?"white":"", color:monthlyQuiz?"#063d40":""}}>
                     <Typography>Monthly Quiz</Typography>
                 </Card>
-                <Card className='card' onClick={()=>handleQuizChoices("Weekly Quiz")} style={{backgroundColor:weeklyQuiz?"white":"", color:weeklyQuiz?"#0a686e":""}}>
+                <Card className='card' onClick={()=>handleQuizChoices("Weekly Quiz")} style={{backgroundColor:weeklyQuiz?"white":"", color:weeklyQuiz?"#063d40":""}}>
                     <Typography>Weekly Quiz</Typography>
                 </Card>
             </Box>
@@ -68,12 +68,14 @@ const Root = styled.div`
     display: flex;
     flex-direction: row;
   }
+  background-color: white;
+  border-radius: 20px;
 .card {
     cursor: pointer;
-    border: 2px solid #0a686e;
+    border: 2px solid #0a5054;
     border-radius: 10px;
     text-align: center;
-    background-color: #0a686e;
+    background-color: #0a5054;
     color: white;
     margin: 0px 10px 5px 10px;
     padding: 10px;

@@ -28,7 +28,7 @@ export const AppBarComponent = ({comp}) => {
       setAnchorEl(null);
   };
   const handleProfile = () => {
-      navigate('/personal-info');
+      navigate('/profile/personal-info');
   }
   const handleSettings = () => {
       navigate('/settings');
@@ -41,7 +41,7 @@ export const AppBarComponent = ({comp}) => {
       navigate('/help-support')
   }
   const handleLeaderboard = () => {
-      navigate('/leaderboard');
+      navigate('/playground/leaderboard');
   }
   return (
       <Root>
@@ -55,14 +55,14 @@ export const AppBarComponent = ({comp}) => {
                               <IconButton style={{ color: "#086D67", marginRight: "20px" }} onClick={() => navigate('/')}>
                                   <HomeIcon />
                               </IconButton>
-                              <NavLink to='/personal-info' style={({ isActive }) =>
+                              <NavLink to='/profile/personal-info' style={({ isActive }) =>
                                   (isActive ? { borderBottom: "5px solid #086D67", borderRadius: "5px" } : { color: '#086D67' })} className='profile-btn' >Personal Info</NavLink>
-                              <NavLink to='/quiz-dashboard' style={({ isActive }) =>
+                              <NavLink to='/playground/quiz-dashboard' style={({ isActive }) =>
                                   (isActive ? { borderBottom: "5px solid #086D67", borderRadius: "5px" } : { color: '#086D67' })} className='profile-btn'>Quiz Dashboard</NavLink>
                           </Box>}
                           <Box sx={{ ml: "auto" }}>
                               <IconButton color="inherit" onClick={handleMenu}>
-                                  <Avatar alt='Anshuman' src={`http://localhost:3000/userImages/${user.picturePath}`} className='avatar-style' />
+                                  <Avatar alt={user.name} src={`http://localhost:3000/userImages/${user.picturePath}`} className='avatar-style' />
                               </IconButton>
                               <Menu
                                   className='menu-style'

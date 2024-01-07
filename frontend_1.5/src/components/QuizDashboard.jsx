@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import AppBarComponent from '../components/AppBar';
+import AppBarComponent from '../components/AppBarComponent';
 import { Box, Grid, IconButton, Avatar } from '@mui/material';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import WhatshotIcon from '@mui/icons-material/Whatshot';
@@ -70,9 +70,9 @@ const QuizDashboard = () => {
                 <IconButton>
                   <Avatar alt={name} src={`http://localhost:3000/userImages/${picturePath}`} className='avatar-style' />
                 </IconButton>
-                <h5 style={{ color: "#086D67" }}>{name}</h5>
-                <h4 style={{ color: "#086D67", marginBottom: "0px" }}>Quiz attempts: {quizCount}</h4>
-                <h5 style={{ color: "#086D67", marginBottom: "0px" }}>Username: {userName}</h5>
+                <h5 style={{ color: "#0a686e" }}>{name}</h5>
+                <h4 style={{ color: "#0a686e", marginBottom: "0px" }}>Quiz attempts: {quizCount}</h4>
+                <h5 style={{ color: "#0a686e", marginBottom: "0px" }}>Username: {userName}</h5>
               </Box>
             </Box>
           </Grid>
@@ -177,13 +177,13 @@ const Root = styled.div`
   }
   .rank-info{
     margin: auto;
-    color: #086D67;
+    color: #0a686e;
     text-align: left;
     margin-left: 100px;
   }
   .streak-info{
     margin: auto;
-    color: #086D67;
+    color: #0a686e;
     text-align: center;
   }
   .quiz-info{

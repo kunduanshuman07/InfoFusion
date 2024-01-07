@@ -21,7 +21,7 @@ const ScrollbarStyles = (
                 '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.1)'
             },
             '*::-webkit-scrollbar-thumb': {
-                backgroundColor: '#086D67',
+                backgroundColor: '#0a686e',
             }
         }}
     />
@@ -114,7 +114,7 @@ const ScoreCardModal = (props) => {
                 <Root>
                     <DialogTitle
                         sx={{
-                            backgroundColor: "#086D67",
+                            backgroundColor: "#0a686e",
                             fontSize: "20px",
                         }}
                     >
@@ -165,7 +165,7 @@ const Root = styled.div`
         padding: 10px;
     }
     .mytableheader{
-        background-color: #086D67;
+        background-color: #0a686e;
         color: white;
         font-weight: bold;
         margin-top: 10px;
@@ -178,7 +178,7 @@ const Root = styled.div`
         margin-bottom : 10px;
       }
       .export{
-        color: #086D67;
+        color: #0a686e;
         font-weight: bold;
         margin-top: -35px;
       }

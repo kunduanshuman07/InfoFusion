@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from "styled-components";
-import AppBarComponent from "../components/AppBar";
+import AppBarComponent from "../components/AppBarComponent";
 import { Box, IconButton, Typography, Avatar, Button } from '@mui/material';
 import EditProfile from './EditProfile';
 import AvatarUpload from './AvatarUploadDialog';
@@ -16,7 +16,7 @@ const PersonalInfo = () => {
                     <IconButton color="inherit">
                         <Avatar alt={user.name} src={`http://localhost:3000/userImages/${user.picturePath}`} className='avatar-style' onClick={() => setUploadImageModal(true)}/>
                     </IconButton>
-                    <h3 style={{ color: "#086D67" }}>{user.name}</h3>
+                    <h3 style={{ color: "#0a686e" }}>{user.name}</h3>
                     <Button className='edit-profile' onClick={() => setOpenModal(true)}>Edit Profile</Button>
                 </Box>
 
@@ -96,7 +96,7 @@ const Root = styled.div`
         font-weight: bold;
         font-size: 18px;
         margin-bottom: 10px;
-        color: #086D67;
+        color: #0a686e;
     }
 
     .info {
@@ -116,7 +116,7 @@ const Root = styled.div`
         color: #045350;
     }
     .avatar-style{
-        background-color: #086D67;
+        background-color: #0a686e;
     }
     .change-pass{
         text-decoration: none;
@@ -136,7 +136,7 @@ const Root = styled.div`
         margin-left: 5px;
     }
     .edit-profile{
-        background-color: #086D67;
+        background-color: #0a686e;
         color: white;
         font-weight: bold;
         padding: 5px 10px;

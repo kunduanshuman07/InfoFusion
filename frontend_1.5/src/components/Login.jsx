@@ -4,12 +4,12 @@ import styled from 'styled-components'
 import { useAuth } from '../context/AuthProvider'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'
-import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import FPDialog from './FPDialog';
 import IFLogo from "../assets/InfoFusion.png";
+import SnackBarComponent from "./SnackBarComponent";
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -35,12 +35,11 @@ const Login = () => {
     } catch (error) {
       setAuth(false);
       setValid(false);
-      toast.error("Incorrect credentials")
     }
   }
   return (
     <Root>
-      <ToastContainer position='top-center' />
+      {!valid && <SnackBarComponent severity="error" message="Invalid Credentials"/>}
       <Box className="container">
         <Typography variant="h5" className="form-header">
           Login
