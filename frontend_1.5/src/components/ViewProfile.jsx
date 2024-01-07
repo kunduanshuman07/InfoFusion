@@ -16,7 +16,7 @@ const ViewProfile = ({ onCloseModal, userId }) => {
   const [username, setUsername] = useState();
   const [name, setName] = useState();
   const handleViewFullDashboard = () => {
-    navigate(`/quiz-dashboard/${userId}`);
+    navigate(`/playground/quiz-dashboard/${userId}`);
   }
   useEffect(() => {
     const fetchUser = async () => {

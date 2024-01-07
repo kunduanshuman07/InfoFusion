@@ -89,7 +89,7 @@ const Login = () => {
         </Box>
       </Box>
       <Box className='image'>
-        <img src={IFLogo} alt='IFLogo' className='img' width={200} height={50} />
+        <img src={IFLogo} alt='IFLogo' className='img' width={300} height={60} />
         <Typography className='intro'>Play & Compete around General Awareness !</Typography>
       </Box>
       {fpDialog && <FPDialog onCloseModal = {()=>setFpDialog(false)}/>}
@@ -163,6 +163,7 @@ flex-direction: row;
 }
 .img{
   margin: auto;
+  border-radius: 40px;
 }
 `
 
