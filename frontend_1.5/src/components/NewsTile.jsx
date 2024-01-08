@@ -56,7 +56,7 @@ const Root = styled.div`
   .card-box {
     display: flex;
     margin: 20px;
-    border: 2px solid #ddd;
+    border: 2px solid #d7e7fa;
     border-radius: 10px;
     cursor: pointer;
     padding: 10px;
@@ -64,7 +64,7 @@ const Root = styled.div`
     cursor: pointer;
     &:hover {
       box-shadow: 8px 4px 8px rgba(0.1, 0.1, 0.1, 0.4);
-      border: 2px solid #0a686e;
+      border: 2px solid #d7e7fa;
     }
   }
   .card-media{
@@ -74,7 +74,7 @@ const Root = styled.div`
     max-width: 200px;
     height: 170px;
     min-width: 180px;
-    border-right: 2px solid #0a686e;
+    border-right: 2px solid #d7e7fa;
   }
   .card-content{
     display: flex;
@@ -82,7 +82,7 @@ const Root = styled.div`
     width: 90%;
   }
   .progress-bar{
-    color: #0a686e;
+    color:#0072e5;
     margin: 100px 400px;
     font-size: 100px;
   }
@@ -90,8 +90,8 @@ const Root = styled.div`
     font-weight: bold;
     font-size: 18px;
     padding-bottom: 10px;
-    border-bottom: 1px solid #0a686e;\
-    color: #0a686e;
+    border-bottom: 2px solid #d7e7fa;
+    color: #444444;
   }
   .description{
     font-size: 15px;

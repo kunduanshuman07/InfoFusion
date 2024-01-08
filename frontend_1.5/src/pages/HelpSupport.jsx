@@ -29,7 +29,7 @@ const HelpSupport = () => {
             <TextField type="email" name="from_name" placeholder='Your Email' fullWidth className='textfield' />
             <TextField name="message" placeholder='Write your Query' multiline fullWidth className='textfield' />
           </form>}
-          <Button onClick={sendEmail} variant='filled' style={{ backgroundColor: "#063d40", color: "white", marginTop: sentEmail? "5px": "20px", fontWeight: "bold" }}>{sending ? <CircularProgress style={{ color: "white", fontSize: "10px" }} /> :
+          <Button onClick={sendEmail} variant='filled' style={{marginTop: sentEmail? "5px": "20px", fontWeight: "bold" }} className='send-email'>{sending ? <CircularProgress style={{ color: "white", fontSize: "10px" }} /> :
             sentEmail ? "Email Sent" : "Send Email"}</Button>
         </Box>
       </Box>
@@ -46,7 +46,7 @@ const Root = styled.div`
     &:hover {
         box-shadow: 8px 4px 8px rgba(0.1, 0.1, 0.1, 0.4);
     }   
-    border: 2px solid #ddd;
+    border: 2px solid #d7e7fa;
     border-radius: 5px;
     padding: 20px;
     text-align: center;
@@ -56,12 +56,20 @@ const Root = styled.div`
   }
   .header{
     margin-bottom: 20px;
-    color: #063d40;
+    color: #444444;
     font-weight: bold;
     font-size: 20px;
   }
   .form{
     padding: 10px;
+  }
+  .send-email{
+    background-color: #0072e5;
+    color: white;
+    &:hover{
+      background-color: #d7e7fa;
+      color: #444444;
+    }
   }
 `
 export default HelpSupport

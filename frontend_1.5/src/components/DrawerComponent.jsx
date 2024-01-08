@@ -28,7 +28,7 @@ const DrawerComponent = () => {
                 sx={{
                     width: drawerWidth,
                     flexShrink: 0,
-                    [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box', backgroundColor: "#063d40", boxShadow: "0px 11px 35px 2px rgba(0, 0, 0, 0.14)", transition: 'width 250ms' },
+                    [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box', backgroundColor: "white", transition: 'width 350ms' },
                 }}
             >
                 <Toolbar />
@@ -40,12 +40,12 @@ const DrawerComponent = () => {
                         <MenuIcon width={16} height="100%" alt="menu" />
                     </IconButton>
                     <List style={{ marginTop: 15}}>
-                        <DrawerItem to="/trending" icon={<TrendingIcon width={16} height="100%" open={open} />} text="Trending" />
-                        <DrawerItem to="/personalized" icon={<PersonalizedIcon width={16} height="100%" open={open} />} text="Personalized" />
-                        <DrawerItem to="/playground" icon={<PlaygroundIcon width={16} height="100%" open={open} />} text="Playground" />
-                        <DrawerItem to="/debate" icon={<QuestionAnswerIcon width={16} height="100%" open={open} />} text="Debate" />
-                        <DrawerItem to="/your-opinion" icon={<AccessibilityIcon width={16} height="100%" open={open} />} text="Opinion ?" />
-                        <DrawerItem to="/fact-check" icon={<FactCheckIcon width={16} height="100%" open={open} />} text="Fact Check" />
+                        <DrawerItem to="/trending" icon={<TrendingIcon width={16} height="40px" open={open} />} text="Trending" />
+                        <DrawerItem to="/personalized" icon={<PersonalizedIcon width={16} height="40px" open={open} />} text="Personalized" />
+                        <DrawerItem to="/playground" icon={<PlaygroundIcon width={16} height="40px" open={open} />} text="Playground" />
+                        <DrawerItem to="/debate" icon={<QuestionAnswerIcon width={16} height="40px" open={open} />} text="Debate" />
+                        <DrawerItem to="/your-opinion" icon={<AccessibilityIcon width={16} height="40px" open={open} />} text="Opinion ?" />
+                        <DrawerItem to="/fact-check" icon={<FactCheckIcon width={16} height="40px" open={open} />} text="Fact Check" />
                     </List>
                 </Box>
             </Drawer>
@@ -57,9 +57,8 @@ const Root = styled.div`
 .drawer-icon{
     margin-top: 15px;
     padding: 0px;
-    color:white;
+    color: #444444;
     margin-left: 22px;
-    border: 2px solid #edfeff;
     border-radius: 5px;
 }
 `

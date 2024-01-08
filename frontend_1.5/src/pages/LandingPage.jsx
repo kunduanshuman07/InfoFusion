@@ -59,8 +59,8 @@ const Root = styled.div`
         box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
     }
     .intro-img{
-        width: 300px;
-        height: 60px;
+        width: 120px;
+        height: 100px;
         margin: 5px auto 5px auto;
         border-radius: 30px;
     }

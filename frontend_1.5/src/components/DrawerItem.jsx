@@ -10,11 +10,11 @@ export const DrawerItem = ({ to, icon, text}) => (
         to={to}
         component={NavLink}
         style={({ isActive }) =>
-            isActive ? { color: 'white', backgroundColor: "#0a686e" } : { color: 'white'}
+            isActive ? { color: '#444444', backgroundColor: "#d7e7fa",  borderRadius: "10px", height: "48px"} : { color: '#444444', height: "48px",}
         }
     >
         <ListItemIcon>
-            <IconButton style={{ color: "white" }}>{icon}</IconButton>
+            <IconButton style={{ color: "#444444" }}>{icon}</IconButton>
         </ListItemIcon>
         <ListItemText
             primary={<Typography>{text}</Typography>}
@@ -23,5 +23,3 @@ export const DrawerItem = ({ to, icon, text}) => (
     </ListItem>
 );
 export default DrawerItem
-
-// borderBottom: '2px solid white', borderTop: '2px solid white'

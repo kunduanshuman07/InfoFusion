@@ -49,7 +49,7 @@ const Root = styled.div`
     margin: 20px;
     cursor: pointer;
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 2px solid #d7e7fa ;
     border-radius: 10px;
     box-shadow: 8px 4px 8px rgba(0.1, 0.1, 0.1, 0.2);
     cursor: pointer;
@@ -67,47 +67,20 @@ const Root = styled.div`
     max-width: 120px;
     height: 100px;
     min-width: 180px;
-    border-right: 2px solid #0a686e;
+    border-right: 2px solid #d7e7fa;
   }
   .card-content{
     display: flex;
     flex-direction: column; 
     width: 90%;
   }
-  .opinion-box{
-    display: flex;
-    flex-direction: column;
-    border: 2px solid #ddd;
-    padding: 0px 5px;
-    border-radius: 10px;
-    padding-top: 10px;
-  }
-  .post-opinion{
-    display: flex;
-  }
-  .opinions{
-    margin-top: 10px;
-    color: #0a686e;
-  }
-  .text-avatar{
-    display: flex;
-  }
   .title{
     font-size: 18px;
     font-weight: bold;
     padding-bottom: 10px;
-    color: #0a686e;
-    border-bottom: 2px solid #ddd;
+    color: #444444;
+    border-bottom: 2px solid #d7e7fa;
     margin: auto;
-  }
-  .description{
-    font-size: 15px;
-    color: gray;
-    margin-top: 10px;
-    font-weight: bold;
-  }
-  .comment-btn{
-    color: #0a686e;
   }
 `;
 export default OpinionPost
