@@ -56,8 +56,7 @@ const PlaygroundAppBar = () => {
 
 const Root = styled.div`
     .container{
-        border-radius: 20px;
-        background-color: white;
+        border-radius: 5px;
         width: 90%;
         height: 50px;
         background-color: #d7e7fa;
@@ -69,7 +68,7 @@ const Root = styled.div`
     }
     .list-item{
         width: 25%;
-        border-radius: 20px;
+        border-radius: 5px;
         height: 30px;
         margin: 10px auto 0px auto;
     }
