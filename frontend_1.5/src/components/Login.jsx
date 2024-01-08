@@ -89,7 +89,7 @@ const Login = () => {
         </Box>
       </Box>
       <Box className='image'>
-        <img src={IFLogo} alt='IFLogo' className='img' width={300} height={60} />
+        <img src={IFLogo} alt='IFLogo' className='img' width={120} height={100} />
         <Typography className='intro'>Play & Compete around General Awareness !</Typography>
       </Box>
       {fpDialog && <FPDialog onCloseModal = {()=>setFpDialog(false)}/>}

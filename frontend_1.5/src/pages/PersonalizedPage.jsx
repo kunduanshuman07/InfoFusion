@@ -36,7 +36,7 @@ const PersonalizedPage = () => {
           </TextField>
         </Box>
       </Box>
-      {loading ? <LinearProgress className='progress-bar' color="inherit"/> : <NewsTile url={personalizedUrl} />}
+      {loading ? <LinearProgress className='progress-bar'/> : <NewsTile url={personalizedUrl} />}
       {loading ? <Box className='choose-category'>
         <Typography className='category-desc'>Set your category preferrence to read personallized news shorts !</Typography>
       </Box>: ""}
@@ -53,7 +53,7 @@ flex-direction: column;
     padding: 20px 10px;
     box-shadow: 8px 4px 8px rgba(0.1, 0.1, 0.1, 0.2);
     cursor: pointer;
-    border: 1px solid #ddd;
+    border: 2px solid #d7e7fa;
     border-radius: 5px;
     min-width: 600px;
     min-height: 50px;
@@ -67,42 +67,19 @@ flex-direction: column;
     margin-left: 10px;
     justify-content
   }
-  .makeurl{
-    width: 10%;
-    margin-left: 25px;
-  }
-  .makeurl-btn{
-    width: 90%;
-    font-weight: bold;
-    background-color: white;
-    border: 1px solid #0a686e;
-    color: #0a686e;
-    text-transform: none;
-    &:hover {
-      background-color: #0a686e;
-      color: whitesmoke;
-      border: 1px solid #0a686e;
-    }
-  }
-  .country-label{
-    font-weight: bold;
-    margin-bottom: 5px;
-    margin-left: 150px;
-    color: #0a686e;
-  }
   .category-label{
     font-weight: bold;
     margin-bottom: 5px;
     margin-left: 150px;
-    color: #0a686e;
+    color: #444444;
   }
   .progress-bar{
-    color: #0a686e;
+    color: #0072e5;
     margin-top: 1%;
   }
   .choose-category{
     margin: 100px auto;
-    background-color: #0a686e;
+    background-color: #0072e5;
     padding: 10px;
     border-radius: 40px;
   }

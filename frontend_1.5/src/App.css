@@ -1,17 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500&display=swap');
-body {
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@500&display=swap');
+*{
   margin: 0;
   padding: 0;
-  font-family: 'Ubuntu', sans-serif;
-  background-color:#c1ddde;
+  font-family: 'IBM Plex Sans', sans-serif;
 }
 body::-webkit-scrollbar {
-  width: 8px;
+  width: 5px;
 }
 
 body::-webkit-scrollbar-thumb {
-  background-color: #086D67;
-  border-radius: 8px;
+  background-color: #0072e5;
 }
 
 body::-webkit-scrollbar-track {

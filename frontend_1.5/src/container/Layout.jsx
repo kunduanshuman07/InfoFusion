@@ -12,7 +12,6 @@ import DebatePage from '../pages/DebatePage'
 import PlaygroundPage from "../pages/PlaygroundPage"
 import OverallLeaderboard from "../pages/OverallLeaderboard"
 import SettingsPage from "../pages/SettingsPage"
-import ScoreCardPage from '../pages/ScoreCardPage'
 const Layout = () => {
 
   return (
@@ -31,7 +30,6 @@ const Layout = () => {
             <Route path='/playground' element={<PlaygroundPage/>}/>
             <Route path='/playground/leaderboard' element={<OverallLeaderboard/>}/>
             <Route path='/settings' element={<SettingsPage />} />
-            <Route path='/playground/score-cards' element={<ScoreCardPage />} />
           </Routes>
         </div>
       </main>

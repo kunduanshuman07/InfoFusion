@@ -26,7 +26,7 @@ const FactcheckPage = () => {
                   type='file'
                   placeholder="Upload Picture"
                   fullWidth
-                  style={{ color: "#0a686e" }}
+                  style={{ color: "#444444" }}
                   onChange={(e)=>setFile(e.target.files[0])}
                 />
               </Box>
@@ -44,7 +44,7 @@ const FactcheckPage = () => {
             </CardContent>
 
           </Box>
-          <Button variant='contained' style={{backgroundColor: "#0a686e", width: "20%", margin: "auto"}} onClick={handleSubmit}>Submit</Button>
+          <Button variant='contained' style={{width: "20%", margin: "auto"}} onClick={handleSubmit} className='submit-btn'>Submit</Button>
         </Card>
       </Box>
     </Root>
@@ -57,7 +57,7 @@ const Root = styled.div`
     margin: 20px;
     cursor: pointer;
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 2px solid #d7e7fa;
     border-radius: 10px;
     box-shadow: 8px 4px 8px rgba(0.1, 0.1, 0.1, 0.2);
     cursor: pointer;
@@ -78,20 +78,26 @@ const Root = styled.div`
     font-size: 18px;
     font-weight: bold;
     padding-bottom: 10px;
-    border-bottom: 1px solid #0a686e;
+    border-bottom: 2px solid #d7e7fa;
     margin: auto;
-    color: #0a686e;
+    color: #444444;
   }
   .fact-pic{
     margin-top: 20px;
   }
   .input-label{
     margin-bottom: 5px;
-    color: #0a686e;
+    color: #444444;
     font-weight: bold;
   }
   .fact-desc{
     margin-top: 20px;
+  }
+  .submit-btn{
+    &:hover{
+      background-color: #d7e7fa;
+      color: #444444;
+    }
   }
 `;
 export default FactcheckPage

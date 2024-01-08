@@ -46,7 +46,7 @@ const OpinionDialog = ({ onCloseModal, postId }) => {
             <DialogTitle
                 sx={{
                     display: "flex",
-                    backgroundColor: "#0a686e",
+                    backgroundColor: "#0072e5",
                     fontSize: "19px",
                     fontWeight: "bolder",
                     height: "70px",
@@ -58,7 +58,7 @@ const OpinionDialog = ({ onCloseModal, postId }) => {
                     <Typography style={{ color: "white", margin: "auto", fontWeight: "bold" }}>{post.postTitle}
                     </Typography>
                 </Box>
-                <Box className='timer' style={{ display: "flex", cursor: "pointer", marginLeft: "auto", backgroundColor: "white", color: "#0a686e", borderRadius: "20px", fontWeight: "bolder", padding: "0px" }}>
+                <Box className='timer' style={{ display: "flex", cursor: "pointer", marginLeft: "auto", backgroundColor: "white", color: "#444444", borderRadius: "20px", fontWeight: "bolder", padding: "0px" }}>
                     <IconButton onClick={onCloseModal} size='small'>
                         <CloseIcon className="close-icon" style={{ fontWeight: "bolder" }} />
                     </IconButton>
@@ -89,7 +89,7 @@ const OpinionDialog = ({ onCloseModal, postId }) => {
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position="end">
-                                        <IconButton onClick={handleDisplayOpinion} size="small" color='#063d40'>
+                                        <IconButton onClick={handleDisplayOpinion} size="small" style={{color:'#0072e5'}}>
                                             <SendIcon />
                                         </IconButton>
                                     </InputAdornment>
@@ -103,7 +103,7 @@ const OpinionDialog = ({ onCloseModal, postId }) => {
                                 <IconButton color='inherit' size='small'>
                                     <Avatar alt={opinion.username} src='avatar' className='avatar-style' size='small' />
                                 </IconButton>
-                                <Typography key={index} style={{ margin: "auto 10px", border: "1px solid #ddd", borderRadius: "10px", padding: "5px", color: "#0a686e", fontSize: "14px" }}>{opinion.opinionText}</Typography>
+                                <Typography key={index} style={{ margin: "auto 10px", border: "1px solid #ddd", borderRadius: "10px", padding: "5px", color: "#444444", fontSize: "14px" }}>{opinion.opinionText}</Typography>
                                 <Box className='time-delete'>
                                     <Typography key={index} className='time-post'>{opinion.timeOfPost}</Typography>
                                     <Box className='reply-delete'>
@@ -130,14 +130,14 @@ flex-direction: column;
     display: flex;
     flex-direction: row;
     margin-top: 10px;
-    border-bottom: 5px solid #ddd;
+    border-bottom: 5px solid #d7e7fa ;
     padding-bottom: 10px;
 }
 .media-textfield{
     display: flex;
     flex-direction: column;
     width: 30%;
-    border-left: 5px solid #ddd;
+    border-left: 5px solid #d7e7fa;
     padding: 10px;
 }
 .desc{
@@ -157,16 +157,16 @@ flex-direction: column;
     margin: 10px;
   }
   .description{
-    color: #0a686e;
+    color: #444444;
     font-weight: bolder;
   }
   .post-opinion{
     margin-top: 10px;
-    border-bottom: 5px solid #ddd;
+    border-bottom: 5px solid #d7e7fa;
     padding-bottom: 10px;
   }
   .avatar-style{
-    background-color: #0a686e;
+    background-color: #0072e5;
   }
   .time-delete{
     display: flex;
