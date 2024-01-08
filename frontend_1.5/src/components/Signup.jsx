@@ -141,7 +141,7 @@ const Signup = () => {
         </Box>
       </Box>
       <Box className='image'>
-        <img src={IFLogo} alt='IFLogo' className='img' width={120} height={100}/>
+        <img src={IFLogo} alt='IFLogo' className='img' width={150} height={130}/>
         <Typography className='intro'>Play & Compete around General Awareness !</Typography>
       </Box>
     </Root>
@@ -181,11 +181,16 @@ flex-direction: row;
 }
 .submit-btn{
   margin: 10px auto 0px auto;
-  background: linear-gradient(to right, #0b4e52, #004d48);
-  color: white;
   width: 40%;
   border-radius: 20px;
   margin-top: 20px;
+  background-color: #0072e5;
+  color: white;
+  font-weight: bold;
+  &:hover{
+    background-color: #d7e7fa;
+    color: #444444;
+  }
 }
 .footer{
   display: flex;
@@ -193,7 +198,7 @@ flex-direction: row;
   margin-top: 15px;
 }
 .fpassword{
-  color: #0b4e52;
+  color: #444444;
   font-size: 13px;
   text-decoration: none;
   &: hover{
@@ -207,7 +212,7 @@ flex-direction: row;
   justify-content: center;
 }
 .intro{
-  color: #0b4e52;
+  color: #444444;
   font-weight: bold;
   font-size: 18px;
   margin-top: 10px;
