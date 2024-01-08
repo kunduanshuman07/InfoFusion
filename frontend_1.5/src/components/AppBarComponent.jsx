@@ -8,7 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import Container from '@mui/material/Container';
 import Logo from "../assets/InfoFusion.png";
 import { NavLink, useNavigate } from "react-router-dom";
-import { Button, Tooltip } from '@mui/material';
+import { Button, Tooltip, Typography } from '@mui/material';
 import HomeIcon from "@mui/icons-material/Home";
 import SupportIcon from '@mui/icons-material/SupportAgent';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -29,7 +29,7 @@ export const AppBarComponent = ({ comp }) => {
         navigate('/help-support')
     }
     const handleSettings = () => {
-        navigate('/playground/leaderboard');
+        navigate('/settings');
     }
     return (
         <Root>
@@ -38,7 +38,11 @@ export const AppBarComponent = ({ comp }) => {
                 <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, backgroundColor: "white", color: "#086D67" }}>
                     <Container maxWidth="xl">
                         <Toolbar disableGutters>
-                            <img alt="InfoFusion" src={Logo} width={70} height={60} onClick={() => navigate('/trending')} className='logo-style' />
+                            <img alt="InfoFusion" src={Logo} width={70} height={60} onClick={() => navigate('/trending')}
+                                className='logo-style' />
+                            <Box style={{display: "flex", flexDirection: "column"}}>
+                                <Typography className='logo-text'>INFOFUSION</Typography>
+                            </Box>
                             {comp === 'profile' && <Box className='profile-btns'>
                                 <IconButton style={{ color: "#086D67", marginRight: "20px" }} onClick={() => navigate('/')}>
                                     <HomeIcon />
@@ -81,6 +85,13 @@ export const AppBarComponent = ({ comp }) => {
 const Root = styled.div`
     .logo-style{
         cursor: pointer
+    }
+    .logo-text{
+        color: #0072e5;
+        font-size: 12px;
+        border: 2px solid #d7e7fa;
+        padding: 5px 10px 5px 10px;
+        border-radius: 20px;
     }
     .avatar-style{
         background-color: #0072e5;

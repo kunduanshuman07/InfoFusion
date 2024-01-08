@@ -94,6 +94,7 @@ const Root = styled.div`
     margin-top: 20px;
   }
   .submit-btn{
+    border-radius: 20px;
     &:hover{
       background-color: #d7e7fa;
       color: #444444;

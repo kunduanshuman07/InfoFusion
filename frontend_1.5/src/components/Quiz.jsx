@@ -2,13 +2,13 @@ import { Box } from '@mui/material'
 import React from 'react'
 import PlaygroundAppBar from './PlaygroundAppBar'
 
-const LeaderBoard = () => {
+const Quiz = () => {
   return (
     <Box>
         <PlaygroundAppBar/>
-        Leaderboard
+        Quiz
     </Box>
   )
 }
 
-export default LeaderBoard
+export default Quiz

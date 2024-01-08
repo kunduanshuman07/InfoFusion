@@ -66,6 +66,7 @@ const Root = styled.div`
   .send-email{
     background-color: #0072e5;
     color: white;
+    border-radius: 20px;
     &:hover{
       background-color: #d7e7fa;
       color: #444444;
