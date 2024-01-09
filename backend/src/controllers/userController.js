@@ -174,3 +174,21 @@ export const deleteAccount = async (req, res) => {
         res.status(500).send(error);
     }
 }
+
+export const getUserScorecards = async(req,res) => {
+    const {userId} = req.body;
+    try {
+        const user = await User.findById(userId);
+        if(!user){
+            res.status(400).send("User not found");
+        }
+        const scorecardData = [];
+        user.quizzes.forEach((quiz)=>{
+            scorecardData.push(quiz);
+        })
+        res.status(200).send(scorecardData);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}

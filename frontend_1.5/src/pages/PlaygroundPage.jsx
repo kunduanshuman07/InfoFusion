@@ -1,11 +1,11 @@
 import { Box } from '@mui/material'
 import React from 'react'
-import PlaygroundAppBar from '../components/PlaygroundAppBar'
+import Quiz from '../components/Quiz'
 
 const PlaygroundPage = () => {
   return (
     <Box>
-      <PlaygroundAppBar/>
+      <Quiz />
     </Box>
   )
 }

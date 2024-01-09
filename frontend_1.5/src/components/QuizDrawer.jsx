@@ -3,7 +3,6 @@ import Box from '@mui/material/Box';
 import { ListItem, Typography } from '@mui/material';
 import styled from "styled-components"
 const QuizDrawer = ({setQuizState, quizState}) => {
-    console.log(setQuizState)
     return (
         <Root>
             <Box className='container'>
