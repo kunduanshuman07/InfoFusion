@@ -7,9 +7,8 @@ import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Container from '@mui/material/Container';
 import Logo from "../assets/InfoFusion.png";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button, Tooltip, Typography } from '@mui/material';
-import HomeIcon from "@mui/icons-material/Home";
 import SupportIcon from '@mui/icons-material/SupportAgent';
 import SettingsIcon from '@mui/icons-material/Settings';
 import styled from "styled-components";
@@ -19,7 +18,7 @@ export const AppBarComponent = ({ comp }) => {
     const navigate = useNavigate();
 
     const handleProfile = () => {
-        navigate('/profile/personal-info');
+        navigate('/profile');
     }
     const handleLogout = () => {
         localStorage.clear();
@@ -43,15 +42,6 @@ export const AppBarComponent = ({ comp }) => {
                             <Box style={{display: "flex", flexDirection: "column"}}>
                                 <Typography className='logo-text'>INFOFUSION</Typography>
                             </Box>
-                            {comp === 'profile' && <Box className='profile-btns'>
-                                <IconButton style={{ color: "#086D67", marginRight: "20px" }} onClick={() => navigate('/')}>
-                                    <HomeIcon />
-                                </IconButton>
-                                <NavLink to='/profile/personal-info' style={({ isActive }) =>
-                                    (isActive ? { borderBottom: "5px solid #086D67", borderRadius: "5px" } : { color: '#086D67' })} className='profile-btn' >Personal Info</NavLink>
-                                <NavLink to='/playground/quiz-dashboard' style={({ isActive }) =>
-                                    (isActive ? { borderBottom: "5px solid #086D67", borderRadius: "5px" } : { color: '#086D67' })} className='profile-btn'>Quiz Dashboard</NavLink>
-                            </Box>}
                             <Box sx={{ ml: "auto" }}>
                                 <Tooltip title='Profile'>
                                     <IconButton color="inherit" onClick={handleProfile}>

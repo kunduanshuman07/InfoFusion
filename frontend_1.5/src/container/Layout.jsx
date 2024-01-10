@@ -13,6 +13,7 @@ import PlaygroundPage from "../pages/PlaygroundPage"
 import SettingsPage from "../pages/SettingsPage"
 import Scorecards from "../components/Scorecards";
 import Leaderboard from "../components/LeaderBoard"
+import Quiz from '../components/Quiz'
 const Layout = () => {
 
   return (
@@ -24,14 +25,15 @@ const Layout = () => {
           <Routes>
             <Route path="/trending" element={<TrendingPage />} />
             <Route path="/personalized" element={<PersonalizedPage />} />
-            <Route path="/fact-check" element={<FactCheckPage />} />
-            <Route path='/help-support' element={<HelpSupport />} />
-            <Route path='/your-opinion' element={<OpinionPage />} />
+            <Route path='/playground' element={<PlaygroundPage/>}/>
+            <Route path='/playground/quiz' element ={<Quiz />}/>
+            <Route path='/playground/leaderboard' element ={<Leaderboard />}/>
+            <Route path='/playground/scorecards' element ={<Scorecards />}/>
             <Route path='/debate' element={<DebatePage />} />
-            <Route path='/playground/quiz' element={<PlaygroundPage/>}/>
+            <Route path='/your-opinion' element={<OpinionPage />} />
+            <Route path="/fact-check" element={<FactCheckPage />} />
             <Route path='/settings' element={<SettingsPage />} />
-            <Route path='/playground/quiz/leaderboard' element ={<Leaderboard />}/>
-            <Route path='/playground/quiz/scorecards' element ={<Scorecards />}/>
+            <Route path='/help-support' element={<HelpSupport />} />
           </Routes>
         </div>
       </main>
@@ -42,7 +44,7 @@ const Root = styled.div`
 display: flex;
     .content{
         flexGrow: 1.5;
-        padding: 80px;
+        padding: 70px;
         overflowX: auto;
         overflowY: hidden;
     }

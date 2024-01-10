@@ -1,13 +1,16 @@
 import { Box } from '@mui/material'
 import React from 'react'
-import Quiz from '../components/Quiz'
-
+import PlaygroundAppBar from '../components/PlaygroundAppBar'
+import PlaygroundLanding from "../components/PlaygroundLanding"
 const PlaygroundPage = () => {
   return (
     <Box>
-      <Quiz />
+      <PlaygroundAppBar />
+      <PlaygroundLanding/>
     </Box>
   )
 }
+
+
 
 export default PlaygroundPage

@@ -22,6 +22,7 @@ const QuizLandingPage = () => {
 const Root = styled.div`
 .container{
   display: flex;
+  margin-top: 30px;
 }
 .quiz-choices{
   width: 30%;

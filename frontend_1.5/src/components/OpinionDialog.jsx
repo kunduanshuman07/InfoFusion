@@ -46,7 +46,7 @@ const OpinionDialog = ({ onCloseModal, postId }) => {
             <DialogTitle
                 sx={{
                     display: "flex",
-                    backgroundColor: "#0072e5",
+                    backgroundColor: "#01264a",
                     fontSize: "19px",
                     fontWeight: "bolder",
                     height: "70px",
@@ -89,7 +89,7 @@ const OpinionDialog = ({ onCloseModal, postId }) => {
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position="end">
-                                        <IconButton onClick={handleDisplayOpinion} size="small" style={{color:'#0072e5'}}>
+                                        <IconButton onClick={handleDisplayOpinion} size="small" style={{color:'#01264a'}}>
                                             <SendIcon />
                                         </IconButton>
                                     </InputAdornment>
@@ -166,7 +166,7 @@ flex-direction: column;
     padding-bottom: 10px;
   }
   .avatar-style{
-    background-color: #0072e5;
+    background-color: #01264a;
   }
   .time-delete{
     display: flex;

@@ -13,13 +13,13 @@ import ScoreboardIcon from '@mui/icons-material/Scoreboard';
 const PlaygroundAppBar = () => {
   return (
     <Root>
-      <AppBar position="static" className='container'>
+      <AppBar position="fixed" className='container'>
         <Box className='list-container'>
           <ListItem
             to='/playground/quiz'
             component={NavLink}
             style={({ isActive }) =>
-              isActive ? { color: '#444444', } : { color: '#444444' }
+              isActive ? { color: '#444444',backgroundColor: 'white' } : { color: '#444444' }
             }
             className='list-item'
           >
@@ -27,7 +27,7 @@ const PlaygroundAppBar = () => {
             <Typography className='list-text'>Quiz</Typography>
           </ListItem>
           <ListItem
-            to='/playground/quiz/leaderboard'
+            to='/playground/leaderboard'
             component={NavLink}
             style={({ isActive }) =>
               isActive ? { color: '#444444', backgroundColor: 'white' } : { color: '#444444' }
@@ -38,7 +38,7 @@ const PlaygroundAppBar = () => {
             <Typography className='list-text'>Leaderboard</Typography>
           </ListItem>
           <ListItem
-            to='/playground/quiz/scorecards'
+            to='/playground/scorecards'
             component={NavLink}
             style={({ isActive }) =>
               isActive ? { color: '#444444', backgroundColor: 'white' } : { color: '#444444' }
@@ -57,9 +57,11 @@ const PlaygroundAppBar = () => {
 const Root = styled.div`
   .container {
     border-radius: 5px;
-    width: 90%;
+    width: 64%;
     height: 50px;
     background-color: #d7e7fa;
+    margin-top: 65px;
+    margin-right: 160px;
   }
   .list-container {
     display: flex;

@@ -78,7 +78,6 @@ export const getOverallLeaderboard = async (req, res) => {
             });
         });
         leaderboardData.sort((a, b) => b.rating - a.rating);
-        console.log(leaderboardData);
         res.status(200).send({ leaderboard: leaderboardData });
     } catch (error) {
         console.error(error);
@@ -126,6 +125,8 @@ export const userDashboard = async (req, res) => {
         let correctanswers = 0;
         let hardanswers = 0;
         let miscanswers = 0;
+        let easyanswers = 0;
+        let mediumanswers = 0
         if (user && user.quizzes.length > 0) {
             const quizzes = user.quizzes;
             quizzes.map((quiz) => {
@@ -138,6 +139,12 @@ export const userDashboard = async (req, res) => {
                         }
                         else if (scores.type === "4") {
                             miscanswers = miscanswers + 1;
+                        }
+                        else if (scores.type === "1") {
+                            easyanswers = easyanswers + 1;
+                        }
+                        else if (scores.type === "2") {
+                            mediumanswers = mediumanswers + 1;
                         }
                     }
                 })
@@ -156,6 +163,8 @@ export const userDashboard = async (req, res) => {
             hardAnswers: hardanswers,
             miscAnswers: miscanswers,
             correctAnswers: correctanswers,
+            easyAnswers: easyanswers,
+            mediumAnswers: mediumanswers,
         }
         res.status(200).send({ dashboardData: dashboardData, user: user });
     } catch (error) {
