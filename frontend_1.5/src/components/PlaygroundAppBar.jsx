@@ -19,7 +19,7 @@ const PlaygroundAppBar = () => {
             to='/playground/quiz'
             component={NavLink}
             style={({ isActive }) =>
-              isActive ? { color: '#444444', } : { color: '#444444' }
+              isActive ? { color: '#444444',backgroundColor: 'white' } : { color: '#444444' }
             }
             className='list-item'
           >
@@ -27,7 +27,7 @@ const PlaygroundAppBar = () => {
             <Typography className='list-text'>Quiz</Typography>
           </ListItem>
           <ListItem
-            to='/playground/quiz/leaderboard'
+            to='/playground/leaderboard'
             component={NavLink}
             style={({ isActive }) =>
               isActive ? { color: '#444444', backgroundColor: 'white' } : { color: '#444444' }
@@ -38,7 +38,7 @@ const PlaygroundAppBar = () => {
             <Typography className='list-text'>Leaderboard</Typography>
           </ListItem>
           <ListItem
-            to='/playground/quiz/scorecards'
+            to='/playground/scorecards'
             component={NavLink}
             style={({ isActive }) =>
               isActive ? { color: '#444444', backgroundColor: 'white' } : { color: '#444444' }

@@ -78,7 +78,6 @@ export const getOverallLeaderboard = async (req, res) => {
             });
         });
         leaderboardData.sort((a, b) => b.rating - a.rating);
-        console.log(leaderboardData);
         res.status(200).send({ leaderboard: leaderboardData });
     } catch (error) {
         console.error(error);
