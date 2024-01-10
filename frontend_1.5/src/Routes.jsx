@@ -8,6 +8,7 @@ import QuizForm from './pages/QuizFormPage';
 import UploadPostAdmin from './pages/UploadPostAdmin';
 import LandingPage from './pages/LandingPage';
 import ProfilePage from './pages/ProfilePage';
+import EditProfilePage from './pages/EditProfilePage';
 const RoutesJS = () => {
   const { auth } = useAuth();
   return (
@@ -17,6 +18,7 @@ const RoutesJS = () => {
       <Route path='/' element={<LandingPage />} />
       <Route path='/*' element={auth ? <Layout /> : <Navigate to="/login" replace />} />
       <Route path='/profile' element={auth && <ProfilePage />} />
+      <Route path='/profile/edit-profile' element={auth && <EditProfilePage />} />
       <Route path='/quiz-form-admin' element={auth && <QuizForm />} />
       <Route path='/create-post-admin' element={<UploadPostAdmin />} />
     </Routes>

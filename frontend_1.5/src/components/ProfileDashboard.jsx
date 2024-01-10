@@ -2,11 +2,12 @@ import { Box, IconButton, Avatar, Button, Typography, LinearProgress } from '@mu
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { LineChart } from '@mui/x-charts/LineChart';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from "axios"
 import { badgeDecider } from '../utils/BadgeDecider';
 import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
 const ProfileDashboard = () => {
+    const navigate = useNavigate();
     const { userId } = useParams();
     const user = JSON.parse(localStorage.getItem("user"));
     const [iqrRow, setIqrRow] = useState([]);
@@ -50,7 +51,7 @@ const ProfileDashboard = () => {
             const badgeCategory = badgeDecider(data.user.quizzes);
             setBadgeColor(badgeCategory.hexColor);
             setBadgeLabel(badgeCategory.label);
-            setBadgeAverage(badgeCategory.finalAverage);
+            setBadgeAverage(badgeCategory.finalAverage.toFixed(2));
         }
         fetchDashboard();
     }, [])
@@ -71,7 +72,7 @@ const ProfileDashboard = () => {
                             <Typography className='rank'>Rank 45</Typography>
                         </Box>
                     </Box>
-                    <Button className='edit-profile'>Edit Profile</Button>
+                    <Button className='edit-profile' onClick={()=>navigate('/profile/edit-profile')}>Edit Profile</Button>
                 </Box>
                 <Box className='right-container'>
                     <Box className='top-container'>
@@ -153,7 +154,7 @@ const ProfileDashboard = () => {
                             <Typography className='badge-intro'>Badge</Typography>
                             <Box className='badge-holo'>
                                 <Box className='text'>
-                                    <Typography className='badge-text' style={{ backgroundColor: badgeColor, color: "white" }}>"{badgeLabel}"</Typography>
+                                    <Typography className='badge-text' style={{ backgroundColor: badgeColor, color: "white" }}>{badgeLabel}</Typography>
                                     <Typography className='badge-average'><span className='average-span' style={{ color: badgeColor }}>'IF'</span>   Rating : <span className='average-span' style={{ color: badgeColor }}>{badgeAverage}</span></Typography>
                                 </Box>
                                 <IconButton className='badge-icon'>
@@ -173,7 +174,7 @@ const Root = styled.div`
     display: flex;
     width: 95%;
     margin: 90px 35px 0px 30px;
-
+    cursor: pointer;
 }
 .left-container{
     box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.1);
@@ -248,6 +249,7 @@ const Root = styled.div`
     margin: 5px auto;
     font-weight: bold;
     border-radius: 10px;
+    text-transform: none;
 }
 .t-left-container{
     display : flex;
@@ -360,7 +362,7 @@ const Root = styled.div`
     font-size: 11px;
 }
 .badge-text{
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
     text-align: center;
     border-radius: 20px;

@@ -119,10 +119,9 @@ const Leaderboard = () => {
 const Root = styled.div`
   .data-grid{
     max-width: 90%;
-    height: 335px;
     padding: 10px;
-    border-radius: 20px;
-    margin-top: 10px;
+    border-radius: 10px;
+    margin-top: 60px;
     box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
   }
   .mytableheader{

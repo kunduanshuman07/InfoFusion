@@ -136,10 +136,11 @@ const Root = styled.div`
     .datagrid-container{
         background-color: white;
         max-width: 100%;
-        border-radius: 20px;
+        border-radius: 10px;
         padding: 10px;
         height: 450px;
         margin-top: 20px;
+        cursor: pointer;
     }
     .toolbar{
         margin: 0px auto;

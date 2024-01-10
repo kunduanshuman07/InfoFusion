@@ -13,7 +13,7 @@ import ScoreboardIcon from '@mui/icons-material/Scoreboard';
 const PlaygroundAppBar = () => {
   return (
     <Root>
-      <AppBar position="static" className='container'>
+      <AppBar position="fixed" className='container'>
         <Box className='list-container'>
           <ListItem
             to='/playground/quiz'
@@ -57,9 +57,11 @@ const PlaygroundAppBar = () => {
 const Root = styled.div`
   .container {
     border-radius: 5px;
-    width: 90%;
+    width: 64%;
     height: 50px;
     background-color: #d7e7fa;
+    margin-top: 65px;
+    margin-right: 160px;
   }
   .list-container {
     display: flex;
