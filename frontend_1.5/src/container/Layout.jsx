@@ -14,6 +14,7 @@ import SettingsPage from "../pages/SettingsPage"
 import Scorecards from "../components/Scorecards";
 import Leaderboard from "../components/LeaderBoard"
 import Quiz from '../components/Quiz'
+import DebateRoom from '../components/DebateRoom'
 const Layout = () => {
 
   return (
@@ -30,6 +31,7 @@ const Layout = () => {
             <Route path='/playground/leaderboard' element ={<Leaderboard />}/>
             <Route path='/playground/scorecards' element ={<Scorecards />}/>
             <Route path='/debate' element={<DebatePage />} />
+            <Route path='/debate/:debateId' element={<DebateRoom />} />
             <Route path='/your-opinion' element={<OpinionPage />} />
             <Route path="/fact-check" element={<FactCheckPage />} />
             <Route path='/settings' element={<SettingsPage />} />

@@ -13,7 +13,7 @@ const LandingPage = () => {
     const navigate = useNavigate();
     const handleGetStarted = () => {
         if(auth){
-            navigate('/trending')
+            navigate('/playground')
         }
         else {
             navigate('/login')

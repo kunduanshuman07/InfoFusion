@@ -8,9 +8,9 @@ import IconButton from '@mui/material/IconButton';
 import Container from '@mui/material/Container';
 import Logo from "../assets/InfoFusion.png";
 import { useNavigate } from "react-router-dom";
-import { Button, Tooltip, Typography } from '@mui/material';
-import SupportIcon from '@mui/icons-material/SupportAgent';
-import SettingsIcon from '@mui/icons-material/Settings';
+import { Tooltip, Typography } from '@mui/material';
+import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
+import MessageIcon from '@mui/icons-material/Message';
 import styled from "styled-components";
 
 export const AppBarComponent = ({ comp }) => {
@@ -24,11 +24,11 @@ export const AppBarComponent = ({ comp }) => {
         localStorage.clear();
         navigate('/login');
     }
-    const handleSupport = () => {
-        navigate('/help-support')
+    const handleDebateRoom = () => {
+        navigate('/debate/join-debate-room/##')
     }
-    const handleSettings = () => {
-        navigate('/settings');
+    const handleMessages = () => {
+        navigate('/messages')
     }
     return (
         <Root>
@@ -37,31 +37,26 @@ export const AppBarComponent = ({ comp }) => {
                 <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, backgroundColor: "white", color: "#086D67" }}>
                     <Container maxWidth="xl">
                         <Toolbar disableGutters>
-                            <img alt="InfoFusion" src={Logo} width={70} height={60} onClick={() => navigate('/trending')}
+                            <img alt="InfoFusion" src={Logo} width={70} height={60} onClick={() => navigate('/playground')}
                                 className='logo-style' />
                             <Box style={{display: "flex", flexDirection: "column"}}>
                                 <Typography className='logo-text'>INFOFUSION</Typography>
                             </Box>
                             <Box sx={{ ml: "auto" }}>
-                                <Tooltip title='Profile'>
+                                <Tooltip title='Account'>
                                     <IconButton color="inherit" onClick={handleProfile}>
                                         <Avatar alt={user.name} src={`http://localhost:3000/userImages/${user.picturePath}`} className='avatar-style' />
                                     </IconButton>
                                 </Tooltip>
                             </Box>
                             <Box>
-                                <Tooltip title='Settings'>
-                                    <IconButton className='support-style' onClick={handleSettings} size='small'><SettingsIcon style={{ fontSize: "20px" }} /></IconButton>
+                                <Tooltip title='Debate Room'>
+                                    <IconButton className='support-style' onClick={handleDebateRoom} size='small'><MeetingRoomIcon style={{ fontSize: "20px" }} /></IconButton>
                                 </Tooltip>
                             </Box>
                             <Box>
-                                <Tooltip title='Help & Support'>
-                                    <IconButton className='support-style' onClick={handleSupport} size='small'><SupportIcon style={{ fontSize: "20px" }} /></IconButton>
-                                </Tooltip>
-                            </Box>
-                            <Box>
-                                <Tooltip title='Logout'>
-                                    <Button className='logout-btn' onClick={handleLogout}>Logout</Button>
+                                <Tooltip title='Messages'>
+                                    <IconButton className='support-style' onClick={handleMessages} size='small'><MessageIcon style={{ fontSize: "20px" }} /></IconButton>
                                 </Tooltip>
                             </Box>
                         </Toolbar>
