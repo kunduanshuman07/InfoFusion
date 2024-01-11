@@ -18,7 +18,7 @@ export const AppBarComponent = ({ comp }) => {
     const navigate = useNavigate();
 
     const handleProfile = () => {
-        navigate('/profile');
+        navigate(`/profile/${user._id}`);
     }
     const handleLogout = () => {
         localStorage.clear();

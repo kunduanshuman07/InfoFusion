@@ -2,18 +2,15 @@ import { Box, Button, TextField, InputAdornment, IconButton } from '@mui/materia
 import React, { useEffect, useState } from 'react'
 import PlaygroundAppBar from './PlaygroundAppBar'
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 import { DataGrid, GridToolbarContainer } from '@mui/x-data-grid';
 import styled from 'styled-components';
 import SearchIcon from "@mui/icons-material/Search";
-import ViewScorecardDialog from './ViewScorecardDialog';
 const Leaderboard = () => {
   const [rows, setRows] = useState([]);
-  const [modalOpen, setModalOpen] = useState(false);
-  const handleClose = () => {
-    setModalOpen(false);
-  }
+  const navigate = useNavigate();
   const handleViewProfile = (rowData) => {
-    setModalOpen(true);
+    navigate(`/profile/${rowData.userId}`);
   }
   const columns = [
     {
@@ -91,6 +88,7 @@ const Leaderboard = () => {
       const formattedRows = data.leaderboard.map((item, index) => ({
         id: index,
         rank: index + 1,
+        userId: item.user._id,
         username: item.user.username,
         rating: item.rating,
         quizcount: item.quizcount,

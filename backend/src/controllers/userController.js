@@ -14,34 +14,31 @@ const storage = multer.diskStorage({
 export const upload = multer({ storage: storage });
 
 export const updateProfile = async (req, res) => {
-    const { id, age, gender, education, university, employment, city, state, pincode } = req.body;
+    const { key, value } = req.body;
+    const { userid } = req.params;
+
     try {
+        const allowedFields = ['name', 'gender', 'age', 'location', 'education', 'employment'];
+        if (!allowedFields.includes(key)) {
+            return res.status(400).send({ error: 'Invalid field for update' });
+        }
+        const updateObject = { [key]: value };
         const updatedUser = await User.findByIdAndUpdate(
-            id,
-            {
-                age,
-                gender,
-                education,
-                university,
-                employment,
-                city,
-                state,
-                pincode,
-            },
+            userid,
+            updateObject,
             { new: true, runValidators: true }
         );
 
         if (!updatedUser) {
-            return res.status(404).send({ error: "Error updating the profile" });
+            return res.status(404).send({ error: 'Error updating the profile' });
         }
 
         res.status(200).send({ updatedUser });
     } catch (error) {
-        console.log(error);
-        res.status(500).send(error);
-
+        console.error(error);
+        res.status(500).send({ error: 'Internal server error' });
     }
-}
+};
 export const uploadUserImage = async (req, res) => {
     const {id} = req.body;
     const Img = req.file;

@@ -1,125 +1,178 @@
-import { Box, Button, TextField, Typography } from '@mui/material'
-import React, { useState } from 'react'
-import styled from 'styled-components'
+import React, { useEffect, useState } from 'react';
+import { Box, Button, TextField, Typography, MenuItem } from '@mui/material';
+import styled from 'styled-components';
+import axios from 'axios';
+
 const BasicInfo = () => {
-  const [editState, setEditState] = useState(false);
-  const handleEdit = () => {
-    setEditState(true);
-  }
-  const handleSaveEdit = () => {
-    setEditState(false);
-  }
-  const handleCancelEdit = () => {
-    setEditState(false);
-  }
+  const user = JSON.parse(localStorage.getItem("user"));
+  const [editState, setEditState] = useState({});
+  const [fieldValues, setFieldValues] = useState({});
+  
+  const headersData = [
+    { key: 'name', label: 'Name', defaultValue: user.name },
+    { key: 'gender', label: 'Gender', defaultValue: user.gender },
+    { key: 'age', label: 'Age', defaultValue: user.age },
+    { key: 'location', label: 'Location', defaultValue: `${user.city} ${user.state}` },
+    { key: 'education', label: 'Education', defaultValue: user.education },
+    { key: 'employment', label: 'Employment', defaultValue: user.employment },
+  ];
+
+  const educationOptions = [
+    { value: 'Below High School', label: 'Below High School' },
+    { value: 'High School', label: 'High School' },
+    { value: 'Undergraduate', label: 'Undergraduate' },
+    { value: 'Graduate', label: 'Graduate' },
+  ];
+
+  const employmentOptions = [
+    { value: 'Unemployed', label: 'Unemployed' },
+    { value: 'Selfemployed', label: 'Selfemployed' },
+    { value: 'Employed', label: 'Employed' },
+  ];
+
+  const genderOptions = [
+    { value: 'Male', label: 'Male' },
+    { value: 'Female', label: 'Female' },
+    { value: 'Others', label: 'Others' },
+  ];
+
+  const handleEdit = (key) => {
+    setEditState((prevState) => ({ ...prevState, [key]: true }));
+    setFieldValues((prevValues) => ({ ...prevValues, [key]: '' }));
+  };
+
+  const handleSaveEdit = async(key) => {
+    const updatedValue = fieldValues[key];
+    const { data } = await axios.patch(`http://localhost:3000/user/update-profile/${user._id}`, {key, value: updatedValue});
+    localStorage.setItem("user", JSON.stringify(data.updatedUser));
+    setEditState((prevState) => ({ ...prevState, [key]: false }));
+  };
+
+  const handleCancelEdit = (key) => {
+    setEditState((prevState) => ({ ...prevState, [key]: false }));
+    setFieldValues((prevValues) => ({ ...prevValues, [key]: headersData.find((header) => header.key === key).defaultValue }));
+  };
+
+  const handleFieldChange = (key, value) => {
+    setFieldValues((prevValues) => ({ ...prevValues, [key]: value }));
+  };
+
+  const renderInputField = (header) => {
+    if (header.key === 'education') {
+      return (
+        <TextField
+          select
+          placeholder={`Your ${header.label.toLowerCase()}`}
+          className='text-fields'
+          size='small'
+          value={fieldValues[header.key]}
+          onChange={(e) => handleFieldChange(header.key, e.target.value)}
+        >
+          {educationOptions.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </TextField>
+      );
+    }
+
+    if (header.key === 'employment') {
+      return (
+        <TextField
+          select
+          placeholder={`Your ${header.label.toLowerCase()}`}
+          className='text-fields'
+          size='small'
+          value={fieldValues[header.key]}
+          onChange={(e) => handleFieldChange(header.key, e.target.value)}
+        >
+          {employmentOptions.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </TextField>
+      );
+    }
+
+    if (header.key === 'gender') {
+      return (
+        <TextField
+          select
+          placeholder={`Your ${header.label.toLowerCase()}`}
+          className='text-fields'
+          size='small'
+          value={fieldValues[header.key]}
+          onChange={(e) => handleFieldChange(header.key, e.target.value)}
+        >
+          {genderOptions.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </TextField>
+      );
+    }
+
+    // Default to a regular text field
+    return (
+      <TextField
+        placeholder={`Your ${header.label.toLowerCase()}`}
+        className='text-fields'
+        size='small'
+        value={fieldValues[header.key]}
+        onChange={(e) => handleFieldChange(header.key, e.target.value)}
+      />
+    );
+  };
+
+  useEffect(() => {
+    // ... (your existing useEffect logic)
+  }, [fieldValues]);
+
   return (
     <Root>
       <Box className='container'>
         <Typography className='header'>Basic Info</Typography>
-        <Box className='basic-info-list'>
-          <Typography className='field-header'>Name</Typography>
-          {editState ? <Box className='edit-box'>
-            <TextField placeholder='Your name' className='text-fields' size='small' />
-            <Box className='actions'>
-              <Button className='save-btn' onClick={handleSaveEdit} variant='contained'>Save</Button>
-              <Button className='cancel-btn' onClick={handleCancelEdit} variant='contained' style={{backgroundColor: "#d7e7fa"}}>Cancel</Button>
-            </Box>
-          </Box> : <>
-            <Typography className='field-details'>Anshuman Kundu</Typography>
-            <Button className='edit-btn' onClick={handleEdit}>Edit</Button>
-          </>
-          }
-        </Box>
-        <Box className='basic-info-list'>
-          <Typography className='field-header'>Gender</Typography>
-          {editState ? <Box className='edit-box'>
-            <TextField placeholder='Your name' className='text-fields' size='small' />
-            <Box className='actions'>
-              <Button className='save-btn' onClick={handleSaveEdit} variant='contained'>Save</Button>
-              <Button className='cancel-btn' onClick={handleCancelEdit} variant='contained' style={{backgroundColor: "#d7e7fa"}}>Cancel</Button>
-            </Box>
-          </Box> : <>
-            <Typography className='field-details'>Male</Typography>
-            <Button className='edit-btn' onClick={handleEdit}>Edit</Button>
-          </>
-          }
-        </Box>
-        <Box className='basic-info-list'>
-          <Typography className='field-header'>Age</Typography>
-          {editState ? <Box className='edit-box'>
-            <TextField placeholder='Your name' className='text-fields' size='small' />
-            <Box className='actions'>
-              <Button className='save-btn' onClick={handleSaveEdit} variant='contained'>Save</Button>
-              <Button className='cancel-btn' onClick={handleCancelEdit} variant='contained' style={{backgroundColor: "#d7e7fa"}}>Cancel</Button>
-            </Box>
-          </Box> : <>
-            <Typography className='field-details'>23</Typography>
-            <Button className='edit-btn' onClick={handleEdit}>Edit</Button>
-          </>
-          }
-        </Box>
-        <Box className='basic-info-list'>
-          <Typography className='field-header'>Location</Typography>
-          {editState ? <Box className='edit-box'>
-            <TextField placeholder='Your name' className='text-fields' size='small' />
-            <Box className='actions'>
-              <Button className='save-btn' onClick={handleSaveEdit} variant='contained'>Save</Button>
-              <Button className='cancel-btn' onClick={handleCancelEdit} variant='contained' style={{backgroundColor: "#d7e7fa"}}>Cancel</Button>
-            </Box>
-          </Box> : <>
-            <Typography className='field-details'>Ranchi, Jharkhand</Typography>
-            <Button className='edit-btn' onClick={handleEdit}>Edit</Button>
-          </>
-          }
-        </Box>
-        <Typography className='header'>Experience</Typography>
-        <Box className='basic-info-list'>
-          <Typography className='field-header'>Education</Typography>
-          {editState ? <Box className='edit-box'>
-            <TextField placeholder='Your name' className='text-fields' size='small' />
-            <Box className='actions'>
-              <Button className='save-btn' onClick={handleSaveEdit} variant='contained'>Save</Button>
-              <Button className='cancel-btn' onClick={handleCancelEdit} variant='contained' style={{backgroundColor: "#d7e7fa"}}>Cancel</Button>
-            </Box>
-          </Box> : <>
-            <Typography className='field-details'>Graduate</Typography>
-            <Button className='edit-btn' onClick={handleEdit}>Edit</Button>
-          </>
-          }
-        </Box>
-        <Box className='basic-info-list'>
-          <Typography className='field-header'>Employment</Typography>
-          {editState ? <Box className='edit-box'>
-            <TextField placeholder='Your name' className='text-fields' size='small' />
-            <Box className='actions'>
-              <Button className='save-btn' onClick={handleSaveEdit} variant='contained'>Save</Button>
-              <Button className='cancel-btn' onClick={handleCancelEdit} variant='contained' style={{backgroundColor: "#d7e7fa"}}>Cancel</Button>
-            </Box>
-          </Box> : <>
-            <Typography className='field-details'>Employed</Typography>
-            <Button className='edit-btn' onClick={handleEdit}>Edit</Button>
-          </>
-          }
-        </Box>
-        <Typography className='header'>Skills</Typography>
-        <Box className='basic-info-list'>
-          <Typography className='field-header'>Skill</Typography>
-          {editState ? <Box className='edit-box'>
-            <TextField placeholder='Your name' className='text-fields' size='small' />
-            <Box className='actions'>
-              <Button className='save-btn' onClick={handleSaveEdit} variant='contained'>Save</Button>
-              <Button className='cancel-btn' onClick={handleCancelEdit} variant='contained' style={{backgroundColor: "#d7e7fa"}}>Cancel</Button>
-            </Box>
-          </Box> : <>
-            <Typography className='field-details'>Coding, Music, Cricket</Typography>
-            <Button className='edit-btn' onClick={handleEdit}>Edit</Button>
-          </>
-          }
-        </Box>
+        {headersData.map((header) => (
+          <Box key={header.key} className='basic-info-list'>
+            <Typography className='field-header'>{header.label}</Typography>
+            {editState[header.key] ? (
+              <Box className='edit-box'>
+                {renderInputField(header)}
+                <Box className='actions'>
+                  <Button
+                    className='save-btn'
+                    onClick={() => handleSaveEdit(header.key)}
+                    variant='contained'
+                  >
+                    Save
+                  </Button>
+                  <Button
+                    className='cancel-btn'
+                    onClick={() => handleCancelEdit(header.key)}
+                    variant='contained'
+                    style={{ backgroundColor: '#d7e7fa' }}
+                  >
+                    Cancel
+                  </Button>
+                </Box>
+              </Box>
+            ) : (
+              <>
+                <Typography className='field-details'>{fieldValues[header.key] || header.defaultValue}</Typography>
+                <Button className='edit-btn' onClick={() => handleEdit(header.key)}>
+                  Edit
+                </Button>
+              </>
+            )}
+          </Box>
+        ))}
       </Box>
     </Root>
-  )
-}
+  );
+};
 
 const Root = styled.div`
     .container{
@@ -132,7 +185,7 @@ const Root = styled.div`
         padding: 10px 20px 10px 20px;
         display: flex;
         flex-direction: column;
-        height: 500px;
+        height: 400px;
         margin-bottom: 20px;
     }
     .header{
@@ -166,10 +219,12 @@ const Root = styled.div`
     .actions{
       display: flex;
       margin-bottom: 5px;
+      margin-left: -18px;
     }
     .text-fields{
       width: 300px;
       margin-bottom: 5px;
+      margin-left: -18px;
     }
     .save-btn{
       text-transform: none;
