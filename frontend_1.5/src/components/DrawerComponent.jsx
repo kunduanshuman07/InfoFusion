@@ -40,11 +40,11 @@ const DrawerComponent = () => {
                         <MenuIcon width={16} height="100%" alt="menu" />
                     </IconButton>
                     <List style={{ marginTop: 15}}>
-                        <DrawerItem to="/trending" icon={<TrendingIcon width={16} height="40px" open={open} />} text="Trending" />
-                        <DrawerItem to="/personalized" icon={<PersonalizedIcon width={16} height="40px" open={open} />} text="Personalized" />
                         <DrawerItem to="/playground" icon={<PlaygroundIcon width={16} height="40px" open={open} />} text="Playground" />
                         <DrawerItem to="/debate" icon={<QuestionAnswerIcon width={16} height="40px" open={open} />} text="Debate" />
                         <DrawerItem to="/your-opinion" icon={<AccessibilityIcon width={16} height="40px" open={open} />} text="Opinion ?" />
+                        <DrawerItem to="/trending" icon={<TrendingIcon width={16} height="40px" open={open} />} text="Trending" />
+                        <DrawerItem to="/personalized" icon={<PersonalizedIcon width={16} height="40px" open={open} />} text="Personalized" />
                         <DrawerItem to="/fact-check" icon={<FactCheckIcon width={16} height="40px" open={open} />} text="Fact Check" />
                     </List>
                 </Box>

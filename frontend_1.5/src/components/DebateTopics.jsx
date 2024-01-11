@@ -4,13 +4,18 @@ import styled from 'styled-components'
 import { ongoingDebateTopics } from "../utils/debateTopics";
 import RecommendIcon from '@mui/icons-material/Recommend';
 import GroupIcon from '@mui/icons-material/Group';
+import { useNavigate } from 'react-router-dom';
 const DebateTopics = () => {
+    const navigate = useNavigate();
+    const handleDebateRoom = (topicId) => {
+        navigate(`/debate/${topicId}`)
+    }
     return (
         <Root>
             <Box className='container'>
                 <Grid container spacing={3} className='topic-grid'>
                     {ongoingDebateTopics.map((topic, index) => (
-                        <Grid item xs={6} key={index} className='grid-item'>
+                        <Grid item xs={6} key={index} className='grid-item' onClick={()=>handleDebateRoom(topic.id)}>
                             <Box className='items'>
                                 <Typography className='topic-name'>{topic.topicName}</Typography>
                                 <Typography className='topic-id'>#{topic.id}</Typography>

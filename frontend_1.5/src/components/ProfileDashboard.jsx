@@ -1,4 +1,4 @@
-import { Box, IconButton, Avatar, Button, Typography, LinearProgress } from '@mui/material'
+import { Box, IconButton, Avatar, Button, Typography, LinearProgress, Tooltip } from '@mui/material'
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { LineChart } from '@mui/x-charts/LineChart';
@@ -6,6 +6,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from "axios"
 import { badgeDecider } from '../utils/BadgeDecider';
 import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
+import SettingsIcon from "@mui/icons-material/Settings";
+import SupportIcon from '@mui/icons-material/SupportAgent';
 const ProfileDashboard = () => {
     const navigate = useNavigate();
     const { userId } = useParams();
@@ -76,7 +78,17 @@ const ProfileDashboard = () => {
                             <Typography className='rank'>Rank 45</Typography>
                         </Box>
                     </Box>
-                    {userId === user._id && <Button className='edit-profile' onClick={()=>navigate('/profile/edit-profile')}>Edit Profile</Button>}
+                    {userId === user._id && <Box className='btn-class'>
+                        <Button className='edit-profile' onClick={() => navigate('/profile/edit-profile')}>Edit Profile</Button>
+                        <Tooltip title='settings'>
+                            <IconButton className='settings'>
+                                <SettingsIcon className='settings-icon' onClick={() => navigate('/settings')} />
+                            </IconButton>
+                        </Tooltip>
+                        <Tooltip title='Help & Support'>
+                            <IconButton className='support' onClick={() => navigate('/help-support')} size='small'><SupportIcon className='settings-icon' /></IconButton>
+                        </Tooltip>
+                    </Box>}
                 </Box>
                 <Box className='right-container'>
                     <Box className='top-container'>
@@ -249,11 +261,25 @@ const Root = styled.div`
 .edit-profile{
     color: #0072e5;
     background-color: #d7e7fa;
-    width: 80%;
+    width: 55%;
     margin: 5px auto;
     font-weight: bold;
     border-radius: 10px;
     text-transform: none;
+    margin-left: 20px;
+}
+.btn-class{
+    border-top: 1px solid #d7e7fa;
+    padding-top: 10px;
+}
+.settings{
+    margin-left: 20px;
+}
+.support{
+    margin-left: 5px;
+}
+.settings-icon{
+    color: #0072e5;
 }
 .t-left-container{
     display : flex;
