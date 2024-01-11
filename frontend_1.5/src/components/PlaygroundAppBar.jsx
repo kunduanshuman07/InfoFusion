@@ -57,11 +57,11 @@ const PlaygroundAppBar = () => {
 const Root = styled.div`
   .container {
     border-radius: 5px;
-    width: 64%;
+    width: 70%;
     height: 50px;
     background-color: #d7e7fa;
     margin-top: 65px;
-    margin-right: 160px;
+    margin-right: 120px;
   }
   .list-container {
     display: flex;

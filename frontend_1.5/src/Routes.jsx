@@ -17,7 +17,7 @@ const RoutesJS = () => {
       <Route path='/signup' element={<SignupPage />} />
       <Route path='/' element={<LandingPage />} />
       <Route path='/*' element={auth ? <Layout /> : <Navigate to="/login" replace />} />
-      <Route path='/profile' element={auth && <ProfilePage />} />
+      <Route path='/profile/:userId' element={auth && <ProfilePage />} />
       <Route path='/profile/edit-profile' element={auth && <EditProfilePage />} />
       <Route path='/quiz-form-admin' element={auth && <QuizForm />} />
       <Route path='/create-post-admin' element={<UploadPostAdmin />} />

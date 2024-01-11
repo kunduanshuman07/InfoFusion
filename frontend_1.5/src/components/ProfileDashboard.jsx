@@ -9,6 +9,7 @@ import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
 const ProfileDashboard = () => {
     const navigate = useNavigate();
     const { userId } = useParams();
+    const [User, setUser] = useState([]);
     const user = JSON.parse(localStorage.getItem("user"));
     const [iqrRow, setIqrRow] = useState([]);
     const [seriesRow, setSeriesRow] = useState([]);
@@ -26,12 +27,14 @@ const ProfileDashboard = () => {
     const [badgeColor, setBadgeColor] = useState('');
     const [badgeLabel, setBadgeLabel] = useState('');
     const [badgeAverage, setBadgeAverage] = useState('');
+    const [picturePath, setPicturePath] = useState('');
     useEffect(() => {
         const fetchDashboard = async () => {
             const userData = {
-                userId: userId ? userId : user._id
+                userId: userId
             }
             const { data } = await axios.post('http://localhost:3000/user/user-dashboard', userData);
+            setUser(data.user);
             const xAxisData = data.user.quizzes.map((quiz, index) => index + 1);
             const seriesData = data.user.quizzes.map(quiz => quiz.rating);
             const overallRatingdata = data.user.quizzes.map(quiz => quiz.overallRating);
@@ -52,9 +55,10 @@ const ProfileDashboard = () => {
             setBadgeColor(badgeCategory.hexColor);
             setBadgeLabel(badgeCategory.label);
             setBadgeAverage(badgeCategory.finalAverage.toFixed(2));
+            setPicturePath(data.user.picturePath);
         }
         fetchDashboard();
-    }, [])
+    }, [userId])
     const easyProgress = (easyAnswers / (quizCount * 3)) * 100;
     const mediumProgress = (mediumAnswers / (quizCount * 3)) * 100;
     const hardProgress = (hardAnswers / (quizCount * 2)) * 100;
@@ -65,14 +69,14 @@ const ProfileDashboard = () => {
                 <Box className='left-container'>
                     <Box className='left-top-container'>
                         <IconButton color="inherit" size='large'>
-                            <Avatar alt={user.name} src={`http://localhost:3000/userImages/${user.picturePath}`} className='avatar-style' variant='square' />
+                            <Avatar alt={User.name} src={`http://localhost:3000/userImages/${picturePath}`} className='avatar-style' variant='square' />
                         </IconButton>
                         <Box className='texts'>
-                            <Typography className='username'>{user.username}</Typography>
+                            <Typography className='username'>{User.username}</Typography>
                             <Typography className='rank'>Rank 45</Typography>
                         </Box>
                     </Box>
-                    <Button className='edit-profile' onClick={()=>navigate('/profile/edit-profile')}>Edit Profile</Button>
+                    {userId === user._id && <Button className='edit-profile' onClick={()=>navigate('/profile/edit-profile')}>Edit Profile</Button>}
                 </Box>
                 <Box className='right-container'>
                     <Box className='top-container'>
