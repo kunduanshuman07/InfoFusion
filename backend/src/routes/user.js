@@ -3,7 +3,7 @@ import { updateProfile, getOverallLeaderboard, userDashboard, deleteAccount, use
 import { verifyToken } from '../middlewares/authMiddleware.js';
 const router = Router();
 
-router.patch('/update-profile', updateProfile);
+router.patch('/update-profile/:userid', updateProfile);
 router.patch('/upload-image',upload.single('file'), uploadUserImage);
 router.delete('/delete-account/:userid', deleteAccount);
 router.get('/overall-leaderboard', getOverallLeaderboard);

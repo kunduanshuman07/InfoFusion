@@ -1,21 +1,53 @@
-import { Box, IconButton, Avatar, Typography } from '@mui/material'
-import React, { useState } from 'react'
-import styled from 'styled-components'
-import ProfileDrawer from './ProfileDrawer'
-import BasicInfo from './BasicInfo'
-import Account from './Account'
-import Privacy from './Privacy'
-
+import { Box, IconButton, Avatar, Typography, TextField, InputLabel } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import ProfileDrawer from './ProfileDrawer';
+import BasicInfo from './BasicInfo';
+import Account from './Account';
+import Privacy from './Privacy';
+import CameraEnhanceIcon from '@mui/icons-material/CameraEnhance';
+import axios from 'axios';
 const EditProfileComponent = () => {
-  const user = JSON.parse(localStorage.getItem("user"));
-  const [profileTab, setProfileTab] = useState("basicinfo");
+  const user = JSON.parse(localStorage.getItem('user'));
+  const [profileTab, setProfileTab] = useState('basicinfo');
+  const [isHovered, setIsHovered] = useState(false);
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+
+  const handleFileChange = async(event) => {
+    const selectedFile = event.target.files[0];
+    const formData = new FormData();
+        formData.append('file', selectedFile);
+        formData.append('id', user._id);
+        const { data, status } = await axios.patch('http://localhost:3000/user/upload-image', formData);
+        if (status === 200) {
+            localStorage.setItem("user", JSON.stringify(data.updatedUser));
+        }
+  };
+  useEffect(()=>{
+
+  },[user])
   return (
     <Root>
       <Box className='container'>
         <Box className='top-container'>
-          <IconButton color="inherit">
-            <Avatar alt={user.name} src={`http://localhost:3000/userImages/${user.picturePath}`} className='avatar-style' />
-          </IconButton>
+          <InputLabel For='fileInput' style={{marginTop: "20px"}}>
+            <IconButton color='inherit' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} component='span'>
+              <Avatar alt={user.name} src={!isHovered && `http://localhost:3000/userImages/${user.picturePath}`} className='avatar-style'>
+                {isHovered && <CameraEnhanceIcon />}
+              </Avatar>
+            </IconButton>
+          </InputLabel>
+          <TextField
+            id='fileInput'
+            type='file'
+            style={{ display: 'none' }}
+            onChange={handleFileChange}
+          />
           <Box className='names'>
             <Typography className='name'>{user.name}</Typography>
             <Typography className='username'>IF username: {user.username}</Typography>
@@ -33,8 +65,9 @@ const EditProfileComponent = () => {
         </Box>
       </Box>
     </Root>
-  )
-}
+  );
+};
+
 
 const Root = styled.div`
   .container{

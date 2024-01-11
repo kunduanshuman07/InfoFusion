@@ -45,19 +45,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
-  pincode: {
-    type: Number,
-    default: "",
-  },
   employment: {
     type: String,
     default: "",
   },
   education: {
-    type: String,
-    default: "",
-  },
-  university: {
     type: String,
     default: "",
   },
@@ -69,13 +61,13 @@ const userSchema = new mongoose.Schema({
     type: Number,
     default: ""
   },
-  streak: {
-    type: Number,
-    default: 0,
+  github: {
+    type: String,
+    default: "",
   },
-  maxstreak: {
-    type: Number,
-    default: 0,
+  linkedin:{
+    type: String,
+    default: ""
   },
   quizzes: [
     {

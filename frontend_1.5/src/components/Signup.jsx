@@ -16,7 +16,6 @@ const Signup = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [cpassword, setCPassword] = useState('');
-  const [age, setAge] = useState();
   const [showPassword, setShowPassword] = useState(false);
   const [valid, setValid] = useState(true);
   const [passwordCriteria, setPasswordCriteria] = useState(true);
@@ -32,7 +31,7 @@ const Signup = () => {
       else {
         try {
           const userData = {
-            name, email, password, username, age
+            name, email, password, username
           }
           const { data, status } = await axios.post('http://localhost:3000/auth/register', userData);
           if (status === 200) {
@@ -121,17 +120,6 @@ const Signup = () => {
             className="text-field"
             onChange={(e) => setCPassword(e.target.value)}
           />
-          <TextField
-          name="age"
-          label='Age'
-          type='number'
-          variant="outlined"
-          fullWidth
-          size="small"
-          placeholder='Age'
-          className="text-field"
-          onChange={(e) => setAge(e.target.value)}
-        />
         </Box>
         <Box className="submit">
           <Button className="submit-btn" onClick={handleSignUp}>Signup</Button>

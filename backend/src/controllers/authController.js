@@ -5,12 +5,12 @@ import User from '../models/userModel.js';
 const JWT_SECRET='infofusionsuperhardkey'
 export const register = async (req, res) => {
     console.log(req.body);
-    const { name, email, password, username, age } = req.body;
+    const { name, email, password, username } = req.body;
     try {
         const salt = await bcrypt.genSalt();
         const hashPassword = await bcrypt.hash(password, salt);
         const newUser = new User({
-            name, email, password: hashPassword, username, age
+            name, email, password: hashPassword, username
         });
         const savedNewUser = await newUser.save();
         console.log(savedNewUser);
