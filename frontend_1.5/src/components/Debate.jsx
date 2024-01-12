@@ -1,17 +1,18 @@
-import { Box, Dialog, DialogTitle, DialogContent, Typography, IconButton, Button } from '@mui/material'
+import { Box, Dialog, DialogTitle, DialogContent, Typography, IconButton, Button, Avatar } from '@mui/material'
 import React from 'react'
 import styled from 'styled-components'
 import CloseIcon from "@mui/icons-material/Close";
 import SnackBarComponent from "../components/SnackBarComponent";
 import GroupIcon from '@mui/icons-material/Group';
+
 const Debate = ({ motion, onCloseModal, debate }) => {
   return (
     <Dialog open={true} fullScreen onClose={onCloseModal}>
-      <SnackBarComponent severity="info" message={motion==="Favor"?"You have joined in Favor of the motion!":"You have joined against the motion!"}/>
+      <SnackBarComponent severity="info" message={motion === "Favor" ? "You have joined in Favor of the motion!" : "You have joined against the motion!"} />
       <DialogTitle
         sx={{
           display: "flex",
-          backgroundColor: "#01264a",
+          backgroundColor: "#d7e7fa",
           fontSize: "19px",
           fontWeight: "bolder",
           height: "70px",
@@ -20,7 +21,7 @@ const Debate = ({ motion, onCloseModal, debate }) => {
         }}
       >
         <Box>
-          <Typography style={{ color: "white", margin: "auto", fontWeight: "bold" }}>Debate id: #{debate.id}
+          <Typography style={{ color: "#444444", margin: "auto", fontWeight: "bold" }}>Debate id: #{debate.id}
           </Typography>
         </Box>
         <Box className='timer' style={{ display: "flex", cursor: "pointer", marginLeft: "auto", backgroundColor: "white", color: "#444444", borderRadius: "20px", fontWeight: "bolder", padding: "0px" }}>
@@ -35,10 +36,34 @@ const Debate = ({ motion, onCloseModal, debate }) => {
           <Box className='container'>
             <Box className='left-container'>
               <Box className='header-container'>
-                <Typography className='header'>{debate.topicName}</Typography>
+                <Typography className='header-text'>{debate.topicName}</Typography>
                 <Box className='user-btn'>
-                  <Button startIcon={<GroupIcon/>} className='user-btn'>72 Active Debaters</Button>
-                  <Button className='statement-btn' style={{backgroundColor: motion==="Favor"?"green": "red"}}>Pin Statement</Button>
+                  <Button startIcon={<GroupIcon />} className='user-btn'>72 Active Debaters</Button>
+                  <Button className='statement-btn' style={{ backgroundColor: motion === "Favor" ? "green" : "red" }}>Pin Statement</Button>
+                </Box>
+              </Box>
+              <Box className='statement-container'>
+                <Box className='favor-container'>
+                  <Box className='header-favor'>
+                    <Typography className='favor-text'>In Favor</Typography>
+                  </Box>
+                  <Box className='favor-statements'>
+                    <IconButton>
+                      <Avatar alt='Anshuman' src='' className='avatar'/>
+                    </IconButton>
+                    <Typography className='stat-text'>Yes, It should be implemented</Typography>
+                  </Box>
+                </Box>
+                <Box className='against-container'>
+                  <Box className='header-against'>
+                    <Typography className='against-text'>Against</Typography>
+                  </Box>
+                  <Box className='against-statements'>
+                    <IconButton>
+                      <Avatar alt='Anshuman' src='' className='avatar'/>
+                    </IconButton>
+                    <Typography className='stat-text'>No, It should not be implemented</Typography>
+                  </Box>
                 </Box>
               </Box>
             </Box>
@@ -56,17 +81,22 @@ const Debate = ({ motion, onCloseModal, debate }) => {
 const Root = styled.div`
   .container{
     display: flex;
+    margin-top: 10px;
+    border: 2px solid #d7e7fa;
+    border-radius: 20px;
+    box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.4);
   }
   .left-container{
-    width: 80%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
   }
   .header-container{
     display: flex;
     flex-direction: column;
-    border-bottom: 1px solid #d7e7fa;
     padding: 10px;
   }
-  .header{
+  .header-text{
     font-size: 23px;
     color: #444444;
     font-weight: bold;
@@ -88,10 +118,66 @@ const Root = styled.div`
     color: white;
     border-radius: 20px;
     width: 200px;
+    &:hover{
+      background-color: brown;
+    }
   }
-  .right-container{
+  .statement-container{
+    display: flex;
+  }
+  .favor-container{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    height: 1000vh;
+  }
+  .against-container{
+    width: 50%;
     border-left: 2px solid #d7e7fa;
-    width: 20%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    height: 1000vh;
+  }
+  .favor-text{
+    color: #444444;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 10px;
+    
+  }
+  .against-text{
+    color: #444444;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 10px;
+  }
+  .header-favor{
+    background-color: #d7e7fa;
+    height: 50px;
+  }
+  .header-against{
+    background-color: #d7e7fa;
+    height: 50px;
+  }
+  .favor-statements{
+    display: flex;
+  }
+  .against-statements{
+    display: flex;
+  }
+  .stat-text{
+    color: #444444;
+    margin: auto;
+    margin-left: 10px;
+    font-weight: bold;
+  }
+  .avatar{
+    width: 30px;
+    height: 30px;
   }
 `
 

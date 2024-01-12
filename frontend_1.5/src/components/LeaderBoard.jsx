@@ -1,10 +1,12 @@
-import { Box, Button, TextField, InputAdornment, IconButton } from '@mui/material'
+import { Box, Button, TextField, InputAdornment, IconButton, Tooltip, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import { DataGrid, GridToolbarContainer } from '@mui/x-data-grid';
 import styled from 'styled-components';
 import SearchIcon from "@mui/icons-material/Search";
+import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
+import { badgeDecider } from '../utils/BadgeDecider';
 const Leaderboard = () => {
   const [rows, setRows] = useState([]);
   const navigate = useNavigate();
@@ -20,6 +22,22 @@ const Leaderboard = () => {
       sortable: false,
       headerAlign: "center",
       align: "center",
+    },
+    {
+      field: "badge",
+      headerName: "Badge",
+      flex: 0.1,
+      headerClassName: "mytableheader",
+      sortable: false,
+      headerAlign: "center",
+      align: "center",
+      renderCell: (rowData) => (
+        <Tooltip title={badgeDecider(rowData.row.user.quizzes).label}>
+          <IconButton>
+          <MilitaryTechIcon style={{color:badgeDecider(rowData.row.user.quizzes).hexColor}}/>
+        </IconButton>
+        </Tooltip>
+      )
     },
     {
       field: "username",
@@ -40,9 +58,9 @@ const Leaderboard = () => {
       align: "center",
     },
     {
-      field: "quizcount",
-      headerName: "Quiz Count",
-      flex: 0.1,
+      field: "ifrating",
+      headerName: "IF Rating",
+      flex: 0,
       headerClassName: "mytableheader",
       sortable: false,
       headerAlign: "center",
@@ -78,6 +96,7 @@ const Leaderboard = () => {
               </InputAdornment>
             )
           }} />
+          <Typography className='toolbar-text'>Quiz Leaderboard</Typography>
       </GridToolbarContainer>
     );
   }
@@ -91,6 +110,8 @@ const Leaderboard = () => {
         username: item.user.username,
         rating: item.rating,
         quizcount: item.quizcount,
+        user: item.user,
+        ifrating: badgeDecider(item.user.quizzes).finalAverage.toFixed(2),
       }))
       setRows(formattedRows)
     }
@@ -106,7 +127,9 @@ const Leaderboard = () => {
           disableColumnFilter
           disableRowSelectionOnClick
           slots={{ toolbar: CustomToolbar }}
-          className='grid-data' />
+          className='grid-data' 
+          hideFooterSelectedRowCount
+        />
       </Box>
     </Root>
   )
@@ -117,11 +140,12 @@ const Root = styled.div`
     max-width: 99%;
     padding: 10px;
     border-radius: 10px;
-    margin-top: 10px;
     box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
+    cursor: pointer;
   }
   .mytableheader{
     color: #444444;
+    background-color: #d7e7fa;
   }
   .view-scorecard{
     font-weight: bold;
@@ -136,10 +160,19 @@ const Root = styled.div`
     color: #444444;
   }
   .toolbar{
-    margin: 0px auto;
+    margin: 10px 20px;
   }
   .search-icon{
     color: #0072e5;
+  }
+  .toolbar-text{
+    color: white;
+    background-color: #0072e5;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 15px;
+    margin-left: 60px;
   }
 `
 

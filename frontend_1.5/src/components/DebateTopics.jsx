@@ -13,6 +13,7 @@ const DebateTopics = () => {
     return (
         <Root>
             <Box className='container'>
+                <Typography style={{backgroundColor: "#0072e5", color: "white", textAlign: "center", padding: "10px", borderRadius: "10px", position: "fixed", marginTop: "10px", width: "71%", marginRight: "25px", fontWeight: "bold"}}>Choose from the topics below and Click to enter !</Typography>
                 <Grid container spacing={3} className='topic-grid'>
                     {ongoingDebateTopics.map((topic, index) => (
                         <Grid item xs={6} key={index} className='grid-item' onClick={()=>handleDebateRoom(topic.id)}>
@@ -40,14 +41,13 @@ const DebateTopics = () => {
 
 const Root = styled.div`
 .container{
-    margin-top: 60px;
+    margin-top: 10px;
     cursor: pointer;
 }
 .topic-grid{
-    
 }
 .grid-item{
-    
+    margin-top: 40px;
 }
 .items{
     border-radius: 10px;

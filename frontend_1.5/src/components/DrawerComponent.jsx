@@ -22,16 +22,26 @@ const DrawerComponent = () => {
     const [isQuizCollapse, setIsQuizCollapse] = React.useState(false);
     const [isDebateCollapse, setIsDebateCollapse] = React.useState(false);
     const handleDrawerOpen = () => {
-        setDrawerWidth(open ? 75 : 220);
+        setDrawerWidth(open ? 75 : 230);
         setOpen(!open);
+        setIsQuizCollapse(false);
+        setIsDebateCollapse(false);
     }
     const handleQuizCollapse = () => {
         setIsQuizCollapse(!isQuizCollapse);
         setIsDebateCollapse(false);
+        if(!open){
+            setDrawerWidth(open ? 75 : 230);
+            setOpen(true);
+        }
     };
     const handleDebateCollapse = () => {
         setIsDebateCollapse(!isDebateCollapse);
         setIsQuizCollapse(false);
+        if(!open){
+            setDrawerWidth(open ? 75 : 230);
+            setOpen(true);
+        }
     };
     return (
         <Root>
@@ -58,20 +68,21 @@ const DrawerComponent = () => {
                             component={NavLink}
 
                             style={({ isActive }) =>
-                                isActive ? { color: '#444444', backgroundColor: "#d7e7fa", borderRadius: "20px", height: "38px", marginTop: "5px" } : { color: '#444444', height: "38px", marginTop: "5px" }
+                                isActive ? { color: '#444444', backgroundColor: "#d7e7fa", borderRadius: "20px", height: "38px", marginTop: "5px" } : { color: '#444444', height: "38px", marginTop: "5px", }
                             }
+                            className='list-item'
                         >
                             <ListItemIcon>
                                 <IconButton style={{ color: "#444444" }}><NotStartedIcon style={{ color: "#01264a" }} /></IconButton>
                             </ListItemIcon>
-                            <ListItemText primary={<Typography>Getting Started</Typography>} />
+                            <ListItemText primary={<Typography style={{display: !open?"none": ""}}>Getting Started</Typography>} />
                         </ListItem>
-                        <ListItem onClick={handleQuizCollapse} style={{marginTop: "4px"}}>
+                        <ListItem onClick={handleQuizCollapse} style={{marginTop: "10px", height: "38px"}} className={!isQuizCollapse && 'list-item'}>
                             <ListItemIcon>
                                 <IconButton style={{ color: "#444444" }}><PlaygroundIcon style={{ color: "#01264a" }} /></IconButton>
                             </ListItemIcon>
-                            <ListItemText primary={<Typography>Quiz</Typography>} />
-                            {isQuizCollapse ? <ExpandLessIcon style={{color: "#01264a"}}/> : <ExpandMoreIcon style={{color: "#01264a"}}/>}
+                            <ListItemText primary={<Typography style={{display: !open?"none": ""}}>Quiz</Typography>} />
+                            {open&&isQuizCollapse ? <ExpandLessIcon style={{color: "#01264a"}}/> :open? <ExpandMoreIcon style={{color: "#01264a"}} className='list-item'/>: ""}
                         </ListItem>
                         <Collapse in={isQuizCollapse} style={{marginTop: "-5px"}}>
                             <ListItem
@@ -81,8 +92,9 @@ const DrawerComponent = () => {
                                 style={({ isActive }) =>
                                     isActive ? { color: '#444444', backgroundColor: "#d7e7fa", borderRadius: "30px", height: "28px" } : { color: '#444444', height: "28px"}
                                 }
+                                className='list-item'
                             >
-                                <ListItemText primary={<Typography style={{ fontSize: "12px", textAlign: "center", }}>Today's Quiz</Typography>} />
+                                <ListItemText primary={<Typography style={{ fontSize: "12px", textAlign: "right", fontWeight: "bold", }}>Today's Quiz</Typography>} />
                             </ListItem>
                             <ListItem
                                 to='/quiz/past-quizzes'
@@ -91,8 +103,9 @@ const DrawerComponent = () => {
                                 style={({ isActive }) =>
                                     isActive ? { color: '#444444', backgroundColor: "#d7e7fa", borderRadius: "20px", height: "28px" } : { color: '#444444', height: "28px", }
                                 }
+                                className='list-item'
                             >
-                                <ListItemText primary={<Typography style={{ fontSize: "12px", textAlign: "center", }}>Past Quizzes</Typography>} />
+                                <ListItemText primary={<Typography style={{ fontSize: "12px", textAlign: "right", fontWeight: "bold", }}>Past Quizzes</Typography>} />
                             </ListItem>
                             <ListItem
                                 to='/quiz/scorecards'
@@ -101,26 +114,17 @@ const DrawerComponent = () => {
                                 style={({ isActive }) =>
                                     isActive ? { color: '#444444', backgroundColor: "#d7e7fa", borderRadius: "20px", height: "28px" } : { color: '#444444', height: "28px", }
                                 }
+                                className='list-item'
                             >
-                                <ListItemText primary={<Typography style={{ fontSize: "12px", textAlign: "center", }}>Scorecards</Typography>} />
-                            </ListItem>
-                            <ListItem
-                                to='/quiz/current-leaderboard'
-                                component={NavLink}
-
-                                style={({ isActive }) =>
-                                    isActive ? { color: '#444444', backgroundColor: "#d7e7fa", borderRadius: "20px", height: "28px" } : { color: '#444444', height: "28px", }
-                                }
-                            >
-                                <ListItemText primary={<Typography style={{ fontSize: "12px", textAlign: "center", }}>Current Leaderboard</Typography>} />
+                                <ListItemText primary={<Typography style={{ fontSize: "12px", textAlign: "right", fontWeight: "bold", }}>Scorecards</Typography>} />
                             </ListItem>
                         </Collapse>
-                        <ListItem onClick={handleDebateCollapse} style={{marginTop: ""}}>
+                        <ListItem onClick={handleDebateCollapse} style={{marginTop: "15px", height: "38px"}} className={!isDebateCollapse && 'list-item'}>
                             <ListItemIcon>
                                 <IconButton style={{ color: "#444444" }}><AccessibilityIcon style={{ color: "#01264a" }} /></IconButton>
                             </ListItemIcon>
-                            <ListItemText primary={<Typography>Debate</Typography>} />
-                            {isDebateCollapse ? <ExpandLessIcon style={{color: "#01264a"}}/> : <ExpandMoreIcon style={{color: "#01264a"}}/>}
+                            <ListItemText primary={<Typography style={{display: !open?"none": ""}}>Debate</Typography>} />
+                            {open&&isQuizCollapse ? <ExpandLessIcon style={{color: "#01264a"}}/> :open? <ExpandMoreIcon style={{color: "#01264a"}} className='list-item'/>: ""}
                         </ListItem>
                         <Collapse in={isDebateCollapse} style={{marginTop: "-5px"}}>
                             <ListItem
@@ -130,8 +134,9 @@ const DrawerComponent = () => {
                                 style={({ isActive }) =>
                                     isActive ? { color: '#444444', backgroundColor: "#d7e7fa", borderRadius: "20px", height: "28px" } : { color: '#444444', height: "28px", }
                                 }
+                                className='list-item'
                             >
-                                <ListItemText primary={<Typography style={{ fontSize: "12px", textAlign: "center", }}>Debate Topics</Typography>} />
+                                <ListItemText primary={<Typography style={{ fontSize: "12px", textAlign: "right", fontWeight: "bold", }}>Debate Topics</Typography>} />
                             </ListItem>
                             <ListItem
                                 to='/debate/debate-rooms'
@@ -140,8 +145,9 @@ const DrawerComponent = () => {
                                 style={({ isActive }) =>
                                     isActive ? { color: '#444444', backgroundColor: "#d7e7fa", borderRadius: "20px", height: "28px" } : { color: '#444444', height: "28px", }
                                 }
+                                className='list-item'
                             >
-                                <ListItemText primary={<Typography style={{ fontSize: "12px", textAlign: "center", }}>Active Debate Rooms</Typography>} />
+                                <ListItemText primary={<Typography style={{ fontSize: "12px", textAlign: "right", fontWeight: "bold", }}>Active Debate Rooms</Typography>} />
                             </ListItem>
                         </Collapse>
                         <ListItem
@@ -149,13 +155,14 @@ const DrawerComponent = () => {
                             component={NavLink}
 
                             style={({ isActive }) =>
-                                isActive ? { color: '#444444', backgroundColor: "#d7e7fa", borderRadius: "20px", height: "38px", marginTop: "8px" } : { color: '#444444', height: "38px", marginTop: "8px" }
+                                isActive ? { color: '#444444', backgroundColor: "#d7e7fa", borderRadius: "20px", height: "38px", marginTop: "16px" } : { color: '#444444', height: "38px", marginTop: "16px" }
                             }
+                            className='list-item'
                         >
                             <ListItemIcon>
                                 <IconButton style={{ color: "#444444" }}><LeaderboardIcon style={{ color: "#01264a" }} /></IconButton>
                             </ListItemIcon>
-                            <ListItemText primary={<Typography>Leaderboard</Typography>} />
+                            <ListItemText primary={<Typography style={{display: !open?"none": ""}}>Leaderboard</Typography>} />
                         </ListItem>
                         <ListItem
                             to='/connect'
@@ -164,11 +171,12 @@ const DrawerComponent = () => {
                             style={({ isActive }) =>
                                 isActive ? { color: '#444444', backgroundColor: "#d7e7fa", borderRadius: "20px", height: "38px", marginTop: "13px" } : { color: '#444444', height: "38px", marginTop: "13px" }
                             }
+                            className='list-item'
                         >
                             <ListItemIcon>
                                 <IconButton style={{ color: "#444444" }}><HubIcon style={{ color: "#01264a" }} /></IconButton>
                             </ListItemIcon>
-                            <ListItemText primary={<Typography>Connect</Typography>} />
+                            <ListItemText primary={<Typography style={{display: !open?"none": ""}}>Connect</Typography>} />
                         </ListItem>
                     </List>
                 </Box>
@@ -184,6 +192,12 @@ const Root = styled.div`
     color: #444444;
     margin-left: 22px;
     border-radius: 5px;
+}
+.list-item{
+    &:hover{
+        background-color: #f0f0f0;
+        border-radius: 30px;
+    }
 }
 `
 
