@@ -6,7 +6,6 @@ import Layout from "./container/Layout";
 import { useAuth } from './context/AuthProvider';
 import QuizForm from './pages/QuizFormPage';
 import UploadPostAdmin from './pages/UploadPostAdmin';
-import LandingPage from './pages/LandingPage';
 import ProfilePage from './pages/ProfilePage';
 import EditProfilePage from './pages/EditProfilePage';
 const RoutesJS = () => {
@@ -15,7 +14,6 @@ const RoutesJS = () => {
     <Routes>
       <Route path='/login' element={<LoginPage />} />
       <Route path='/signup' element={<SignupPage />} />
-      <Route path='/' element={<LandingPage />} />
       <Route path='/*' element={auth ? <Layout /> : <Navigate to="/login" replace />} />
       <Route path='/profile/:userId' element={auth && <ProfilePage />} />
       <Route path='/profile/edit-profile' element={auth && <EditProfilePage />} />

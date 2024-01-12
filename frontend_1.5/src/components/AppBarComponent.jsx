@@ -9,7 +9,6 @@ import Container from '@mui/material/Container';
 import Logo from "../assets/InfoFusion.png";
 import { useNavigate } from "react-router-dom";
 import { Tooltip, Typography } from '@mui/material';
-import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 import MessageIcon from '@mui/icons-material/Message';
 import styled from "styled-components";
 
@@ -23,9 +22,6 @@ export const AppBarComponent = ({ comp }) => {
     const handleLogout = () => {
         localStorage.clear();
         navigate('/login');
-    }
-    const handleDebateRoom = () => {
-        navigate('/debate/join-debate-room/##')
     }
     const handleMessages = () => {
         navigate('/messages')
@@ -47,11 +43,6 @@ export const AppBarComponent = ({ comp }) => {
                                     <IconButton color="inherit" onClick={handleProfile}>
                                         <Avatar alt={user.name} src={`http://localhost:3000/userImages/${user.picturePath}`} className='avatar-style' />
                                     </IconButton>
-                                </Tooltip>
-                            </Box>
-                            <Box>
-                                <Tooltip title='Debate Room'>
-                                    <IconButton className='support-style' onClick={handleDebateRoom} size='small'><MeetingRoomIcon style={{ fontSize: "20px" }} /></IconButton>
                                 </Tooltip>
                             </Box>
                             <Box>

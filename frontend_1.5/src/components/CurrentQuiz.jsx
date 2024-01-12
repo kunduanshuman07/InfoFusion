@@ -29,10 +29,10 @@ const CurrentQuiz = () => {
 const Root = styled.div`
 .container{
   width: 90%;
-  box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.2);
   margin-left: -30px;
   margin-top: 10px;
-  height: 330px;
+  height: 380px;
   border-radius:5px;
   display: flex;
   flex-direction: column;
