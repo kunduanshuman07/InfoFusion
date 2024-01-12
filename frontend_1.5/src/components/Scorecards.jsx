@@ -1,4 +1,4 @@
-import { Box, Button, TextField, InputAdornment, IconButton } from '@mui/material'
+import { Box, Button, TextField, InputAdornment, IconButton, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import axios from "axios";
 import { DataGrid, GridToolbarContainer } from '@mui/x-data-grid';
@@ -86,6 +86,7 @@ const Scorecards = () => {
               </InputAdornment>
             )
           }} />
+          <Typography className='toolbar-text'>All Quiz Scorecards</Typography>
       </GridToolbarContainer>
     );
   }
@@ -135,10 +136,10 @@ const Scorecards = () => {
 const Root = styled.div`
   .data-grid{
     max-width: 99%;
-    margin-top: 10px;
     padding: 10px;
     border-radius: 10px;
     box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
+    cursor: pointer;
   }
   .mytableheader{
     color: #444444;
@@ -155,10 +156,22 @@ const Root = styled.div`
     color: #444444;
   }
   .toolbar{
-    margin: 0px auto;
+    margin: 10px 20px;
   }
   .search-icon{
     color: #0072e5;
+  }
+  .mytableheader{
+    background-color: #d7e7fa;
+  }
+  .toolbar-text{
+    color: white;
+    background-color: #0072e5;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 15px;
+    margin-left: 60px;
   }
 `
 
