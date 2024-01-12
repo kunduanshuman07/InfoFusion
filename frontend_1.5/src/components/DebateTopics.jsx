@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 const DebateTopics = () => {
     const navigate = useNavigate();
     const handleDebateRoom = (topicId) => {
-        navigate(`/debate/${topicId}`)
+        navigate(`/debate/debate-topics/${topicId}`)
     }
     return (
         <Root>

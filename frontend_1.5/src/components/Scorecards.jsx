@@ -1,6 +1,5 @@
 import { Box, Button, TextField, InputAdornment, IconButton } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import PlaygroundAppBar from './PlaygroundAppBar'
 import axios from "axios";
 import { DataGrid, GridToolbarContainer } from '@mui/x-data-grid';
 import styled from 'styled-components';
@@ -118,7 +117,6 @@ const Scorecards = () => {
   }, [])
   return (
     <Root>
-      <PlaygroundAppBar />
       <Box className='data-grid'>
         <DataGrid
           columns={columns}
@@ -136,8 +134,8 @@ const Scorecards = () => {
 
 const Root = styled.div`
   .data-grid{
-    max-width: 90%;
-    margin-top: 60px;
+    max-width: 99%;
+    margin-top: 10px;
     padding: 10px;
     border-radius: 10px;
     box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);

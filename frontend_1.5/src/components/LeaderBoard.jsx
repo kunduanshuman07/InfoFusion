@@ -1,6 +1,5 @@
 import { Box, Button, TextField, InputAdornment, IconButton } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import PlaygroundAppBar from './PlaygroundAppBar'
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import { DataGrid, GridToolbarContainer } from '@mui/x-data-grid';
@@ -99,7 +98,6 @@ const Leaderboard = () => {
   }, [])
   return (
     <Root>
-      <PlaygroundAppBar />
       <Box className='data-grid'>
         <DataGrid
           columns={columns}
@@ -116,10 +114,10 @@ const Leaderboard = () => {
 
 const Root = styled.div`
   .data-grid{
-    max-width: 90%;
+    max-width: 99%;
     padding: 10px;
     border-radius: 10px;
-    margin-top: 60px;
+    margin-top: 10px;
     box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
   }
   .mytableheader{

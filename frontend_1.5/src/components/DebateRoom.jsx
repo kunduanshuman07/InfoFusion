@@ -4,13 +4,25 @@ import styled from 'styled-components'
 import { useParams } from 'react-router-dom'
 import { ongoingDebateTopics } from "../utils/debateTopics";
 import RecommendIcon from '@mui/icons-material/Recommend';
-import GroupIcon from '@mui/icons-material/Group';
+import SurroundSoundIcon from '@mui/icons-material/SurroundSound';
 import WrongLocationIcon from '@mui/icons-material/WrongLocation';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
+import Debate from './Debate';
 const DebateRoom = () => {
     const { debateId } = useParams();
-    console.log(debateId)
     const [debate, setDebate] = useState();
+    const [debateModelFavor, setDebateModelFavor] = useState(false);
+    const [debateModelAgainst, setDebateModelAgainst] = useState(false);
+    const handleJoinFavor = () => {
+        setDebateModelFavor(true);
+    }
+    const handleJoinAgainst = () => {
+        setDebateModelAgainst(true);
+    }
+    const handleClose = () => {
+        setDebateModelAgainst(false);
+        setDebateModelFavor(false);
+    }
     useEffect(() => {
         const debateData = ongoingDebateTopics.find(topic => topic.id === debateId);
         setDebate(debateData)
@@ -46,7 +58,7 @@ const DebateRoom = () => {
                         </Box>
                         <Box className='details'>
                             <IconButton>
-                                <GroupIcon style={{ fontSize: "30px", color: "#01264a" }} />
+                                <SurroundSoundIcon style={{ fontSize: "30px", color: "#01264a" }} />
                             </IconButton>
                             <Typography className='detail-text'><span style={{ fontWeight: "bold" }}>10</span> Iterations</Typography>
                         </Box>
@@ -56,10 +68,12 @@ const DebateRoom = () => {
                     </Box>
                 </Box>
                 <Box className='bottom-container'>
-                    <Button startIcon={<HowToRegIcon />} className='favor-btn'>Join In Favor</Button>
-                    <Button startIcon={<WrongLocationIcon />} className='against-btn'>Join Against</Button>
+                    <Button startIcon={<HowToRegIcon />} className='favor-btn' onClick={handleJoinFavor}>Join In Favor</Button>
+                    <Button startIcon={<WrongLocationIcon />} className='against-btn' onClick={handleJoinAgainst}>Join Against</Button>
                 </Box>
             </Box>
+            {debateModelFavor && <Debate onCloseModal={handleClose} motion="Favor" debate={debate} />}
+            {debateModelAgainst && <Debate onCloseModal={handleClose} motion="Against" debate={debate} />}
         </Root>
     )
 }
@@ -102,12 +116,12 @@ const Root = styled.div`
     margin-top: 9px;
 }
 .debate-id{
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
     color: #A5A5A5;
 }
 .debate-header{
-    font-size: 22px;
+    font-size: 24px;
     font-weight: bold;
     color: #444444;
     margin-bottom: 30px;

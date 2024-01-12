@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom'
 import "react-toastify/dist/ReactToastify.css";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import FPDialog from './FPDialog';
 import IFLogo from "../assets/InfoFusion.png";
 import SnackBarComponent from "./SnackBarComponent";
 const Login = () => {
@@ -16,7 +15,6 @@ const Login = () => {
   const [valid, setValid] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const { setAuth } = useAuth();
-  const [fpDialog, setFpDialog] = useState(false);
   const navigate = useNavigate();
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -84,7 +82,7 @@ const Login = () => {
           <Button className="submit-btn" onClick={handleLogin}>Login</Button>
         </Box>
         <Box className="footer">
-          <a href='/forgot-password' className="fpassword" onClick={()=>setFpDialog(true)}>Forgot Password</a>
+          <a href='/forgot-password' className="fpassword">Forgot Password</a>
           <a href='/signup' className="fpassword">New User? Signup</a>
         </Box>
       </Box>
@@ -92,7 +90,6 @@ const Login = () => {
         <img src={IFLogo} alt='IFLogo' className='img' width={150} height={130} />
         <Typography className='intro'>Play & Compete around General Awareness !</Typography>
       </Box>
-      {fpDialog && <FPDialog onCloseModal = {()=>setFpDialog(false)}/>}
     </Root>
   );
 };
