@@ -1,30 +1,42 @@
 import mongoose from "mongoose";
 
 const postSchema = new mongoose.Schema({
-    postTitle: {
-        type: String,
-        required: true,
-    },
-    postDescription: {
-        type: String,
-        required: true,
-    },
-    postImg: {
+    postCaption: {
         type: String,
     },
-    opinions: [
+    postImage: {
+        type: String,
+    },
+    username: {
+        type: String,
+    },
+    userName: {
+        type: String,
+    },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+    },
+    userPicturePath: {
+        type: String,
+    },
+    comments: [
         {
-            username: {
+            userId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "User",
+            },
+            commentText: {
                 type: String,
             },
-            opinionText: {
-                type: String, 
-            },
-            timeOfPost: {
+            timeOfComment: {
                 type: String,
             },
         }
     ],
+    likes:{
+        type: Number,
+    }
 }, {
     timestamps: true
 });

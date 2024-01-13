@@ -3,7 +3,7 @@ export const badgeDecider = (data) => {
     const n = data.length;
 
     data.forEach((item, index) => {
-        totalSum = totalSum + item.rating;
+        totalSum = totalSum + item.iqr;
     });
 
     const finalAverage = totalSum / n;

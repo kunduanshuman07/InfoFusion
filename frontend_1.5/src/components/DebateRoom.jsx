@@ -37,13 +37,13 @@ const DebateRoom = () => {
                         <Box className='pro-con'>
                             <Box className='pro'>
                                 <IconButton>
-                                    <HowToRegIcon style={{ color: "green" }} />
+                                    <HowToRegIcon style={{ color: "#01781b" }} />
                                 </IconButton>
                                 <Typography className='pro-con-text'>4 In Favor</Typography>
                             </Box>
                             <Box className='con'>
                                 <IconButton>
-                                    <WrongLocationIcon style={{ color: "red" }} />
+                                    <WrongLocationIcon style={{ color: "#96050c" }} />
                                 </IconButton>
                                 <Typography className='pro-con-text'>6 Against</Typography>
                             </Box>
@@ -141,7 +141,7 @@ const Root = styled.div`
     font-weight: bold;
 }
 .favor-btn{
-    background-color: green;
+    background-color: #01781b;
     color: white;
     width: 150px;
     border-radius: 20px;
@@ -153,7 +153,7 @@ const Root = styled.div`
     }
 }
 .against-btn{
-    background-color: red;
+    background-color: #96050c;
     color: white;
     width: 150px;
     border-radius: 20px;

@@ -39,7 +39,15 @@ const Debate = ({ motion, onCloseModal, debate }) => {
                 <Typography className='header-text'>{debate.topicName}</Typography>
                 <Box className='user-btn'>
                   <Button startIcon={<GroupIcon />} className='user-btn'>72 Active Debaters</Button>
-                  <Button className='statement-btn' style={{ backgroundColor: motion === "Favor" ? "green" : "red" }}>Pin Statement</Button>
+                  <Button
+                    className="statement-btn"
+                    style={{
+                      backgroundColor: motion === "Favor" ? "#01781b" : "#96050c",
+                    }}
+                  >
+                    Pin Statement
+                  </Button>
+
                 </Box>
               </Box>
               <Box className='statement-container'>
@@ -49,7 +57,7 @@ const Debate = ({ motion, onCloseModal, debate }) => {
                   </Box>
                   <Box className='favor-statements'>
                     <IconButton>
-                      <Avatar alt='Anshuman' src='' className='avatar'/>
+                      <Avatar alt='Anshuman' src='' className='avatar' style={{ backgroundColor: "#01781b" }} />
                     </IconButton>
                     <Typography className='stat-text'>Yes, It should be implemented</Typography>
                   </Box>
@@ -60,7 +68,7 @@ const Debate = ({ motion, onCloseModal, debate }) => {
                   </Box>
                   <Box className='against-statements'>
                     <IconButton>
-                      <Avatar alt='Anshuman' src='' className='avatar'/>
+                      <Avatar alt='Anshuman' src='' className='avatar' style={{ backgroundColor: "#96050c" }} />
                     </IconButton>
                     <Typography className='stat-text'>No, It should not be implemented</Typography>
                   </Box>
@@ -118,9 +126,6 @@ const Root = styled.div`
     color: white;
     border-radius: 20px;
     width: 200px;
-    &:hover{
-      background-color: brown;
-    }
   }
   .statement-container{
     display: flex;
@@ -141,7 +146,7 @@ const Root = styled.div`
     height: 1000vh;
   }
   .favor-text{
-    color: #444444;
+    color: white;
     font-size: 18px;
     font-weight: bold;
     text-align: center;
@@ -149,18 +154,18 @@ const Root = styled.div`
     
   }
   .against-text{
-    color: #444444;
+    color: white;
     font-size: 18px;
     font-weight: bold;
     text-align: center;
     margin-top: 10px;
   }
   .header-favor{
-    background-color: #d7e7fa;
+    background-color: #01781b;
     height: 50px;
   }
   .header-against{
-    background-color: #d7e7fa;
+    background-color: #96050c;
     height: 50px;
   }
   .favor-statements{

@@ -39,7 +39,7 @@ export const updateUserQuizData = async (req, res) => {
                     quizzes: {
                         quizId: quizId,
                         score: score,
-                        rating: iqr,
+                        iqr: iqr,
                         dateOfQuiz: dateOfQuiz,
                         scorecard: scoreCard,
                         overallRating: user.rating,

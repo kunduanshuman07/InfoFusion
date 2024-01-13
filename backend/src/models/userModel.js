@@ -35,13 +35,9 @@ const userSchema = new mongoose.Schema({
   },
   age: {
     type: Number,
-    required: true,
-  },
-  city: {
-    type: String,
     default: "",
   },
-  state: {
+  location: {
     type: String,
     default: "",
   },
@@ -83,7 +79,7 @@ const userSchema = new mongoose.Schema({
       dateOfQuiz: {
         type: Date,
       },
-      rating: {
+      iqr: {
         type: Number,
         required: true,
       },
@@ -93,6 +89,46 @@ const userSchema = new mongoose.Schema({
       overallRating: {
         type: Number,
       }
+    },
+  ],
+  connections:[
+    {
+      userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      }
+    }
+  ],
+  messages:[
+    {
+      userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+      messageText:{
+        type: String,
+      },
+      messageTime: {
+        type: Date,
+      }
+    }
+  ],
+  notifications:[
+    {
+      notificationText:{
+        type: String,
+      },
+      notificationTime: {
+        type: Date,
+      },
+    }
+  ],
+  posts: [
+    {
+      postId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Post",
+      },
     },
   ],
 }, {

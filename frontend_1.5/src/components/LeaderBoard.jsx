@@ -32,9 +32,9 @@ const Leaderboard = () => {
       headerAlign: "center",
       align: "center",
       renderCell: (rowData) => (
-        <Tooltip title={badgeDecider(rowData.row.user.quizzes).label}>
+        <Tooltip title={badgeDecider(rowData.row.user.quizzes)?.label}>
           <IconButton>
-          <MilitaryTechIcon style={{color:badgeDecider(rowData.row.user.quizzes).hexColor}}/>
+          <MilitaryTechIcon style={{color:badgeDecider(rowData.row.user.quizzes)?.hexColor}}/>
         </IconButton>
         </Tooltip>
       )
@@ -111,7 +111,7 @@ const Leaderboard = () => {
         rating: item.rating,
         quizcount: item.quizcount,
         user: item.user,
-        ifrating: badgeDecider(item.user.quizzes).finalAverage.toFixed(2),
+        ifrating: badgeDecider(item.user.quizzes)?.finalAverage?.toFixed(2),
       }))
       setRows(formattedRows)
     }

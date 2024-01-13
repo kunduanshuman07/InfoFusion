@@ -12,7 +12,7 @@ const BasicInfo = () => {
     { key: 'name', label: 'Name', defaultValue: user.name },
     { key: 'gender', label: 'Gender', defaultValue: user.gender },
     { key: 'age', label: 'Age', defaultValue: user.age },
-    { key: 'location', label: 'Location', defaultValue: `${user.city} ${user.state}` },
+    { key: 'location', label: 'Location', defaultValue: `${user.location}` },
     { key: 'education', label: 'Education', defaultValue: user.education },
     { key: 'employment', label: 'Employment', defaultValue: user.employment },
   ];
