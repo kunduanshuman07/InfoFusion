@@ -38,7 +38,7 @@ const ProfileDashboard = () => {
             const { data } = await axios.post('http://localhost:3000/user/user-dashboard', userData);
             setUser(data.user);
             const xAxisData = data.user.quizzes.map((quiz, index) => index + 1);
-            const seriesData = data.user.quizzes.map(quiz => quiz.rating);
+            const seriesData = data.user.quizzes.map(quiz => quiz.iqr);
             const overallRatingdata = data.user.quizzes.map(quiz => quiz.overallRating);
             setIqrRow(xAxisData);
             setSeriesRow(seriesData);
@@ -54,9 +54,9 @@ const ProfileDashboard = () => {
             setMaxrating(data.dashboardData.maxRating);
             setRating(data.dashboardData.rating);
             const badgeCategory = badgeDecider(data.user.quizzes);
-            setBadgeColor(badgeCategory.hexColor);
-            setBadgeLabel(badgeCategory.label);
-            setBadgeAverage(badgeCategory.finalAverage.toFixed(2));
+            setBadgeColor(badgeCategory?.hexColor);
+            setBadgeLabel(badgeCategory?.label);
+            setBadgeAverage(badgeCategory?.finalAverage.toFixed(2));
             setPicturePath(data.user.picturePath);
         }
         fetchDashboard();

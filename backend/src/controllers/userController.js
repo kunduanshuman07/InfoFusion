@@ -18,7 +18,7 @@ export const updateProfile = async (req, res) => {
     const { userid } = req.params;
 
     try {
-        const allowedFields = ['name', 'gender', 'age', 'location', 'education', 'employment'];
+        const allowedFields = ['name', 'gender', 'age', 'location', 'education', 'employment', 'username', 'email', 'github', 'linkedin'];
         if (!allowedFields.includes(key)) {
             return res.status(400).send({ error: 'Invalid field for update' });
         }
@@ -109,10 +109,14 @@ export const userDashboard = async (req, res) => {
             console.error("User or user.quizzes is undefined.");
         }
         let maxiqr = 0;
+        let miniqr = 0;
         if (user && user.quizzes && user.quizzes.length > 0) {
             user.quizzes.map((quiz) => {
-                if (quiz.rating !== undefined && quiz.rating > maxiqr) {
-                    maxiqr = quiz.rating;
+                if (quiz.iqr !== undefined && quiz.iqr > maxiqr) {
+                    maxiqr = quiz.iqr;
+                }
+                if (quiz.iqr !== undefined && quiz.iqr < miniqr) {
+                    miniqr = quiz.iqr;
                 }
             });
         } else {

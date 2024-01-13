@@ -108,7 +108,7 @@ const Scorecards = () => {
         sno: index + 1,
         date: dateFormat(item.dateOfQuiz),
         score: item.score,
-        iqr: item.rating,
+        iqr: item.iqr,
         quizId: item.quizId,
         scorecard: item.scorecard,
       }))

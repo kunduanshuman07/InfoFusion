@@ -8,6 +8,7 @@ import QuizForm from './pages/QuizFormPage';
 import UploadPostAdmin from './pages/UploadPostAdmin';
 import ProfilePage from './pages/ProfilePage';
 import EditProfilePage from './pages/EditProfilePage';
+import ConnectPage from './pages/ConnectPage';
 const RoutesJS = () => {
   const { auth } = useAuth();
   return (
@@ -19,6 +20,7 @@ const RoutesJS = () => {
       <Route path='/profile/edit-profile' element={auth && <EditProfilePage />} />
       <Route path='/quiz-form-admin' element={auth && <QuizForm />} />
       <Route path='/create-post-admin' element={<UploadPostAdmin />} />
+      <Route path='/connect' element={<ConnectPage/>}/>
     </Routes>
   )
 }

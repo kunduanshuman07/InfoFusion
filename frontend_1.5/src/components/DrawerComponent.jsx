@@ -13,9 +13,9 @@ import styled from "styled-components";
 import Collapse from "@mui/material/Collapse";
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import NotStartedIcon from '@mui/icons-material/NotStarted';
-import HubIcon from '@mui/icons-material/Hub';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { ListItem, Typography, ListItemText, ListItemIcon } from '@mui/material';
+import LiveTvIcon from '@mui/icons-material/LiveTv';
 const DrawerComponent = () => {
     const [drawerWidth, setDrawerWidth] = React.useState(230);
     const [open, setOpen] = React.useState(true);
@@ -124,7 +124,7 @@ const DrawerComponent = () => {
                                 <IconButton style={{ color: "#444444" }}><AccessibilityIcon style={{ color: "#01264a" }} /></IconButton>
                             </ListItemIcon>
                             <ListItemText primary={<Typography style={{display: !open?"none": ""}}>Debate</Typography>} />
-                            {open&&isQuizCollapse ? <ExpandLessIcon style={{color: "#01264a"}}/> :open? <ExpandMoreIcon style={{color: "#01264a"}} className='list-item'/>: ""}
+                            {open&&isDebateCollapse ? <ExpandLessIcon style={{color: "#01264a"}}/> :open? <ExpandMoreIcon style={{color: "#01264a"}} className='list-item'/>: ""}
                         </ListItem>
                         <Collapse in={isDebateCollapse} style={{marginTop: "-5px"}}>
                             <ListItem
@@ -165,7 +165,7 @@ const DrawerComponent = () => {
                             <ListItemText primary={<Typography style={{display: !open?"none": ""}}>Leaderboard</Typography>} />
                         </ListItem>
                         <ListItem
-                            to='/connect'
+                            to='/live-sessions'
                             component={NavLink}
 
                             style={({ isActive }) =>
@@ -174,9 +174,9 @@ const DrawerComponent = () => {
                             className='list-item'
                         >
                             <ListItemIcon>
-                                <IconButton style={{ color: "#444444" }}><HubIcon style={{ color: "#01264a" }} /></IconButton>
+                                <IconButton style={{ color: "#444444" }}><LiveTvIcon style={{ color: "#01264a" }} /></IconButton>
                             </ListItemIcon>
-                            <ListItemText primary={<Typography style={{display: !open?"none": ""}}>Connect</Typography>} />
+                            <ListItemText primary={<Typography style={{display: !open?"none": ""}}>Live Sessions</Typography>} />
                         </ListItem>
                     </List>
                 </Box>

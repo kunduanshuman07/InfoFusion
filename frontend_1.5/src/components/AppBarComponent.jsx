@@ -9,7 +9,7 @@ import Container from '@mui/material/Container';
 import Logo from "../assets/InfoFusion.png";
 import { useNavigate } from "react-router-dom";
 import { Tooltip, Typography } from '@mui/material';
-import MessageIcon from '@mui/icons-material/Message';
+import HubIcon from '@mui/icons-material/Hub';
 import styled from "styled-components";
 
 export const AppBarComponent = ({ comp }) => {
@@ -23,8 +23,8 @@ export const AppBarComponent = ({ comp }) => {
         localStorage.clear();
         navigate('/login');
     }
-    const handleMessages = () => {
-        navigate('/messages')
+    const handleConnections = () => {
+        navigate('/connect')
     }
     return (
         <Root>
@@ -35,7 +35,7 @@ export const AppBarComponent = ({ comp }) => {
                         <Toolbar disableGutters>
                             <img alt="InfoFusion" src={Logo} width={70} height={60} onClick={() => navigate('/playground')}
                                 className='logo-style' />
-                            <Box style={{display: "flex", flexDirection: "column"}}>
+                            <Box style={{ display: "flex", flexDirection: "column" }}>
                                 <Typography className='logo-text'>INFOFUSION</Typography>
                             </Box>
                             <Box sx={{ ml: "auto" }}>
@@ -46,8 +46,8 @@ export const AppBarComponent = ({ comp }) => {
                                 </Tooltip>
                             </Box>
                             <Box>
-                                <Tooltip title='Messages'>
-                                    <IconButton className='support-style' onClick={handleMessages} size='small'><MessageIcon style={{ fontSize: "20px" }} /></IconButton>
+                                <Tooltip title='Connect'>
+                                    <IconButton className='support-style' onClick={handleConnections} size='small'><HubIcon style={{ fontSize: "20px" }} /></IconButton>
                                 </Tooltip>
                             </Box>
                         </Toolbar>
