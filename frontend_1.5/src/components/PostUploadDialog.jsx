@@ -11,10 +11,7 @@ const PostUpload = ({onCloseModal}) => {
         formData.append('file', file);
         formData.append('postCaption', caption);
         formData.append('userId', user._id);
-        formData.append('username', user.username);
-        formData.append('userName', user.name);
-        formData.append('userPicturePath', user.picturePath);
-        const { data, status } = await axios.post('http://localhost:3000/post/create-post', formData);
+        const { status } = await axios.post('http://localhost:3000/post/create-post', formData);
         if (status === 200) {
             onCloseModal();
         }

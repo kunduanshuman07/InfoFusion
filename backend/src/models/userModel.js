@@ -61,7 +61,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
-  linkedin:{
+  linkedin: {
     type: String,
     default: ""
   },
@@ -91,35 +91,59 @@ const userSchema = new mongoose.Schema({
       }
     },
   ],
-  connections:[
-    {
-      userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-      }
-    }
-  ],
-  messages:[
+  connections: [
     {
       userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
       },
-      messageText:{
+    }
+  ],
+  connectionRequests: [
+    {
+      userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    }
+  ],
+  requestedConnections: [
+    {
+      userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    }
+  ],
+  messages: [
+    {
+      userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+      messageText: {
         type: String,
       },
       messageTime: {
         type: Date,
-      }
+      },
+      messageType: {
+        type: String,
+        default: "unread",
+      },
     }
   ],
-  notifications:[
+  notifications: [
     {
-      notificationText:{
+      notificationText: {
         type: String,
       },
       notificationTime: {
         type: Date,
+      },
+      notificationType: {
+        type: String,
+        default: "unread",
       },
     }
   ],
@@ -131,6 +155,14 @@ const userSchema = new mongoose.Schema({
       },
     },
   ],
+  debate: [
+    {
+      debateId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Debate",
+      }
+    }
+  ]
 }, {
   timestamps: true
 });

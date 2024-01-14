@@ -94,6 +94,103 @@ export const userDetails = async (req, res) => {
     }
 }
 
+export const getAllUsers = async(req, res) => {
+    try {
+        const allUsers = await User.find();
+        res.status(200).send(allUsers);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
+
+export const getMyConnections = async(req,res) => {
+    const {userId} = req.body;
+    try {
+        const user = await User.findById(userId);
+        const userConnections = user.connections;
+        res.status(200).send(userConnections);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
+export const getRequestedConnections = async(req,res) => {
+    const {userId} = req.body;
+    try {
+        const user = await User.findById(userId);
+        const userConnections = user.requestedConnections;
+        res.status(200).send(userConnections);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
+export const getConnectionRequests = async(req,res) => {
+    const {userId} = req.body;
+    try {
+        const user = await User.findById(userId);
+        const userConnections = user.connectionRequests;
+        res.status(200).send(userConnections);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
+
+export const approveConnectionRequests = async (req, res) => {
+    const { actualUserId, connectionUserId } = req.body;
+    try {
+        const userone = await User.findById(actualUserId);
+        const usertwo = await User.findById(connectionUserId);
+        userone.connectionRequests = userone.connectionRequests.filter(request => request.userId.toString() !== connectionUserId);
+        usertwo.requestedConnections = usertwo.requestedConnections.filter(request => request.userId.toString() !== actualUserId);
+        userone.connections.push({ userId: connectionUserId });
+        usertwo.connections.push({ userId: actualUserId });
+        await userone.save();
+        await usertwo.save();
+        res.status(200).send(userone);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+};
+
+export const sendConnectionRequests = async (req, res) => {
+    const { actualUserId, connectionUserId } = req.body;
+    try {
+        const userone = await User.findById(actualUserId);
+        const usertwo = await User.findById(connectionUserId);
+        userone.requestedConnections.push({ userId: connectionUserId });
+        usertwo.connectionRequests.push({ userId: actualUserId });
+
+        await userone.save();
+        await usertwo.save();
+
+        res.status(200).send(userone);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+};
+
+export const deleteConnectionRequests = async (req, res) => {
+    const { actualUserId, connectionUserId } = req.body;
+    try {
+        const userone = await User.findById(actualUserId);
+        const usertwo = await User.findById(connectionUserId);
+        userone.connectionRequests = userone.connectionRequests.filter(request => request.userId.toString() !== connectionUserId);
+        usertwo.requestedConnections = usertwo.requestedConnections.filter(request => request.userId.toString() !== actualUserId);
+
+        await userone.save();
+        await usertwo.save();
+
+        res.status(200).send(userone);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+};
 
 
 export const userDashboard = async (req, res) => {
