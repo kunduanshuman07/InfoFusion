@@ -1,5 +1,5 @@
 import { Avatar, Box, Button, Typography } from '@mui/material'
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import MarkChatUnreadIcon from '@mui/icons-material/MarkChatUnread';
@@ -12,53 +12,69 @@ import { useNavigate } from 'react-router-dom';
 const ConnectPosts = () => {
     const navigate = useNavigate();
     const [postUpload, setPostUpload] = useState(false);
-    const [Posts, setPosts] = useState([]);
+    const [combinedDetailsArray, setCombinedDetailsArray] = useState([]);
     const handleCreatePost = () => {
         setPostUpload(true);
     }
     const handleClose = () => {
         setPostUpload(false);
     }
-    useEffect(()=>{
-        const fetchPosts = async() => {
-            const {data} = await axios.get('http://localhost:3000/post/get-posts');
-            setPosts(data);
-        }
+    useEffect(() => {
+        const fetchPosts = async () => {
+            try {
+                const { data } = await axios.get('http://localhost:3000/post/get-posts');
+                const userDetailsPromises = data.map(async (post) => {
+                    const userResponse = await axios.post('http://localhost:3000/user/user-details', { userId: post.userId });
+                    return {
+                        postDetails: post,
+                        userDetails: userResponse.data,
+                    };
+                });
+
+                const combinedDetails = await Promise.all(userDetailsPromises);
+                console.log(combinedDetails);
+                setCombinedDetailsArray(combinedDetails);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
         fetchPosts();
-    },[])
-  return (
-    <Root>
-        <Box className='container'>
-            <Box className='create-posts'>
-                <Button startIcon={<AddAPhotoIcon/>} className='create-post-btn' onClick={handleCreatePost}>Create Post</Button>
-                <Button startIcon={<DynamicFeedIcon/>} className='my-posts-btn'>My Posts</Button>
-            </Box>
-            {Posts?.map((post, index)=>(
-                <Box className='posts' key={index}>
-                <Box className='header'>
-                    <Avatar src={`http://localhost:3000/userImages/${post.userPicturePath}`} alt={post.userName} onClick={()=>navigate(`/profile/${post.userId}`)}/>
-                    <Box className='username-name' onClick={()=>navigate(`/profile/${post.userId}`)}>
-                        <Typography className='name'>{post.userName}</Typography>
-                        <Typography className='username-time'>@{post.username} | 1 minute ago</Typography>
+    }, []);
+
+    return (
+        <Root>
+            <Box className='container'>
+                <Box className='create-posts'>
+                    <Button startIcon={<AddAPhotoIcon />} className='create-post-btn' onClick={handleCreatePost}>Create Post</Button>
+                    <Button startIcon={<DynamicFeedIcon />} className='my-posts-btn'>My Posts</Button>
+                </Box>
+                {combinedDetailsArray?.map((post, index) => (
+                    <Box className='posts' key={index}>
+                        <Box className='header'>
+                            <Avatar src={`http://localhost:3000/userImages/${post.userDetails.picturePath}`} alt={post.userDetails.name} onClick={() => navigate(`/profile/${post.userDetails._id}`)} />
+                            <Box className='username-name' onClick={() => navigate(`/profile/${post.userDetails._id}`)}>
+                                <Typography className='name'>{post.userDetails.name}</Typography>
+                                <Typography className='username-time'>@{post.userDetails.username} | 1 minute ago</Typography>
+                            </Box>
+                        </Box>
+                        <Box className='caption'>
+                            <Typography className='caption-text'>{post.postDetails.postCaption}</Typography>
+                        </Box>
+                        <Box className='image'>
+                            <img src={`http://localhost:3000/postImages/${post.postDetails.postImage}`} alt='Loading' className='post-img' />
+                        </Box>
+                        <Box className='like-comment-follow'>
+                            <Button startIcon={<ThumbUpAltIcon style={{}} />} className='like'>{post.postDetails.likes.length} Likes</Button>
+                            <Button startIcon={<MarkChatUnreadIcon style={{}} />} className='comment'>{post.postDetails.comments.length} Comments</Button>
+                            <Button startIcon={<GroupAddIcon style={{}} />} className='connect'>Connect</Button>
+                        </Box>
                     </Box>
-                </Box>
-                <Box className='caption'>
-                    <Typography className='caption-text'>{post.postCaption}</Typography>
-                </Box>
-                <Box className='image'>
-                    <img src={`http://localhost:3000/postImages/${post.postImage}`} alt='Loading' className='post-img'/>
-                </Box>
-                <Box className='like-comment-follow'>
-                    <Button startIcon={<ThumbUpAltIcon style={{}}/>} className='like'>{post.likes?.length||0} Likes</Button>
-                    <Button startIcon={<MarkChatUnreadIcon style={{}}/>} className='comment'>{post.comments.length} Comments</Button>
-                    <Button startIcon={<GroupAddIcon style={{}}/>} className='connect'>Connect</Button>
-                </Box>
+                ))}
             </Box>
-            ))}
-        </Box>
-        {postUpload && <PostUpload onCloseModal = {handleClose}/>}
-    </Root>
-  )
+            {postUpload && <PostUpload onCloseModal={handleClose} />}
+        </Root>
+    )
 }
 
 const Root = styled.div`
@@ -102,6 +118,7 @@ const Root = styled.div`
     .posts{
         display: flex;
         width: 500px;
+        min-width: 500px;
         flex-direction: column;
         box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
         margin-left: 80px;

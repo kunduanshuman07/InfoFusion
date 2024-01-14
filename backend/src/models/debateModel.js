@@ -1,31 +1,13 @@
 import mongoose from "mongoose";
 
-const postSchema = new mongoose.Schema({
-    postCaption: {
+const debateSchema = new mongoose.Schema({
+    debateTitle: {
         type: String,
     },
-    postImage: {
+    debateId: {
         type: String,
     },
-    userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-    },
-    comments: [
-        {
-            userId: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "User",
-            },
-            commentText: {
-                type: String,
-            },
-            timeOfComment: {
-                type: String,
-            },
-        }
-    ],
-    likes: [
+    usersInFavor: [
         {
             userId: {
                 type: mongoose.Schema.Types.ObjectId,
@@ -33,10 +15,26 @@ const postSchema = new mongoose.Schema({
             },
         }
     ],
+    usersAgainst: [
+        {
+            userId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "User",
+            },
+        }
+    ],
+    likes: {
+        type: Number,
+        default: 0,
+    },
+    rating: {
+        type: Number,
+        default: 5,
+    }
     
 }, {
     timestamps: true
 });
 
-const Post = mongoose.model("Post", postSchema);
-export default Post;
+const Debate = mongoose.model("Debate", debateSchema);
+export default Debate;
