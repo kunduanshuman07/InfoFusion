@@ -1,25 +1,33 @@
 import { Box, Grid, Tooltip, Typography } from '@mui/material'
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
-import { ongoingDebateTopics } from "../utils/debateTopics";
 import RecommendIcon from '@mui/icons-material/Recommend';
 import GroupIcon from '@mui/icons-material/Group';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 const DebateTopics = () => {
     const navigate = useNavigate();
+    const [ongoingDebates, setOngoingDebates] = useState([]);
     const handleDebateRoom = (topicId) => {
         navigate(`/debate/debate-topics/${topicId}`)
     }
+    useEffect(()=>{
+        const fetchDebates = async() => {
+            const {data} = await axios.get('http://localhost:3000/debate/all-debates');
+            setOngoingDebates(data);
+        }
+        fetchDebates();
+    },[])
     return (
         <Root>
             <Box className='container'>
                 <Typography style={{backgroundColor: "#0072e5", color: "white", textAlign: "center", padding: "10px", borderRadius: "10px", marginTop: "10px", width: "51%",fontWeight: "bold", margin: "auto"}}>Choose from the topics below and Click to enter !</Typography>
                 <Grid container spacing={3} className='topic-grid'>
-                    {ongoingDebateTopics.map((topic, index) => (
-                        <Grid item xs={6} key={index} className='grid-item' onClick={()=>handleDebateRoom(topic.id)}>
+                    {ongoingDebates.map((topic, index) => (
+                        <Grid item xs={6} key={index} className='grid-item' onClick={()=>handleDebateRoom(topic.debateId)}>
                             <Box className='items'>
-                                <Typography className='topic-name'>{topic.topicName}</Typography>
-                                <Typography className='topic-id'>#{topic.id}</Typography>
+                                <Typography className='topic-name'>{topic.debateTitle}</Typography>
+                                <Typography className='topic-id'>#{topic.debateId}</Typography>
                                 <Box className='icons'>
                                     <Tooltip title='Liked'>
                                         <RecommendIcon className='icon-btn-one' />

@@ -1,11 +1,48 @@
-import { Box, Dialog, DialogTitle, DialogContent, Typography, IconButton, Button, Avatar } from '@mui/material'
-import React from 'react'
+import { Box, Dialog, DialogTitle, DialogContent, Typography, IconButton, Button, Avatar, TextField } from '@mui/material'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import CloseIcon from "@mui/icons-material/Close";
 import SnackBarComponent from "../components/SnackBarComponent";
 import GroupIcon from '@mui/icons-material/Group';
-
-const Debate = ({ motion, onCloseModal, debate }) => {
+import axios from "axios";
+const Debate = ({ motion, setMotion, onCloseModal, debate }) => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  const [inFavorStatements, setInFavorStatements] = useState([]);
+  const [againstStatements, setAgainstStatements] = useState([]);
+  const [addStatement, setAddStatement] = useState('');
+  useEffect(() => {
+    if (motion === 'Enter') {
+      const againstEnability = Boolean(debate?.usersAgainst && debate?.usersAgainst.find(instance => instance.userId === user._id));
+      const favorEnability = Boolean(debate?.usersInFavor && debate?.usersInFavor.find(instance => instance.userId === user._id));
+      if (favorEnability) {
+        setMotion('Favor');
+      }
+      else if (againstEnability) {
+        setMotion('Against');
+      }
+    }
+    const fetchStatements = async () => {
+      const { data } = await axios.post('http://localhost:3000/debate/getall-pinned-statements', { debateId: debate._id });
+      setInFavorStatements(data.inFavorStatements);
+      setAgainstStatements(data.againstStatements);
+    }
+    fetchStatements();
+  }, [])
+  const handlePinStatement = async () => {
+    console.log(addStatement);
+    if (motion === 'Favor') {
+      await axios.post('http://localhost:3000/debate/pinstatement-infavor', { debateId: debate._id, userId: user._id, statement: addStatement });
+      const { data } = await axios.post('http://localhost:3000/debate/getall-pinned-statements', { debateId: debate._id });
+      setInFavorStatements(data.inFavorStatements);
+      setAgainstStatements(data.againstStatements);
+    }
+    else {
+      await axios.post('http://localhost:3000/debate/pinstatement-against', { debateId: debate._id, userId: user._id, statement: addStatement });
+      const { data } = await axios.post('http://localhost:3000/debate/getall-pinned-statements', { debateId: debate._id });
+      setInFavorStatements(data.inFavorStatements);
+      setAgainstStatements(data.againstStatements);
+    }
+  }
   return (
     <Dialog open={true} fullScreen onClose={onCloseModal}>
       <SnackBarComponent severity="info" message={motion === "Favor" ? "You have joined in Favor of the motion!" : "You have joined against the motion!"} />
@@ -21,12 +58,12 @@ const Debate = ({ motion, onCloseModal, debate }) => {
         }}
       >
         <Box>
-          <Typography style={{ color: "#444444", margin: "auto", fontWeight: "bold" }}>Debate id: #{debate.id}
+          <Typography style={{ color: "#444444", margin: "auto", fontWeight: "bold" }}>Debate id: #{debate.debateId}
           </Typography>
         </Box>
         <Box className='timer' style={{ display: "flex", cursor: "pointer", marginLeft: "auto", backgroundColor: "white", color: "#444444", borderRadius: "20px", fontWeight: "bolder", padding: "0px" }}>
           <IconButton onClick={onCloseModal} size='small'>
-            <CloseIcon className="close-icon" style={{ fontWeight: "bolder" }} />
+            <CloseIcon className="close-icon" style={{ fontWeight: "bolder" }} onClick={onCloseModal} />
           </IconButton>
         </Box>
 
@@ -36,14 +73,21 @@ const Debate = ({ motion, onCloseModal, debate }) => {
           <Box className='container'>
             <Box className='left-container'>
               <Box className='header-container'>
-                <Typography className='header-text'>{debate.topicName}</Typography>
-                <Box className='user-btn'>
+                <Box className='header-elements'>
+                  <Typography className='header-text'>{debate.debateTitle}</Typography>
                   <Button startIcon={<GroupIcon />} className='user-btn'>72 Active Debaters</Button>
+                </Box>
+                <Box className='user-btn-box'>
+
+                  <TextField placeholder='Statement' fullWidth size='small' onChange={(e) => setAddStatement(e.target.value)} />
                   <Button
                     className="statement-btn"
                     style={{
-                      backgroundColor: motion === "Favor" ? "#01781b" : "#96050c",
+                      color: motion === "Favor" ? "#01781b" : "#96050c",
+                      border: motion === "Favor" ? "2px solid #01781b" : "2px solid #96050c",
                     }}
+                    variant='outlined'
+                    onClick={handlePinStatement}
                   >
                     Pin Statement
                   </Button>
@@ -55,23 +99,27 @@ const Debate = ({ motion, onCloseModal, debate }) => {
                   <Box className='header-favor'>
                     <Typography className='favor-text'>In Favor</Typography>
                   </Box>
-                  <Box className='favor-statements'>
-                    <IconButton>
-                      <Avatar alt='Anshuman' src='' className='avatar' style={{ backgroundColor: "#01781b" }} />
-                    </IconButton>
-                    <Typography className='stat-text'>Yes, It should be implemented</Typography>
-                  </Box>
+                  {inFavorStatements.map((data) => (
+                    <Box className='favor-statements'>
+                      <IconButton>
+                        <Avatar alt={data.debateUser.name} src={`http://localhost:3000/userImages/${data.debateUser.picturePath}`} className='avatar' style={{ backgroundColor: "#01781b" }} />
+                      </IconButton>
+                      <Typography className='stat-text'>{data.statementText}</Typography>
+                    </Box>
+                  ))}
                 </Box>
                 <Box className='against-container'>
                   <Box className='header-against'>
                     <Typography className='against-text'>Against</Typography>
                   </Box>
-                  <Box className='against-statements'>
-                    <IconButton>
-                      <Avatar alt='Anshuman' src='' className='avatar' style={{ backgroundColor: "#96050c" }} />
-                    </IconButton>
-                    <Typography className='stat-text'>No, It should not be implemented</Typography>
-                  </Box>
+                  {againstStatements.map((data) => (
+                    <Box className='favor-statements'>
+                      <IconButton>
+                        <Avatar alt={data.debateUser.name} src={`http://localhost:3000/userImages/${data.debateUser.picturePath}`} className='avatar' style={{ backgroundColor: "#01781b" }} />
+                      </IconButton>
+                      <Typography className='stat-text'>{data.statementText}</Typography>
+                    </Box>
+                  ))}
                 </Box>
               </Box>
             </Box>
@@ -110,16 +158,26 @@ const Root = styled.div`
     font-weight: bold;
     margin-top: 20px;
   }
+  .header-elements{
+    display: flex;
+  }
+  .user-btn-box{
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+  }
   .user-btn{
     color: #01264a;
     text-transform: none;
-    margin-top: 8px;
     font-size: 15px;
     font-weight: bold;
+    width: 220px;
+    margin: auto;
+    margin-top: 20px;
   }
   .statement-btn{
-    margin-left: 80px;
-    margin-top: 8px;
+    margin-left: 10px;
+    margin-top: 20px;
     text-transform: none;
     font-weight: bold;
     font-size: 15px;

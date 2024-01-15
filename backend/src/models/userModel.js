@@ -160,7 +160,17 @@ const userSchema = new mongoose.Schema({
       debateId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Debate",
-      }
+      },
+      debateType: {
+        type: String,
+      },
+      statements: [
+        {
+          statement:{
+            type: String,
+          }
+        }
+      ]
     }
   ]
 }, {
