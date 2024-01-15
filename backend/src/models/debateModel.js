@@ -23,6 +23,31 @@ const debateSchema = new mongoose.Schema({
             },
         }
     ],
+    statementsInFavor: [
+        {
+            userId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "User",
+            },
+            upvotes:{
+                type: Number,
+            },
+            statement:{
+                type: String,
+            }
+        }
+    ],
+    statementsAgainst: [
+        {
+            userId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "User",
+            },
+            upvotes:{
+                type: Number,
+            }
+        }
+    ],
     likes: {
         type: Number,
         default: 0,
