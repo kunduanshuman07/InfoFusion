@@ -27,7 +27,7 @@ const Login = () => {
         await localStorage.setItem("user", JSON.stringify(data.user));
         setAuth(true);
         setValid(true);
-        navigate('/');
+        navigate('/getting-started');
 
       }
     } catch (error) {
