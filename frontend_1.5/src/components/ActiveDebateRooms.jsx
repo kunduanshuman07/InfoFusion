@@ -1,19 +1,21 @@
-import { Box, Grid, Tooltip, Typography } from '@mui/material'
+import { Box, Button, Grid, Tooltip, Typography } from '@mui/material'
 import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
 import RecommendIcon from '@mui/icons-material/Recommend';
 import GroupIcon from '@mui/icons-material/Group';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-const DebateTopics = () => {
+const ActiveDebateRooms = () => {
     const navigate = useNavigate();
+    const user = JSON.parse(localStorage.getItem("user"));
     const [ongoingDebates, setOngoingDebates] = useState([]);
     const handleDebateRoom = (topicId) => {
         navigate(`/debate/debate-topics/${topicId}`)
     }
     useEffect(()=>{
         const fetchDebates = async() => {
-            const {data} = await axios.get('http://localhost:3000/debate/all-debates');
+            const {data} = await axios.post('http://localhost:3000/debate/get-active-debates', {userId: user._id});
+            console.log(data);
             setOngoingDebates(data);
         }
         fetchDebates();
@@ -24,19 +26,20 @@ const DebateTopics = () => {
                 <Typography style={{backgroundColor: "#0072e5", color: "white", textAlign: "center", padding: "10px", borderRadius: "10px", marginTop: "10px", width: "51%",fontWeight: "bold", margin: "auto"}}>Choose from the topics below and Click to enter !</Typography>
                 <Grid container spacing={3} className='topic-grid'>
                     {ongoingDebates.map((topic, index) => (
-                        <Grid item xs={6} key={index} className='grid-item' onClick={()=>handleDebateRoom(topic.debateId)}>
+                        <Grid item xs={6} key={index} className='grid-item' onClick={()=>handleDebateRoom(topic?.debate?.debateId)}>
                             <Box className='items'>
-                                <Typography className='topic-name'>{topic.debateTitle}</Typography>
-                                <Typography className='topic-id'>#{topic.debateId}</Typography>
+                                <Typography className='topic-name'>{topic?.debate?.debateTitle}</Typography>
+                                <Typography className='topic-id'>#{topic?.debate?.debateId}</Typography>
                                 <Box className='icons'>
                                     <Tooltip title='Liked'>
                                         <RecommendIcon className='icon-btn-one' />
                                     </Tooltip>
-                                    <Typography className='counts'>{topic.likes}</Typography>
+                                    <Typography className='counts'>{topic?.debate?.likes}</Typography>
                                     <Tooltip title='Active Users'>
                                         <GroupIcon className='icon-btn-two'/>
                                     </Tooltip>
-                                    <Typography className='counts'>{topic.usersInFavor.length+topic.usersAgainst.length}</Typography>
+                                    <Typography className='counts'>{topic?.debate?.usersInFavor?.length+topic?.debate?.usersAgainst?.length}</Typography>
+                                    <Button style={{marginTop: "-5px", marginLeft: "30px", color:topic.motion==='favor'? "green": "red", textTransform: "none", border: topic.motion==='favor'?"1px solid green":"1px solid red", borderRadius: "20px"}}>Joined {topic.motion==='favor'? "In Favor": "Against"}</Button>
                                 </Box>
                             </Box>
                         </Grid>
@@ -98,4 +101,4 @@ const Root = styled.div`
 }
 `
 
-export default DebateTopics
+export default ActiveDebateRooms

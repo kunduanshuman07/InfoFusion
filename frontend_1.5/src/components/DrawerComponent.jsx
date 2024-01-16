@@ -139,7 +139,7 @@ const DrawerComponent = () => {
                                 <ListItemText primary={<Typography style={{ fontSize: "12px", textAlign: "right", fontWeight: "bold", }}>Debate Topics</Typography>} />
                             </ListItem>
                             <ListItem
-                                to='/debate/debate-rooms'
+                                to='/debate/active-rooms'
                                 component={NavLink}
 
                                 style={({ isActive }) =>

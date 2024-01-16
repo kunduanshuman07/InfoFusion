@@ -18,62 +18,41 @@ const ConnectNotifications = () => {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
   const [infoBox, setInfoBox] = useState('chat');
-  const [userDetailsArray, setUserDetailsArray] = useState([]);
+  const [allConnections, setAllConnections] = useState([]);
+  const [requestedConnections, setRequestedConnections] = useState([]);
+  const [connectionRequests, setConnectionRequests] = useState([]);
+  const [myConnections, setMyConnections] = useState([]);
   const [messages, setMessages] = useState([]);
   const [notifications, setNotifications] = useState([]);
   const [networkState, setNetworkState] = useState('mine');
 
   const handleSendRequest = async (connectUserId) => {
-    const { data } = await axios.post('http://localhost:3000/user/send-connection-request', { actualUserId: user._id, connectionUserId: connectUserId });
-    const userDetailsPromises = data?.map(user => axios.post(`http://localhost:3000/user/user-details`, { userId: user.userId }));
-    const userDetailsArray = await Promise.all(userDetailsPromises);
-    console.log(userDetailsArray)
-    setUserDetailsArray(userDetailsArray?.map(response => response.data));
+    await axios.post('http://localhost:3000/user/send-connection-request', {actualUserId:user._id, connectionUserId: connectUserId});
     setNetworkState('requested');
   }
   const handleDeleteRequest = async (connectUserId) => {
-    const { data } = await axios.post('http://localhost:3000/user/delete-connection-request', { actualUserId: user._id, connectionUserId: connectUserId })
-    const userDetailsPromises = data?.map(user => axios.post(`http://localhost:3000/user/user-details`, { userId: user.userId }));
-    const userDetailsArray = await Promise.all(userDetailsPromises);
-    console.log(userDetailsArray)
-    setUserDetailsArray(userDetailsArray?.map(response => response.data));
-    setNetworkState('all');
 
   }
   const handleAcceptRequest = async (connectUserId) => {
-    const { data } = await axios.post('http://localhost:3000/user/approve-connection-request', { actualUserId: user._id, connectionUserId: connectUserId })
-    const userDetailsPromises = data?.map(user => axios.post(`http://localhost:3000/user/user-details`, { userId: user.userId }));
-    const userDetailsArray = await Promise.all(userDetailsPromises);
-    console.log(userDetailsArray)
-    setUserDetailsArray(userDetailsArray?.map(response => response.data));
-    setNetworkState('mine');
+    await axios.post('http://localhost:3000/user/approve-connection-request', {actualUserId:user._id, connectionUserId: connectUserId});
+    setNetworkState('mine')
   }
   useEffect(() => {
     const fetchAllNetworkState = async () => {
-      const { data } = await axios.get('http://localhost:3000/user/all-users');
-      console.log(data);
-      setUserDetailsArray(data);
+      const {data} = await axios.post('http://localhost:3000/user/get-if-network', {userId: user._id});
+      setAllConnections(data);
     }
     const fetchMyNetworkState = async () => {
-      const { data } = await axios.post('http://localhost:3000/user/my-connections', { userId: user._id });
-      const userDetailsPromises = data?.map(user => axios.post(`http://localhost:3000/user/user-details`, { userId: user.userId }));
-      const userDetailsArray = await Promise.all(userDetailsPromises);
-      console.log(userDetailsArray)
-      setUserDetailsArray(userDetailsArray?.map(response => response.data));
+      const {data} = await axios.post('http://localhost:3000/user/my-connections', {userId: user._id});
+      setMyConnections(data);
     }
     const fetchRequestedNetworkState = async () => {
-      const { data } = await axios.post('http://localhost:3000/user/requested-connections', { userId: user._id });
-      const userDetailsPromises = data?.map(user => axios.post(`http://localhost:3000/user/user-details`, { userId: user.userId }));
-      const userDetailsArray = await Promise.all(userDetailsPromises);
-      console.log(userDetailsArray)
-      setUserDetailsArray(userDetailsArray?.map(response => response.data));
+     const {data} = await axios.post('http://localhost:3000/user/requested-connections', {userId: user._id});
+     setRequestedConnections(data);
     }
     const fetchRequestNetworkState = async () => {
-      const { data } = await axios.post('http://localhost:3000/user/connection-requests', { userId: user._id });
-      const userDetailsPromises = data?.map(user => axios.post(`http://localhost:3000/user/user-details`, { userId: user.userId }));
-      const userDetailsArray = await Promise.all(userDetailsPromises);
-      console.log(userDetailsArray)
-      setUserDetailsArray(userDetailsArray?.map(response => response.data));
+      const {data} = await axios.post('http://localhost:3000/user/connection-requests', {userId: user._id});
+      setConnectionRequests(data);
     }
     if (networkState === 'all') {
       fetchAllNetworkState();
@@ -141,19 +120,17 @@ const ConnectNotifications = () => {
               <Button className='allc' onClick={() => setNetworkState('requests')} style={{ backgroundColor: networkState === 'requests' && '#d7e7fa' }}>Requests</Button>
               <Button className='allc' onClick={() => setNetworkState('requested')} style={{ backgroundColor: networkState === 'requested' && '#d7e7fa' }}>Requested</Button>
             </Box>
-            {networkState === 'mine' && userDetailsArray.map((user) => (
-              user.connections.map((connection) => (
-                <Box className='my-network-data' key={connection.userId}>
-                  <Avatar src={`http://localhost:3000/userImages/${user.picturePath}`} alt={user.name} onClick={() => navigate(`/profile/${user._id}`)} />
-                  <Box onClick={() => navigate(`/profile/${user._id}`)}>
-                    <Typography className='connections-name'>{user.name}</Typography>
-                    <Typography className='connections-username'>@{user.username}</Typography>
-                  </Box>
-                  <Box className='connection-actions'>
-                    <IconButton><SendIcon style={{ color: '#0072e5' }} /></IconButton>
-                  </Box>
-                </Box>
-              ))
+            {networkState === 'mine' && myConnections.map((users) => (
+              <Box className='my-network-data'>
+              <Avatar src={`http://localhost:3000/userImages/${users?.connectedUser?.picturePath}`} alt={users?.connectedUser?.name} onClick={() => navigate(`/profile/${users?.connectedUser?._id}`)} />
+              <Box onClick={() => navigate(`/profile/${users?.connectedUser?._id}`)}>
+                <Typography className='connections-name'>{users?.connectedUser?.name}</Typography>
+                <Typography className='connections-username'>@{users?.connectedUser?.username}</Typography>
+              </Box>
+              <Box className='connection-actions'>
+                <IconButton><SendIcon style={{ color: '#0072e5' }} /></IconButton>
+              </Box>
+            </Box>
             ))}
             {networkState === 'all' &&
               <>
@@ -170,17 +147,17 @@ const ConnectNotifications = () => {
                         </InputAdornment>
                       )
                     }} /></Box>
-                {userDetailsArray.map((users) => (
-                  users._id !== user._id &&
+                {allConnections?.map((users) => (
+                  users?.User?._id !== user?._id &&
                   <Box className='all-network-data'>
-                    <Avatar src={`http://localhost:3000/userImages/${users.picturePath}`} alt={users.name} onClick={() => navigate(`/profile/${users._id}`)} />
-                    <Box onClick={() => navigate(`/profile/${users._id}`)}>
-                      <Typography className='connections-name'>{users.name}</Typography>
-                      <Typography className='connections-username'>@{users.username}</Typography>
+                    <Avatar src={`http://localhost:3000/userImages/${users?.User?.picturePath}`} alt={users?.User?.name} onClick={() => navigate(`/profile/${users._id}`)} />
+                    <Box onClick={() => navigate(`/profile/${users?.User?._id}`)}>
+                      <Typography className='connections-name'>{users?.User?.name}</Typography>
+                      <Typography className='connections-username'>@{users?.User?.username}</Typography>
 
                     </Box>
                     <Box className='connection-actions'>
-                      <IconButton onClick={() => handleSendRequest(users._id)}><PersonAddIcon style={{ color: '#0072e5' }} /></IconButton>
+                      {users?.isConnection===false? <IconButton onClick={() => handleSendRequest(users?.User._id)}><PersonAddIcon style={{ color: '#0072e5' }} /></IconButton>: <IconButton><PeopleIcon style={{ color: '#0072e5' }} /></IconButton>}
                     </Box>
                   </Box>
                 ))}
@@ -188,29 +165,29 @@ const ConnectNotifications = () => {
 
             }
             {networkState === 'requested' &&
-              userDetailsArray.length === 0 ? <Typography>No Connection Requests sent!</Typography> : userDetailsArray.map((user => (
+              requestedConnections.length === 0 ? <Typography>No Connection Requests sent!</Typography> : requestedConnections.map((user => (
                 <Box className='requested-network-data'>
-                  <Avatar src={`http://localhost:3000/userImages/${user.picturePath}`} alt={user.name} onClick={() => navigate(`/profile/${user._id}`)} />
-                  <Box onClick={() => navigate(`/profile/${user._id}`)}>
-                    <Typography className='connections-name'>{user.name}</Typography>
-                    <Typography className='connections-username'>@{user.username}</Typography>
+                  <Avatar src={`http://localhost:3000/userImages/${user?.connectedUser?.picturePath}`} alt={user?.connectedUser?.name} onClick={() => navigate(`/profile/${user?.connectedUser?._id}`)} />
+                  <Box onClick={() => navigate(`/profile/${user?.connectedUser?._id}`)}>
+                    <Typography className='connections-name'>{user?.connectedUser?.name}</Typography>
+                    <Typography className='connections-username'>@{user?.connectedUser?.username}</Typography>
 
                   </Box>
                 </Box>
               )))
             }
             {networkState === 'requests' &&
-              userDetailsArray.map((user) => (
+              connectionRequests.map((user) => (
                 <Box className='requested-network-data'>
-                  <Avatar src={`http://localhost:3000/userImages/${user.picturePath}`} alt={user.name} onClick={() => navigate(`/profile/${user._id}`)} />
-                  <Box onClick={() => navigate(`/profile/${user._id}`)}>
-                    <Typography className='connections-name'>{user.name}</Typography>
-                    <Typography className='connections-username'>@{user.username}</Typography>
+                  <Avatar src={`http://localhost:3000/userImages/${user?.connectedUser?.picturePath}`} alt={user?.connectedUser?.name} onClick={() => navigate(`/profile/${user?.connectedUser?._id}`)} />
+                  <Box onClick={() => navigate(`/profile/${user?.connectedUser?._id}`)}>
+                    <Typography className='connections-name'>{user?.connectedUser?.name}</Typography>
+                    <Typography className='connections-username'>@{user?.connectedUser?.username}</Typography>
 
                   </Box>
                   <Box className='connection-actions'>
-                    <IconButton onClick={() => handleAcceptRequest(user._id)}><HowToRegIcon style={{ color: '#0072e5' }} /></IconButton>
-                    <IconButton onClick={() => handleDeleteRequest(user._id)}><DeleteIcon style={{ color: '#0072e5' }} /></IconButton>
+                    <IconButton onClick={() => handleAcceptRequest(user?.connectedUser?._id)}><HowToRegIcon style={{ color: '#0072e5' }} /></IconButton>
+                    <IconButton onClick={() => handleDeleteRequest(user?.connectedUser?._id)}><DeleteIcon style={{ color: '#0072e5' }} /></IconButton>
                   </Box>
                 </Box>
               ))

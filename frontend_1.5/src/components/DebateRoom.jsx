@@ -66,13 +66,13 @@ const DebateRoom = () => {
                                 <IconButton>
                                     <HowToRegIcon style={{ color: "#01781b" }} />
                                 </IconButton>
-                                <Typography className='pro-con-text'>4 In Favor</Typography>
+                                <Typography className='pro-con-text'>{debate?.usersInFavor?.length} In Favor</Typography>
                             </Box>
                             <Box className='con'>
                                 <IconButton>
                                     <WrongLocationIcon style={{ color: "#96050c" }} />
                                 </IconButton>
-                                <Typography className='pro-con-text'>6 Against</Typography>
+                                <Typography className='pro-con-text'>{debate?.usersAgainst?.length} Against</Typography>
                             </Box>
                         </Box>
                     </Box>
@@ -81,16 +81,16 @@ const DebateRoom = () => {
                             <IconButton>
                                 <RecommendIcon style={{ fontSize: "30px", color: "#0072e5" }} />
                             </IconButton>
-                            <Typography className='detail-text'><span style={{ fontWeight: "bold" }}>700</span> Likes</Typography>
+                            <Typography className='detail-text'><span style={{ fontWeight: "bold" }}>{debate?.likes}</span> Likes</Typography>
                         </Box>
                         <Box className='details'>
                             <IconButton>
                                 <SurroundSoundIcon style={{ fontSize: "30px", color: "#01264a" }} />
                             </IconButton>
-                            <Typography className='detail-text'><span style={{ fontWeight: "bold" }}>10</span> Iterations</Typography>
+                            <Typography className='detail-text'><span style={{ fontWeight: "bold" }}>{debate?.usersInFavor?.length+debate?.usersAgainst?.length}</span> Debatee</Typography>
                         </Box>
                         <Box className='details'>
-                            <Rating value={4} size='medium' style={{ marginTop: "10px", marginLeft: "18px" }} readOnly />
+                            <Rating value={debate?.rating} size='medium' style={{ marginTop: "10px", marginLeft: "8px" }} readOnly />
                         </Box>
                     </Box>
                 </Box>

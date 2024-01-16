@@ -127,3 +127,20 @@ export const getAllPinnedStatements = async (req, res) => {
 export const upvoteStatement = async (req, res) => {
 
 }
+
+
+export const getAllActiveDebates = async (req,res) => {
+    const {userId} = req.body;
+    try {
+        const user = await User.findById(userId);
+        let activeDebates = [];
+        await Promise.all(user.debate?.map(async (statement) => {
+            const debate = await Debate.findById(statement.debateId);
+            debate.status==='Active' && activeDebates.push({debate: debate, motion: statement.debateType});
+        }));
+        res.status(200).send(activeDebates);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}

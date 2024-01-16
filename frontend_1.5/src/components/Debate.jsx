@@ -75,7 +75,7 @@ const Debate = ({ motion, setMotion, onCloseModal, debate }) => {
               <Box className='header-container'>
                 <Box className='header-elements'>
                   <Typography className='header-text'>{debate.debateTitle}</Typography>
-                  <Button startIcon={<GroupIcon />} className='user-btn'>72 Active Debaters</Button>
+                  <Button startIcon={<GroupIcon />} className='user-btn'>{debate?.usersInFavor?.length+debate?.usersAgainst?.length} Active Debaters</Button>
                 </Box>
                 <Box className='user-btn-box'>
 
@@ -228,9 +228,17 @@ const Root = styled.div`
   }
   .favor-statements{
     display: flex;
+    border: 2px solid #d7e7fa;
+    padding: 10px;
+    border-radius: 20px;
+    margin: 10px 5px 0px 5px;
   }
   .against-statements{
     display: flex;
+    border: 2px solid #d7e7fa;
+    padding: 10px;
+    border-radius: 20px;
+    margin: 10px 5px 0px 5px;
   }
   .stat-text{
     color: #444444;
