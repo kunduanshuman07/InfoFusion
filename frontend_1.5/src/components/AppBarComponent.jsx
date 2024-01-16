@@ -33,7 +33,7 @@ export const AppBarComponent = ({ comp }) => {
                 <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, backgroundColor: "white", color: "#086D67" }}>
                     <Container maxWidth="xl">
                         <Toolbar disableGutters>
-                            <img alt="InfoFusion" src={Logo} width={70} height={60} onClick={() => navigate('/playground')}
+                            <img alt="InfoFusion" src={Logo} width={70} height={60} onClick={() => navigate('/getting-started')}
                                 className='logo-style' />
                             <Box style={{ display: "flex", flexDirection: "column" }}>
                                 <Typography className='logo-text'>INFOFUSION</Typography>
