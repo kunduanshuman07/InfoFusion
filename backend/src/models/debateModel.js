@@ -55,6 +55,10 @@ const debateSchema = new mongoose.Schema({
     rating: {
         type: Number,
         default: 5,
+    },
+    status: {
+        type: String,
+        default: "Active"
     }
     
 }, {

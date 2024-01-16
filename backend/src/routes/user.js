@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { updateProfile, getOverallLeaderboard, userDashboard, deleteAccount, userDetails, uploadUserImage, upload, getUserScorecards, getAllUsers, getMyConnections, getRequestedConnections, getConnectionRequests, sendConnectionRequests, approveConnectionRequests, deleteConnectionRequests, } from '../controllers/userController.js';
+import { updateProfile, getOverallLeaderboard, userDashboard, deleteAccount, userDetails, uploadUserImage, upload, getUserScorecards, getAllUsers, getMyConnections, getRequestedConnections, getConnectionRequests, sendConnectionRequests, approveConnectionRequests, deleteConnectionRequests, getIFNetwork, } from '../controllers/userController.js';
 import { verifyToken } from '../middlewares/authMiddleware.js';
 const router = Router();
 
@@ -10,6 +10,7 @@ router.get('/overall-leaderboard', getOverallLeaderboard);
 router.post('/user-dashboard', userDashboard);
 router.post('/user-details', userDetails);
 router.get('/all-users', getAllUsers);
+router.post('/get-if-network', getIFNetwork);
 router.post('/my-connections',getMyConnections)
 router.post('/requested-connections',getRequestedConnections)
 router.post('/connection-requests',getConnectionRequests)

@@ -10,6 +10,7 @@ import Leaderboard from "../components/LeaderBoard"
 import DebateRoom from '../components/DebateRoom'
 import DebateTopics from '../components/DebateTopics'
 import QuizLandingPage from '../pages/QuizLandingPage'
+import ActiveDebateRooms from '../components/ActiveDebateRooms'
 const Layout = () => {
 
   return (
@@ -23,6 +24,7 @@ const Layout = () => {
             <Route path='/leaderboard' element ={<Leaderboard />}/>
             <Route path='/quiz/scorecards' element ={<Scorecards />}/>
             <Route path='/debate/debate-topics' element={<DebateTopics />} />
+            <Route path='/debate/active-rooms' element={<ActiveDebateRooms />} />
             <Route path='/debate/debate-topics/:debateId' element={<DebateRoom />} />
             <Route path='/settings' element={<SettingsPage />} />
             <Route path='/help-support' element={<HelpSupport />} />

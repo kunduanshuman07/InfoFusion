@@ -40,7 +40,7 @@ export const updateProfile = async (req, res) => {
     }
 };
 export const uploadUserImage = async (req, res) => {
-    const {id} = req.body;
+    const { id } = req.body;
     const Img = req.file;
     const picturePath = Img.filename;
     try {
@@ -94,7 +94,7 @@ export const userDetails = async (req, res) => {
     }
 }
 
-export const getAllUsers = async(req, res) => {
+export const getAllUsers = async (req, res) => {
     try {
         const allUsers = await User.find();
         res.status(200).send(allUsers);
@@ -104,34 +104,72 @@ export const getAllUsers = async(req, res) => {
     }
 }
 
-export const getMyConnections = async(req,res) => {
-    const {userId} = req.body;
+export const getIFNetwork = async (req, res) => {
+    const { userId } = req.body;
+    console.log(userId);
+    try {
+        const allUsers = await User.find();
+        const ifNetwork = allUsers?.map(user => ({
+                User: user,
+                isConnection: user?.connections?.map(instance => {
+                    if(instance.userId.toString()===userId){
+                        return true
+                    }
+                    else{
+                        return false
+                    }
+                }),
+            }));
+        res.status(200).send(ifNetwork);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
+
+export const getMyConnections = async (req, res) => {
+    const { userId } = req.body;
     try {
         const user = await User.findById(userId);
         const userConnections = user.connections;
-        res.status(200).send(userConnections);
+        let myConnections = [];
+        await Promise.all(userConnections.map(async (users) => {
+            const connectionuser = await User.findById(users.userId);
+            myConnections.push({ connectedUser: connectionuser });
+        }));
+        res.status(200).send(myConnections);
     } catch (error) {
         console.log(error);
         res.status(500).send(error);
     }
 }
-export const getRequestedConnections = async(req,res) => {
-    const {userId} = req.body;
+export const getRequestedConnections = async (req, res) => {
+    const { userId } = req.body;
     try {
         const user = await User.findById(userId);
         const userConnections = user.requestedConnections;
-        res.status(200).send(userConnections);
+        let requestedConnections = [];
+        await Promise.all(userConnections.map(async (users) => {
+            const connectionuser = await User.findById(users.userId);
+            requestedConnections.push({ connectedUser: connectionuser });
+        }));
+        res.status(200).send(requestedConnections);
     } catch (error) {
         console.log(error);
         res.status(500).send(error);
     }
 }
-export const getConnectionRequests = async(req,res) => {
-    const {userId} = req.body;
+export const getConnectionRequests = async (req, res) => {
+    const { userId } = req.body;
     try {
         const user = await User.findById(userId);
         const userConnections = user.connectionRequests;
-        res.status(200).send(userConnections);
+        let myConnections = [];
+        await Promise.all(userConnections.map(async (users) => {
+            const connectionuser = await User.findById(users.userId);
+            myConnections.push({ connectedUser: connectionuser });
+        }));
+        res.status(200).send(myConnections);
     } catch (error) {
         console.log(error);
         res.status(500).send(error);
@@ -282,15 +320,15 @@ export const deleteAccount = async (req, res) => {
     }
 }
 
-export const getUserScorecards = async(req,res) => {
-    const {userId} = req.body;
+export const getUserScorecards = async (req, res) => {
+    const { userId } = req.body;
     try {
         const user = await User.findById(userId);
-        if(!user){
+        if (!user) {
             res.status(400).send("User not found");
         }
         const scorecardData = [];
-        user.quizzes.forEach((quiz)=>{
+        user.quizzes.forEach((quiz) => {
             scorecardData.push(quiz);
         })
         res.status(200).send(scorecardData);

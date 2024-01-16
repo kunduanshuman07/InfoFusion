@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { addDebateTopics, getAllDebates, getAllPinnedStatements, getDebate, joinDebateAgainst, joinDebateInFavor, pinStatementAgainst, pinStatementInFavor} from '../controllers/debateController.js';
+import { addDebateTopics, getAllActiveDebates, getAllDebates, getAllPinnedStatements, getDebate, joinDebateAgainst, joinDebateInFavor, pinStatementAgainst, pinStatementInFavor} from '../controllers/debateController.js';
 const router = Router();
 
 router.post('/add-debate-topic', addDebateTopics);
@@ -10,4 +10,5 @@ router.post('/join-debate-against', joinDebateAgainst);
 router.post('/pinstatement-infavor', pinStatementInFavor);
 router.post('/pinstatement-against', pinStatementAgainst);
 router.post('/getall-pinned-statements', getAllPinnedStatements);
+router.post('/get-active-debates', getAllActiveDebates);
 export default router;
