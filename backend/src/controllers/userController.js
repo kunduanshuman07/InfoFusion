@@ -104,28 +104,29 @@ export const getAllUsers = async (req, res) => {
     }
 }
 
+
 export const getIFNetwork = async (req, res) => {
     const { userId } = req.body;
     console.log(userId);
     try {
         const allUsers = await User.find();
         const ifNetwork = allUsers?.map(user => ({
-                User: user,
-                isConnection: user?.connections?.map(instance => {
-                    if(instance.userId.toString()===userId){
-                        return true
-                    }
-                    else{
-                        return false
-                    }
-                }),
-            }));
-        res.status(200).send(ifNetwork);
+            User: user,
+            isConnection: user?.connections?.some(instance => instance.userId.toString() === userId),
+        }));
+
+        const taggedNetwork = ifNetwork.map(item => ({
+            ...item,
+            tag: item.isConnection ? 'Connection' : 'Not Connected',
+        }));
+
+        res.status(200).send(taggedNetwork);
     } catch (error) {
         console.log(error);
         res.status(500).send(error);
     }
 }
+
 
 export const getMyConnections = async (req, res) => {
     const { userId } = req.body;
@@ -332,6 +333,97 @@ export const getUserScorecards = async (req, res) => {
             scorecardData.push(quiz);
         })
         res.status(200).send(scorecardData);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
+
+export const fetchMessages = async (req, res) => {
+    const { userId, secondUserId } = req.body;
+    console.log(req.body);
+    try {
+        const user = await User.findById(userId);
+        const secondUser = await User.findById(secondUserId);
+
+        const myMessages = user.messages
+            .filter(message => String(message.userId) === String(secondUserId))
+            .map(message => ({ type: 'yourmessage', message }));
+
+        const yourMessages = secondUser.messages
+            .filter(message => String(message.userId) === String(userId))
+            .map(message => ({ type: 'mymessage', message }));
+
+        const allMessages = [...myMessages, ...yourMessages]
+            .sort((b, a) => b.message.messageTime - a.message.messageTime);
+
+        res.status(200).send(allMessages);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
+
+
+export const fetchAllMessages = async (req, res) => {
+    const { userId } = req.body;
+    try {
+        const user = await User.findById(userId);
+        const uniqueUserIds = new Set();
+        const allMessagedUsers = [];
+        user.messages?.forEach((message) => {
+            const secondUserId = String(message.userId);
+            uniqueUserIds.add(secondUserId);
+        });
+        for (const secondUserId of uniqueUserIds) {
+            const secondUser = await User.findById(secondUserId);
+            allMessagedUsers.push({ secondUser });
+        }
+
+        res.status(200).send(allMessagedUsers);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+};
+
+
+
+export const messageSeenUpdate = async (req, res) => {
+    const { messageId, userId } = req.body;
+    try {
+        const user = await User.findById(userId);
+        const messageToUpdate = user.messages.find((message) => message._id.toString() === messageId);
+        messageToUpdate.messageType = 'read';
+        await user.save();
+        res.status(200).send(user);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
+
+export const sendMessage = async (req, res) => {
+    const { userId, secondUserId, message, messageTime } = req.body;
+    try {
+        const firstUser = await User.findById(userId);
+        const secondUser = await User.findById(secondUserId);
+        secondUser.messages.push({ userId: userId, messageText: message, messageTime: messageTime, messageType: "unread" });
+        await secondUser.save();
+        res.status(200).send({ firstUser, secondUser });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
+
+export const fetchNotifications = async(req,res) => {
+    const {userId} = req.body;
+    try {
+        const user = await User.findById(userId);
+        const userNotifications = user.notifications;
+        userNotifications.sort((a, b) => b.notificationTime - a.notificationTime);
+        res.status(200).send(userNotifications);
     } catch (error) {
         console.log(error);
         res.status(500).send(error);
