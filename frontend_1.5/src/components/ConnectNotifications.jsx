@@ -14,44 +14,100 @@ import SearchIcon from "@mui/icons-material/Search";
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
+import CloseIcon from "@mui/icons-material/Close";
+import moment from 'moment';
 const ConnectNotifications = () => {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
+  const [messageSecondUser, setMessageSecondUser] = useState();
+  const [conversations, setConversations] = useState([]);
+  const [allMessages, setAllMessages] = useState([]);
   const [infoBox, setInfoBox] = useState('chat');
   const [allConnections, setAllConnections] = useState([]);
   const [requestedConnections, setRequestedConnections] = useState([]);
   const [connectionRequests, setConnectionRequests] = useState([]);
   const [myConnections, setMyConnections] = useState([]);
-  const [messages, setMessages] = useState([]);
-  const [notifications, setNotifications] = useState([]);
   const [networkState, setNetworkState] = useState('mine');
+  const [messageModel, setMessageModel] = useState(false);
+  const [currentMessage, setCurrentMessage] = useState('');
+  const handleSendMessageFromNetwork = (secondUser) => {
+    setMessageSecondUser(secondUser);
+    setMessageModel(true);
+    setInfoBox('chat');
+  }
 
+  const handleSendMessage = async (secondUser) => {
+    const messageData = {
+      userId: user._id,
+      secondUserId: secondUser._id,
+      message: currentMessage,
+      messageTime: moment(new Date()).toISOString()
+    }
+    await axios.post('http://localhost:3000/user/send-message', messageData);
+    const { data } = await axios.post('http://localhost:3000/user/fetch-messages', { userId: user._id, secondUserId: messageSecondUser._id });
+    setConversations(data);
+  }
+
+  const handleCloseMessageModel = () => {
+    setMessageModel(false);
+  }
   const handleSendRequest = async (connectUserId) => {
-    await axios.post('http://localhost:3000/user/send-connection-request', {actualUserId:user._id, connectionUserId: connectUserId});
+    await axios.post('http://localhost:3000/user/send-connection-request', { actualUserId: user._id, connectionUserId: connectUserId });
     setNetworkState('requested');
   }
   const handleDeleteRequest = async (connectUserId) => {
 
   }
   const handleAcceptRequest = async (connectUserId) => {
-    await axios.post('http://localhost:3000/user/approve-connection-request', {actualUserId:user._id, connectionUserId: connectUserId});
+    await axios.post('http://localhost:3000/user/approve-connection-request', { actualUserId: user._id, connectionUserId: connectUserId });
     setNetworkState('mine')
   }
   useEffect(() => {
+    if (infoBox === 'chat') {
+      const fetchAllMessages = async () => {
+        const { data } = await axios.post('http://localhost:3000/user/fetch-all-messages', { userId: user._id });
+        setAllMessages(data);
+      }
+      fetchAllMessages();
+    }
+  }, [infoBox])
+  useEffect(() => {
+    if (messageModel === true && infoBox === 'chat') {
+      const fetchMessages = async () => {
+        const { data } = await axios.post('http://localhost:3000/user/fetch-messages', { userId: user._id, secondUserId: messageSecondUser._id });
+        setConversations(data);
+      }
+      fetchMessages();
+    }
+  }, [messageModel]);
+
+  useEffect(() => {
     const fetchAllNetworkState = async () => {
-      const {data} = await axios.post('http://localhost:3000/user/get-if-network', {userId: user._id});
+      const { data } = await axios.post('http://localhost:3000/user/get-if-network', { userId: user._id });
       setAllConnections(data);
+      setMyConnections([]);
+      setRequestedConnections([]);
+      setConnectionRequests([]);
     }
     const fetchMyNetworkState = async () => {
-      const {data} = await axios.post('http://localhost:3000/user/my-connections', {userId: user._id});
+      const { data } = await axios.post('http://localhost:3000/user/my-connections', { userId: user._id });
+      setAllConnections([]);
       setMyConnections(data);
+      setRequestedConnections([]);
+      setConnectionRequests([]);
     }
     const fetchRequestedNetworkState = async () => {
-     const {data} = await axios.post('http://localhost:3000/user/requested-connections', {userId: user._id});
-     setRequestedConnections(data);
+      const { data } = await axios.post('http://localhost:3000/user/requested-connections', { userId: user._id });
+      setAllConnections([]);
+      setMyConnections([]);
+      setRequestedConnections(data);
+      setConnectionRequests([]);
     }
     const fetchRequestNetworkState = async () => {
-      const {data} = await axios.post('http://localhost:3000/user/connection-requests', {userId: user._id});
+      const { data } = await axios.post('http://localhost:3000/user/connection-requests', { userId: user._id });
+      setAllConnections([]);
+      setMyConnections([]);
+      setRequestedConnections([]);
       setConnectionRequests(data);
     }
     if (networkState === 'all') {
@@ -67,6 +123,13 @@ const ConnectNotifications = () => {
       fetchRequestNetworkState();
     }
   }, [networkState]);
+
+  const formatDate = (originalDate) => {
+    const parsedDate = moment(originalDate);
+    const formattedDate = parsedDate.format('DD-MM-YY HH:mm:ss');
+    return formattedDate;
+  }
+
   return (
     <Root>
       <Box className='container'>
@@ -77,20 +140,54 @@ const ConnectNotifications = () => {
         </Box>
         {infoBox === 'chat' &&
           <>
-            <Box className='chat'>
-              <Avatar src={OpinionImg} alt='' />
-              <Box className='chat-header'>
-                <Typography className='chat-name'>Anshuman Kundu</Typography>
-                <Typography className='chat-overview'>Hi Anshuman How are you?</Typography>
+            {messageModel ? <Box className='message-container'>
+
+              <Box className='header'>
+                <Avatar src={`http://localhost:3000/userImages/${messageSecondUser?.picturePath}`} alt={messageSecondUser?.name} />
+                <Typography className='header-text'>{messageSecondUser?.name}</Typography>
+                <IconButton className='close-btn' onClick={handleCloseMessageModel}>
+                  <CloseIcon />
+                </IconButton>
+              </Box>
+              <Box className='messages'>
+                {conversations?.map((messages) => (
+                  messages.type === 'mymessage' ?
+                    <Box className='my-message'>
+                      <Typography className='my-message-text'>{messages?.message?.messageText}</Typography>
+                      <Typography className='my-timer'>{formatDate(messages?.message?.messageTime)}</Typography>
+                    </Box> :
+                    <Box className='your-message'>
+                      <Typography className='your-message-text'>{messages?.message?.messageText}</Typography>
+                      <Typography className='your-timer'>{formatDate(messages?.message?.messageTime)}</Typography>
+                    </Box>
+
+                ))}
+              </Box>
+              <Box className='text-field'>
+                <TextField placeholder='Message' size='small' fullWidth InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <Button className='send-btn' onClick={() => handleSendMessage(messageSecondUser)}>Send</Button>
+                    </InputAdornment>
+                  )
+                }}
+                  onChange={(e) => setCurrentMessage(e.target.value)}
+                />
               </Box>
             </Box>
-            <Box className='chat'>
-              <Avatar src={OpinionImg} alt='' />
-              <Box className='chat-header'>
-                <Typography className='chat-name'>Anshuman Kundu</Typography>
-                <Typography className='chat-overview'>Hi Anshuman How are you?</Typography>
-              </Box>
-            </Box>
+              :
+              <>
+                {allMessages?.map(users => (
+                  <Box className='chat' onClick={() => handleSendMessageFromNetwork(users?.secondUser)}>
+                    <Avatar src={`http://localhost:3000/userImages/${users?.secondUser?.picturePath}`} alt={users?.secondUser?.name} />
+                    <Box className='chat-header'>
+                      <Typography className='chat-name'>{users?.secondUser?.name}</Typography>
+                      <Typography className='chat-overview'>Hi Anshuman How are you?</Typography>
+                    </Box>
+                  </Box>
+                ))}
+              </>
+            }
           </>
         }
         {infoBox === 'notifications' &&
@@ -122,15 +219,15 @@ const ConnectNotifications = () => {
             </Box>
             {networkState === 'mine' && myConnections.map((users) => (
               <Box className='my-network-data'>
-              <Avatar src={`http://localhost:3000/userImages/${users?.connectedUser?.picturePath}`} alt={users?.connectedUser?.name} onClick={() => navigate(`/profile/${users?.connectedUser?._id}`)} />
-              <Box onClick={() => navigate(`/profile/${users?.connectedUser?._id}`)}>
-                <Typography className='connections-name'>{users?.connectedUser?.name}</Typography>
-                <Typography className='connections-username'>@{users?.connectedUser?.username}</Typography>
+                <Avatar src={`http://localhost:3000/userImages/${users?.connectedUser?.picturePath}`} alt={users?.connectedUser?.name} onClick={() => navigate(`/profile/${users?.connectedUser?._id}`)} />
+                <Box onClick={() => navigate(`/profile/${users?.connectedUser?._id}`)}>
+                  <Typography className='connections-name'>{users?.connectedUser?.name}</Typography>
+                  <Typography className='connections-username'>@{users?.connectedUser?.username}</Typography>
+                </Box>
+                <Box className='connection-actions'>
+                  <IconButton><SendIcon style={{ color: '#0072e5' }} onClick={() => handleSendMessageFromNetwork(users.connectedUser)} /></IconButton>
+                </Box>
               </Box>
-              <Box className='connection-actions'>
-                <IconButton><SendIcon style={{ color: '#0072e5' }} /></IconButton>
-              </Box>
-            </Box>
             ))}
             {networkState === 'all' &&
               <>
@@ -157,7 +254,7 @@ const ConnectNotifications = () => {
 
                     </Box>
                     <Box className='connection-actions'>
-                      {users?.isConnection===false? <IconButton onClick={() => handleSendRequest(users?.User._id)}><PersonAddIcon style={{ color: '#0072e5' }} /></IconButton>: <IconButton><PeopleIcon style={{ color: '#0072e5' }} /></IconButton>}
+                      {users?.isConnection === false ? <IconButton onClick={() => handleSendRequest(users?.User._id)}><PersonAddIcon style={{ color: '#0072e5' }} /></IconButton> : <IconButton><PeopleIcon style={{ color: '#0072e5' }} /></IconButton>}
                     </Box>
                   </Box>
                 ))}
@@ -165,7 +262,7 @@ const ConnectNotifications = () => {
 
             }
             {networkState === 'requested' &&
-              requestedConnections.length === 0 ? <Typography>No Connection Requests sent!</Typography> : requestedConnections.map((user => (
+              requestedConnections.length === 0 ? <Typography className='no-data-text'>No sent requests!</Typography> : requestedConnections.map((user => (
                 <Box className='requested-network-data'>
                   <Avatar src={`http://localhost:3000/userImages/${user?.connectedUser?.picturePath}`} alt={user?.connectedUser?.name} onClick={() => navigate(`/profile/${user?.connectedUser?._id}`)} />
                   <Box onClick={() => navigate(`/profile/${user?.connectedUser?._id}`)}>
@@ -177,6 +274,7 @@ const ConnectNotifications = () => {
               )))
             }
             {networkState === 'requests' &&
+              connectionRequests.length === 0 ? <Typography className='no-data-text'>No requests for approval!</Typography> :
               connectionRequests.map((user) => (
                 <Box className='requested-network-data'>
                   <Avatar src={`http://localhost:3000/userImages/${user?.connectedUser?.picturePath}`} alt={user?.connectedUser?.name} onClick={() => navigate(`/profile/${user?.connectedUser?._id}`)} />
@@ -202,10 +300,11 @@ const ConnectNotifications = () => {
 const Root = styled.div`
   .container{
     display: flex;
-    width: 500px;
+    min-width: 480px;
+    max-width: 480px;
     flex-direction: column;
     margin-top: 80px;
-    margin-left: 60px;
+    margin-left: 50px;
     background-color: white;
     box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
     border: 1px solid #d7e7fa;
@@ -362,6 +461,95 @@ const Root = styled.div`
     display: flex;
     margin-left: auto;
   }
+  .no-data-text{
+    color: #0072e5;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+  }
+  .message-container{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        min-height: 400px;
+        max-height: 400px;
+        margin-top: 10px;
+        margin-left: 0px;
+        box-shadow: none;
+  }
+  .header{
+    display: flex;
+    border-bottom: 2px solid  #d7e7fa;
+    padding-bottom: 10px;
+}
+.close-btn{
+    margin-left: auto;
+}
+.header-text{
+    margin: auto 10px;
+    color: #444444;
+    font-weight: bold;
+}
+.messages{
+    max-height: 290px;
+    overflow-y: auto;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+}
+.text-field{
+    position: fixed;
+    margin-top: 360px;
+    width: 460px;
+}
+.my-message{
+    margin-left: auto; 
+    max-width: 280px;
+    display: flex;
+    flex-direction: column;
+}
+.your-message{
+    margin-right: auto;
+    max-width: 280px;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+}
+.my-message-text{
+    background-color: #01264a;
+    color: white;
+    padding: 3px 10px;
+    border-radius: 10px;
+    word-wrap: break-word;
+}
+.your-message-text{
+    background-color: #0072e5;
+    color: white;
+    padding: 3px 10px;
+    border-radius: 10px;
+    word-wrap: break-word;
+}
+.my-timer{
+    margin-left: auto;
+    margin-top:5px;
+    color: #A5A5A5;
+    font-weight: bold;
+    font-size: 10px;
+    margin-right: 5px;
+}
+.your-timer{
+    margin-right: auto;
+    color: #A5A5A5;
+    margin-top:5px;
+    font-weight: bold;
+    font-size: 10px;
+    margin-left: 5px;
+}
+.send-btn{
+  font-weight: bold;
+  text-transform: none;
+}
 `
 
 
