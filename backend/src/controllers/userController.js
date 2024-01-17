@@ -355,7 +355,7 @@ export const fetchMessages = async (req, res) => {
             .map(message => ({ type: 'mymessage', message }));
 
         const allMessages = [...myMessages, ...yourMessages]
-            .sort((a, b) => b.message.messageTime - a.message.messageTime);
+            .sort((b, a) => b.message.messageTime - a.message.messageTime);
 
         res.status(200).send(allMessages);
     } catch (error) {
@@ -411,6 +411,19 @@ export const sendMessage = async (req, res) => {
         secondUser.messages.push({ userId: userId, messageText: message, messageTime: messageTime, messageType: "unread" });
         await secondUser.save();
         res.status(200).send({ firstUser, secondUser });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
+
+export const fetchNotifications = async(req,res) => {
+    const {userId} = req.body;
+    try {
+        const user = await User.findById(userId);
+        const userNotifications = user.notifications;
+        userNotifications.sort((a, b) => b.notificationTime - a.notificationTime);
+        res.status(200).send(userNotifications);
     } catch (error) {
         console.log(error);
         res.status(500).send(error);

@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
-import OpinionImg from "../assets/Opinion.jpg";
 import LanIcon from '@mui/icons-material/Lan';
 import { useNavigate } from 'react-router-dom';
 import Diversity2Icon from '@mui/icons-material/Diversity2';
@@ -22,6 +21,7 @@ const ConnectNotifications = () => {
   const [messageSecondUser, setMessageSecondUser] = useState();
   const [conversations, setConversations] = useState([]);
   const [allMessages, setAllMessages] = useState([]);
+  const [allNotifications, setAllNotifications] = useState([]);
   const [infoBox, setInfoBox] = useState('chat');
   const [allConnections, setAllConnections] = useState([]);
   const [requestedConnections, setRequestedConnections] = useState([]);
@@ -123,7 +123,15 @@ const ConnectNotifications = () => {
       fetchRequestNetworkState();
     }
   }, [networkState]);
-
+  useEffect(() => {
+    if (infoBox === 'notifications') {
+      const fetchNotifications = async () => {
+        const { data } = await axios.post('http://localhost:3000/user/fetch-notifications', { userId: user._id });
+        setAllNotifications(data);
+      }
+      fetchNotifications();
+    }
+  }, [infoBox])
   const formatDate = (originalDate) => {
     const parsedDate = moment(originalDate);
     const formattedDate = parsedDate.format('DD-MM-YY HH:mm:ss');
@@ -176,7 +184,7 @@ const ConnectNotifications = () => {
               </Box>
             </Box>
               :
-              <>
+              <Box className='chat-container'>
                 {allMessages?.map(users => (
                   <Box className='chat' onClick={() => handleSendMessageFromNetwork(users?.secondUser)}>
                     <Avatar src={`http://localhost:3000/userImages/${users?.secondUser?.picturePath}`} alt={users?.secondUser?.name} />
@@ -186,17 +194,22 @@ const ConnectNotifications = () => {
                     </Box>
                   </Box>
                 ))}
-              </>
+              </Box>
             }
           </>
         }
         {infoBox === 'notifications' &&
-          <Box className='notifications'>
-            <Avatar src={OpinionImg} alt='' />
-            <Box className='notify-box'>
-              <Typography className='notify'>Anshuman Kundu commented on your post</Typography>
-              <Typography className='notify-time'>10 minute ago</Typography>
-            </Box>
+          <Box className='notification-container'>
+            {allNotifications.length===0 && <Typography className='no-data-text'>No notifications to display!</Typography>}
+            {allNotifications?.map((notification) => (
+              <Box className='notifications'>
+                <IconButton style={{ margin: "-6px 0px" }}><CircleNotificationsIcon style={{ color: "#0072e5", fontSize: "35px" }} /></IconButton>
+                <Box className='notify-box'>
+                  <Typography className='notify'>{notification.notificationText}</Typography>
+                  <Typography className='notify-time'>{formatDate(notification.notificationTime)}</Typography>
+                </Box>
+              </Box>
+            ))}
           </Box>
         }
         {infoBox === 'network' &&
@@ -311,6 +324,7 @@ const Root = styled.div`
     padding: 10px;
     border-radius: 20px;
     cursor:pointer;
+    position: fixed;
   }
   .app-bar{
     display: flex;
@@ -342,6 +356,11 @@ const Root = styled.div`
     border-radius: 10px;
     padding: 0px 10px; 
   }
+  .chat-container{
+    height:400px;
+    max-height:400px;
+    overflow-y:auto;
+  }
   .chat{
     display: flex;
     margin-top: 15px;
@@ -357,12 +376,17 @@ const Root = styled.div`
     color: #A5A5A5;
     font-size: 12px;
   }
+  .notification-container{
+    height:400px;
+    max-height:400px;
+    overflow-y:auto;
+  }
   .notifications{
     display: flex;
     margin-top: 15px;
   }
   .notify-box{
-    margin-left: 20px;
+    margin-left: 10px;
   }
   .notify{
     font-weight: bold;

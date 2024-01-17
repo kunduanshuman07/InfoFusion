@@ -1,9 +1,11 @@
 import { Router } from 'express';
-import { createPost, getPosts, upload } from '../controllers/postController.js';
+import { createPost, dislikePost, getPosts, likePost, postcomment, upload } from '../controllers/postController.js';
 
 const router = Router();
 
 router.post('/create-post',upload.single('file'), createPost);
-router.get('/get-posts', getPosts);
-
+router.post('/get-posts', getPosts);
+router.post('/like-post', likePost);
+router.post('/dislike-post', dislikePost);
+router.post('/post-comment', postcomment);
 export default router;

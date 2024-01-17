@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { updateProfile, getOverallLeaderboard, userDashboard, deleteAccount, userDetails, uploadUserImage, upload, getUserScorecards, getAllUsers, getMyConnections, getRequestedConnections, getConnectionRequests, sendConnectionRequests, approveConnectionRequests, deleteConnectionRequests, getIFNetwork, fetchMessages, sendMessage, fetchAllMessages, } from '../controllers/userController.js';
+import { updateProfile, getOverallLeaderboard, userDashboard, deleteAccount, userDetails, uploadUserImage, upload, getUserScorecards, getAllUsers, getMyConnections, getRequestedConnections, getConnectionRequests, sendConnectionRequests, approveConnectionRequests, deleteConnectionRequests, getIFNetwork, fetchMessages, sendMessage, fetchAllMessages, fetchNotifications, } from '../controllers/userController.js';
 import { verifyToken } from '../middlewares/authMiddleware.js';
 const router = Router();
 
@@ -21,5 +21,6 @@ router.post('/user-scorecards', getUserScorecards);
 router.post('/fetch-messages', fetchMessages);
 router.post('/fetch-all-messages', fetchAllMessages);
 router.post('/send-message', sendMessage);
+router.post('/fetch-notifications', fetchNotifications);
 
 export default router;
