@@ -14,6 +14,7 @@ import LinearProgress from '@mui/material/LinearProgress';
 import axios from "axios";
 import { useNavigate } from "react-router-dom"
 import ConfettiComp from "./ConfettiComp"
+import TimerIcon from '@mui/icons-material/Timer';
 const QuizDialog = ({ onCloseModal }) => {
     const navigate = useNavigate();
     const user = JSON.parse(localStorage.getItem("user"));
@@ -27,6 +28,22 @@ const QuizDialog = ({ onCloseModal }) => {
     const [iqr, setIqr] = useState(0);
     const [weightedScore, setWeightedScore] = useState(0);
     const [attemptedQuestions, setAttemptedQuestions] = useState([]);
+    const [timer, setTimer] = useState(60 * 10);
+    const formatTime = (seconds) => {
+        const minutes = Math.floor(seconds / 60);
+        const remainingSeconds = seconds % 60;
+        return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+    };
+    useEffect(() => {
+        const timerInterval = setInterval(() => {
+            setTimer((prevTimer) => (prevTimer > 0 ? prevTimer - 1 : 0));
+            if(timer === 0) {
+                setShowScore(true);
+            }
+        }, 1000);
+        return () => clearInterval(timerInterval);
+        
+    }, [timer]);
     const handleLeaderboard = () => {
         onCloseModal();
         navigate('/playground/quiz/leaderboard')
@@ -83,26 +100,26 @@ const QuizDialog = ({ onCloseModal }) => {
 
     }
     const handleContinue = () => {
-        const skipped = answer===''?true:false;
+        const skipped = answer === '' ? true : false;
         const nextQuestion = currentQuestion + 1;
         const correctOption = questions[currentQuestion].options.find(option => option.isCorrect);
         if (!skipped && correctOption.optionText === answer) {
             const weight = getWeightage(questions[currentQuestion].type);
             setScore(prevScore => prevScore + 1);
             setWeightedScore(prevWeightedScore => prevWeightedScore + weight);
-        } else if(!skipped) {
+        } else if (!skipped) {
             const weight = getWeightage(questions[currentQuestion].type);
             setWeightedScore(prevWeightedScore => prevWeightedScore - weight);
         }
         const attempt = {
             question: questions[currentQuestion].questionText,
-            yourAnswer: !skipped?answer:"",
+            yourAnswer: !skipped ? answer : "",
             correctOption: correctOption.optionText,
             type: questions[currentQuestion].type,
-            points: correctOption.optionText===answer ? 1 : 0,
-          }
+            points: correctOption.optionText === answer ? 1 : 0,
+        }
         setAttemptedQuestions((prevAttempts) => [...prevAttempts, attempt]);
-        if (nextQuestion < questions.length) {
+        if (nextQuestion < questions.length  && timer!==0) {
             setCurrentQuestion(nextQuestion);
             setAnswer('');
         } else {
@@ -136,7 +153,7 @@ const QuizDialog = ({ onCloseModal }) => {
                 }}
             >
                 {!showScore && <Button style={{ backgroundColor: "#0072e5", color: "white", textTransform: "none" }}>Category: {getCategoryLabel(questions[currentQuestion]?.type)}</Button>}
-                <Typography style={{ margin: "auto", fontWeight: "bold", color: "#444444", fontSize: "23px", justifyContent: "center" }}></Typography>
+                {!showScore && <Button startIcon={<TimerIcon/>} style={{marginLeft: "430px", marginRight: "auto", backgroundColor: "White", color: "#444444", fontWeight: "bold", textTransform: "none"}} variant="contained">{formatTime(timer)} Left</Button>}
                 <IconButton onClick={onCloseModal} style={{ backgroundColor: "white", color: "#444444" }} size="small">
                     <CloseIcon />
                 </IconButton>
@@ -148,7 +165,7 @@ const QuizDialog = ({ onCloseModal }) => {
                             <ConfettiComp />
                             <Typography className="greet-text">Congratulations ! You have completed Today's Quiz.</Typography>
                             <Box className='score'>
-                                <Typography className="score-text1">Score : {score}/10</Typography>
+                                <Typography className="score-text1">Score : {score}/20</Typography>
                                 <Typography className="score-text2">Individual Quiz Rating : {iqr}</Typography>
                             </Box>
                             <Box className='footer-btn'>
@@ -181,7 +198,7 @@ const QuizDialog = ({ onCloseModal }) => {
                                 <Button className="skip-btn" onClick={handleSkip}>Skip</Button>
                                 <Box className='bar'>
                                     <LinearProgress variant="determinate" className='progress' color="success" value={progressValue} />
-                                    <Typography className="question-count">Q.{progressValue / 10}/10</Typography>
+                                    <Typography className="question-count">Q.{progressValue / 5}/20</Typography>
                                 </Box>
                                 <Button className="continue-btn" onClick={handleContinue}>Continue</Button>
                             </Box>

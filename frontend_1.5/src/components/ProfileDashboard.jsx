@@ -8,6 +8,7 @@ import { badgeDecider } from '../utils/BadgeDecider';
 import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
 import SettingsIcon from "@mui/icons-material/Settings";
 import SupportIcon from '@mui/icons-material/SupportAgent';
+import InfoIcon from '@mui/icons-material/Info';
 const ProfileDashboard = () => {
     const navigate = useNavigate();
     const { userId } = useParams();
@@ -61,6 +62,10 @@ const ProfileDashboard = () => {
         }
         fetchDashboard();
     }, [userId])
+    const handleLogout = () => {
+        localStorage.clear();
+        navigate('/login');
+    }
     const easyProgress = (easyAnswers / (quizCount * 3)) * 100;
     const mediumProgress = (mediumAnswers / (quizCount * 3)) * 100;
     const hardProgress = (hardAnswers / (quizCount * 2)) * 100;
@@ -78,17 +83,25 @@ const ProfileDashboard = () => {
                             <Typography className='rank'>Rank 45</Typography>
                         </Box>
                     </Box>
-                    {userId === user._id && <Box className='btn-class'>
-                        <Button className='edit-profile' onClick={() => navigate('/profile/edit-profile')}>Edit Profile</Button>
-                        <Tooltip title='settings'>
-                            <IconButton className='settings'>
-                                <SettingsIcon className='settings-icon' onClick={() => navigate('/settings')} />
-                            </IconButton>
-                        </Tooltip>
-                        <Tooltip title='Help & Support'>
-                            <IconButton className='support' onClick={() => navigate('/help-support')} size='small'><SupportIcon className='settings-icon' /></IconButton>
-                        </Tooltip>
-                    </Box>}
+                    {userId === user._id && <>
+                        <Box className='btn-class'>
+                            <Button className='edit-profile' onClick={() => navigate('/profile/edit-profile')}>Edit Profile</Button>
+                            <Tooltip title='settings'>
+                                <IconButton className='settings'>
+                                    <SettingsIcon className='settings-icon' onClick={() => navigate('/settings')} />
+                                </IconButton>
+                            </Tooltip>
+                            <Tooltip title='Help & Support'>
+                                <IconButton className='support' onClick={() => navigate('/help-support')} size='small'><SupportIcon className='settings-icon' /></IconButton>
+                            </Tooltip>
+                        </Box>
+                        <Box className='left-bottom-container'>
+                            <Typography style={{ color: "#0072e5", fontWeight: "bold" }}>Connections : <span className='lbc-count'>{user.connections?.length}</span></Typography>
+                            <Typography style={{ color: "#0072e5", fontWeight: "bold", marginTop: "10px" }}>Quizzes : <span className='lbc-count'>{quizCount}</span></Typography>
+                            <Typography style={{ color: "#0072e5", fontWeight: "bold", marginTop: "10px" }}>Active Debates : <span className='lbc-count'>{user.debate?.length}</span></Typography>
+                            <Button onClick={handleLogout} className='logout-btn'>Logout</Button>
+                        </Box>
+                    </>}
                 </Box>
                 <Box className='right-container'>
                     <Box className='top-container'>
@@ -106,9 +119,10 @@ const ProfileDashboard = () => {
                                     width={300}
                                     height={150}
                                 />
-                                <Box className='description'>
-                                    <Typography className='header'>'IQR'</Typography>
-                                    <Typography className='desc'>Individual Quiz Rating defines the ratings obtained in a single quiz.</Typography>
+                                <Box className='info'>
+                                    <Tooltip title='Individual Quiz Rating defines the ratings obtained in a single quiz.'>
+                                        <IconButton><InfoIcon /></IconButton>
+                                    </Tooltip>
                                 </Box>
                             </Box>
                             <Box className='leftc-text'>
@@ -130,9 +144,10 @@ const ProfileDashboard = () => {
                                     width={300}
                                     height={150}
                                 />
-                                <Box className='description'>
-                                    <Typography className='header'>'Rating'</Typography>
-                                    <Typography className='desc'>Rating defines the overall Rating acquired till date.</Typography>
+                                <Box className='info'>
+                                    <Tooltip title='Rating defines the overall Rating acquired till date.'>
+                                        <IconButton><InfoIcon /></IconButton>
+                                    </Tooltip>
                                 </Box>
                             </Box>
                             <Box className='rightc-text'>
@@ -192,6 +207,9 @@ const Root = styled.div`
     margin: 90px 35px 0px 30px;
     cursor: pointer;
 }
+.info{
+
+}
 .left-container{
     box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.1);
     width: 25%;
@@ -237,6 +255,29 @@ const Root = styled.div`
 .left-top-container{
     display: flex;
     flex-direction: row;
+}
+.left-bottom-container{
+    box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.2);
+    height: 180px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction : column;
+    margin-top: 30px;
+    padding: 20px 30px;
+}
+.lbc-count{
+    margin-left: 5px;
+    color: #01264a;
+}
+.logout-btn{
+    color: #0072e5;
+    background-color: #d7e7fa;
+    width: 55%;
+    margin: 20px auto;
+    font-weight: bold;
+    border-radius: 10px;
+    text-transform: none;
+    margin-left: 50px;
 }
 .avatar-style{
     width: 90px;
@@ -328,7 +369,7 @@ const Root = styled.div`
     background-color: #0072e5;
     width: 80px;
     border-radius: 20px;
-    height: 130px;
+    height: 80px;
 }
 .header{
     font-size: 12px;

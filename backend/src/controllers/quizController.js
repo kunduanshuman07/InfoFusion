@@ -13,6 +13,20 @@ export const quizAddByAdmin = async (req, res) => {
     }
 }
 
+export const rawQuizDetailing = async(req,res) => {
+    const {userId} = req.body;
+    try {
+        const latestQuizDetails = await Quiz.findOne().sort({ createdAt: -1 }).exec();
+        const userEnability = !!latestQuizDetails.users.find(user => user.userId.toString() === userId);
+        const quizzes = await Quiz.find();
+        const quizCount = quizzes.length;
+        res.status(200).send({quizCount, userEnability});
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
+
 export const latestQuiz = async (req, res) => {
     try {
         const latestQuizDetails = await Quiz.findOne().sort({ createdAt: -1 }).exec();

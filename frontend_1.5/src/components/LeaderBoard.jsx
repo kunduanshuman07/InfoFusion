@@ -111,7 +111,7 @@ const Leaderboard = () => {
         rating: item.rating,
         quizcount: item.quizcount,
         user: item.user,
-        ifrating: badgeDecider(item.user.quizzes)?.finalAverage?.toFixed(2),
+        ifrating: badgeDecider(item.user.quizzes)?.finalAverage?.toFixed(2)||0.00,
       }))
       setRows(formattedRows)
     }

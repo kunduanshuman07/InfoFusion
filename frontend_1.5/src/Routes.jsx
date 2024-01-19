@@ -9,10 +9,12 @@ import UploadPostAdmin from './pages/UploadPostAdmin';
 import ProfilePage from './pages/ProfilePage';
 import EditProfilePage from './pages/EditProfilePage';
 import ConnectPage from './pages/ConnectPage';
+import GettingStarted from './pages/GettingStarted';
 const RoutesJS = () => {
   const { auth } = useAuth();
   return (
     <Routes>
+      <Route path='/' element={<GettingStarted/>}/>
       <Route path='/login' element={<LoginPage />} />
       <Route path='/signup' element={<SignupPage />} />
       <Route path='/*' element={auth ? <Layout /> : <Navigate to="/login" replace />} />
@@ -24,5 +26,7 @@ const RoutesJS = () => {
     </Routes>
   )
 }
+
+
 
 export default RoutesJS

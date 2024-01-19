@@ -27,7 +27,7 @@ const Login = () => {
         await localStorage.setItem("user", JSON.stringify(data.user));
         setAuth(true);
         setValid(true);
-        navigate('/getting-started');
+        navigate('/quiz/current-quiz');
 
       }
     } catch (error) {

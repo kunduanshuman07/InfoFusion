@@ -8,20 +8,19 @@ import IconButton from '@mui/material/IconButton';
 import Container from '@mui/material/Container';
 import Logo from "../assets/InfoFusion.png";
 import { useNavigate } from "react-router-dom";
-import { Tooltip, Typography } from '@mui/material';
+import { Button, Tooltip, Typography } from '@mui/material';
 import HubIcon from '@mui/icons-material/Hub';
 import styled from "styled-components";
-
+import { useAuth } from "../context/AuthProvider";
+import LoginIcon from '@mui/icons-material/Login';
+import VpnKeyIcon from '@mui/icons-material/VpnKey';
 export const AppBarComponent = ({ comp }) => {
     const user = JSON.parse(localStorage.getItem("user"));
+    const { auth } = useAuth();
     const navigate = useNavigate();
 
     const handleProfile = () => {
         navigate(`/profile/${user._id}`);
-    }
-    const handleLogout = () => {
-        localStorage.clear();
-        navigate('/login');
     }
     const handleConnections = () => {
         navigate('/connect')
@@ -33,23 +32,36 @@ export const AppBarComponent = ({ comp }) => {
                 <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, backgroundColor: "white", color: "#086D67" }}>
                     <Container maxWidth="xl">
                         <Toolbar disableGutters>
-                            <img alt="InfoFusion" src={Logo} width={70} height={60} onClick={() => navigate('/getting-started')}
-                                className='logo-style' />
-                            <Box style={{ display: "flex", flexDirection: "column" }}>
-                                <Typography className='logo-text'>INFOFUSION</Typography>
-                            </Box>
-                            <Box sx={{ ml: "auto" }}>
-                                <Tooltip title='Account'>
-                                    <IconButton color="inherit" onClick={handleProfile}>
-                                        <Avatar alt={user.name} src={`http://localhost:3000/userImages/${user.picturePath}`} className='avatar-style' />
-                                    </IconButton>
-                                </Tooltip>
-                            </Box>
-                            <Box>
-                                <Tooltip title='Connect'>
-                                    <IconButton className='support-style' onClick={handleConnections} size='small'><HubIcon style={{ fontSize: "20px" }} /></IconButton>
-                                </Tooltip>
-                            </Box>
+                            {auth ? <>
+                                <img alt="InfoFusion" src={Logo} width={70} height={60} onClick={() => navigate('/quiz/current-quiz')}
+                                    className='logo-style' />
+                                <Box style={{ display: "flex", flexDirection: "column" }}>
+                                    <Typography className='logo-text'>INFOFUSION</Typography>
+                                </Box>
+                                <Box sx={{ ml: "auto" }}>
+                                    <Tooltip title='Account'>
+                                        <IconButton color="inherit" onClick={handleProfile}>
+                                            <Avatar alt={user.name} src={`http://localhost:3000/userImages/${user.picturePath}`} className='avatar-style' />
+                                        </IconButton>
+                                    </Tooltip>
+                                </Box>
+                                <Box>
+                                    <Tooltip title='Connect'>
+                                        <IconButton className='support-style' onClick={handleConnections} size='small'><HubIcon style={{ fontSize: "20px" }} /></IconButton>
+                                    </Tooltip>
+                                </Box>
+                            </>
+                                :
+                                <>
+                                    <img alt="InfoFusion" src={Logo} width={70} height={60} className='logo-style' />
+                                    <Box style={{ display: "flex", flexDirection: "column" }}>
+                                        <Typography className='logo-text'>INFOFUSION</Typography>
+                                    </Box>
+                                    <Box sx={{ ml: "auto" }}>
+                                        <Button startIcon={<LoginIcon/>} style={{fontWeight: "bold", textTransform: "none",borderRadius: "10px"}} variant='outlined' onClick={()=>navigate('/login')}>Login</Button>
+                                        <Button startIcon={<VpnKeyIcon/>}variant='outlined' style={{fontWeight: "bold", textTransform: "none", marginLeft: "20px", borderRadius: "10px"}} onClick={()=>navigate('/signup')}>Signup</Button>
+                                    </Box>
+                                </>}
                         </Toolbar>
                     </Container>
                 </AppBar>
