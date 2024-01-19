@@ -67,12 +67,14 @@ export const getOverallLeaderboard = async (req, res) => {
         const allUsers = await User.find();
         let leaderboardData = [];
         allUsers.forEach((user) => {
-            const rating = user.rating;
-            leaderboardData.push({
-                user: user,
-                rating: rating,
-                quizcount: user.quizzes.length,
-            });
+            if (user.quizzes.length !== 0) {
+                const rating = user.rating;
+                leaderboardData.push({
+                    user: user,
+                    rating: rating,
+                    quizcount: user.quizzes.length,
+                });
+            }
         });
         leaderboardData.sort((a, b) => b.rating - a.rating);
         res.status(200).send({ leaderboard: leaderboardData });
@@ -417,8 +419,8 @@ export const sendMessage = async (req, res) => {
     }
 }
 
-export const fetchNotifications = async(req,res) => {
-    const {userId} = req.body;
+export const fetchNotifications = async (req, res) => {
+    const { userId } = req.body;
     try {
         const user = await User.findById(userId);
         const userNotifications = user.notifications;

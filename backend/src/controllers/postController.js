@@ -78,12 +78,13 @@ export const likePost = async (req, res) => {
     try {
         const post = await Post.findById(postId);
         post.likes.push({ userId: userId });
+        const newUser = await User.findById(userId);
         await post.save();
         const allUsers = await User.find();
         allUsers.map((user) => {
             user.posts.map(async (post) => {
                 if (post.postId.toString() === postId) {
-                    user.notifications.push({ notificationText: `${user.name} liked your post.`, notificationTime: timeOfLike });
+                    user.notifications.push({ notificationText: `${newUser.name} liked your post.`, notificationTime: timeOfLike });
                     await user.save();
                 }
             })
@@ -120,7 +121,7 @@ export const postcomment = async (req, res) => {
         allUsers.map((user) => {
             user.posts.map(async (post) => {
                 if (post.postId.toString() === postId) {
-                    user.notifications.push({ notificationText: `${newUser.name} commented ${commentText} on your post.`, notificationTime: timeOfComment });
+                    user.notifications.push({ notificationText: `${newUser.name} commented "${commentText}" on your post.`, notificationTime: timeOfComment });
                     await user.save();
                 }
             })

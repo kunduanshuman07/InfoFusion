@@ -13,7 +13,7 @@ const CurrentQuiz = () => {
   const [rows, setRows] = useState([]);
   const [enability, setEnability] = useState(true);
   const [startQuiz, setStartQuiz] = useState(false);
-
+  const [quizCount, setQuizCount] = useState();
   const columns = [
     {
       field: "rank",
@@ -49,6 +49,9 @@ const CurrentQuiz = () => {
   useEffect(() => {
     const fetchLeaderboard = async () => {
       const { data } = await axios.get('http://localhost:3000/quiz/latest-quiz');
+      const { quizCount, userEnability } = await axios.post('http://localhost:3000/quiz/count-enability', {userId: user._id});
+      setEnability(userEnability);
+      setQuizCount(quizCount);
       const leaderBoard = await axios.post('http://localhost:3000/quiz/get-leaderboard', { quizId: data._id });
       const formattedRows = leaderBoard.data.leaderboard.map((item, index) => ({
         id: index,
@@ -67,7 +70,7 @@ const CurrentQuiz = () => {
       <Box className='container'>
         <Box className='left-container'>
           <Typography className='header'>Hi, {user.name}</Typography>
-          <Typography className='quiz-title'>Welcome to Daily Quiz # 45</Typography>
+          <Typography className='quiz-title'>Welcome to Daily Quiz # {quizCount} </Typography>
           <img src={quizLogo} alt='quiz-logo' width={250} height={150} className='quiz-img' />
           {!enability && <Box className='not-enable'>
             <Typography className='not-enable-text-one'>You have already attempted Today's Quiz.</Typography>

@@ -19,7 +19,7 @@ import LiveTvIcon from '@mui/icons-material/LiveTv';
 const DrawerComponent = () => {
     const [drawerWidth, setDrawerWidth] = React.useState(230);
     const [open, setOpen] = React.useState(true);
-    const [isQuizCollapse, setIsQuizCollapse] = React.useState(false);
+    const [isQuizCollapse, setIsQuizCollapse] = React.useState(true);
     const [isDebateCollapse, setIsDebateCollapse] = React.useState(false);
     const handleDrawerOpen = () => {
         setDrawerWidth(open ? 75 : 230);
@@ -63,20 +63,6 @@ const DrawerComponent = () => {
                         <MenuIcon width={16} height="100%" alt="menu" />
                     </IconButton>
                     <List style={{ marginTop: 10 }}>
-                        <ListItem
-                            to='/getting-started'
-                            component={NavLink}
-
-                            style={({ isActive }) =>
-                                isActive ? { color: '#444444', backgroundColor: "#d7e7fa", borderRadius: "20px", height: "38px", marginTop: "5px" } : { color: '#444444', height: "38px", marginTop: "5px", }
-                            }
-                            className='list-item'
-                        >
-                            <ListItemIcon>
-                                <IconButton style={{ color: "#444444" }}><NotStartedIcon style={{ color: "#01264a" }} /></IconButton>
-                            </ListItemIcon>
-                            <ListItemText primary={<Typography style={{display: !open?"none": ""}}>Getting Started</Typography>} />
-                        </ListItem>
                         <ListItem onClick={handleQuizCollapse} style={{marginTop: "10px", height: "38px"}} className={!isQuizCollapse && 'list-item'}>
                             <ListItemIcon>
                                 <IconButton style={{ color: "#444444" }}><PlaygroundIcon style={{ color: "#01264a" }} /></IconButton>
